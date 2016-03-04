@@ -13,7 +13,7 @@ def rocket_up_time(vi, vf, a):
     """ Calculate distance and time it takes a rocket to get up before it stops midair
         take initial velocity, final velocity and acceleration as arguments """
 
-    print("velocity intial vi = {0} m/s".format(vi))in
+    print("velocity intial vi = {0} m/s".format(vi))
     print("velocity final vf = {0} m/s".format(vf))
     print("acceleration (gravity) = {0} m/s^-2".format(a))
 
@@ -35,6 +35,12 @@ def rocket_up_time(vi, vf, a):
     print("TIME travelled = {0} s".format((vf - vi) / (a)))
 
     print(u"\u2588" * 30)  # http://www.fileformat.info/info/unicode/block/block_elements/images.htm
+
+
+
+
+
+
 
 
 main()
