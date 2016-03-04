@@ -10,14 +10,14 @@ def main():
 def rocket_up_time(vi, vf, a):
 """ Calculate distance and time it takes a rocket to get up before it stops midair
     take initial velocity, final velocity and acceleration as operators """
-  print("velocity intial vi = " + str(vi) + "m/s")
-  print("velocity final vf = " + str(vf) + "m/s")
+  print("velocity intial vi = {0} m/s".format(str(vi)))
+  print("velocity final vf = {0} m/s".format(str(vf)))
   print("acceleration (gravity) = " + str(a))
   
   print("The formula to get the DISTANCE (d) travelled before it will stop and come back down "
             u"\u2591" + " (vf^2 - vi^2) / 2a " + u"\u2591")
   print("change in velocity (" + str(vf) + "^2 - " + str(vi) + "^2) m/s = " + str(vf **2 - vi ** 2) + " m/s")
-  print("acceleration is constant so multiply by 2 (2 x " + str(a) + ") ms^-2= " + str(2 * a) + " m/s^-2")
+  print("acceleration is constant so multiply by 2 (2 x {0}) ms^-2= {1} m/s^-2".format(str(a), str(2 * a)))
   print("DISTANCE travelled = " + str((vf ** 2 - vi ** 2) / (2 * a)) + " m")
   
   print(u"\u2588" * 30)
