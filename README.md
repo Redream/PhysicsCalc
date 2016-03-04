@@ -13,4 +13,4 @@ Matthew Aitchison
 Tim Buchanan
 Josh Llyod
 
-and anyone else in the course!
+and anyone else in the course!.
