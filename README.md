@@ -7,7 +7,7 @@ as well as try to learn physics calculations and formulas.
 
 It will also display the formulas that it is doing, so you can follow, why something does something.
 
-Contributos:
+Contributors:
 Matthew A
 Tim B
 Josh L
