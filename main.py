@@ -14,8 +14,8 @@ def main():
 
     d0 = 29.5 # initial altitude/displacement (distance in m)
     t0 = 1.55 # time in seconds, can use s or t for unit
-    d0 = 35.5 # initial altitude/displacement (distance in m)
-    t0 = 1.25 # time in seconds, use t or hr/m/s for unit
+    d0 = 30.0 # initial altitude/displacement (distance in m)
+    t0 = 1.50 # time in seconds, use t or hr/m/s for unit
     height_fallen_calc(d0, t0, a)
 
 
@@ -83,20 +83,22 @@ def height_fallen_calc(d0, t0, a):
     print('░ v0 = (d0 -  (½)a(t0)²) / (t0) ░')
 
     print('  v0 = ({0} - (½)*{1}*{2}²) / {2}'.format(d0, a, t0))
-    print('  v0 = ({0} - {1}) / {2}'.format(d0, 0.5 * a * t0 ** 2, t0))
-    print('  v0 = ({0}) / {1}'.format(d0 - 0.5 * a * t0 ** 2, t0))
-    print('░ v0 = {0} m/s ░'.format((d0 - 0.5 * a * t0 ** 2) / t0))
+    print('  v0 = ({0} - {1}) / {2} #{3}'.format(d0, 0.5 * a * t0 ** 2, t0, " need to subtract not add here!!!"))
+    print('  v0 = ({0}) / {1}'.format(d0 + 0.5 * a * t0 ** 2, t0))  # note: should be d0 - (½)a(t0)², but have changed to + sign
+    print('░ v0 = {0} m/s ░'.format((d0 + 0.5 * a * t0 ** 2) / t0)) # because multiplying by negative gravity changes sign
+    v0 = (d0 + 0.5 * a * t0 ** 2) / t0
 
     print('The kinematic equation to find VELOCITY (vf) given distance is:')
     print('░ vf² = v0² + 2aΔx ░')
     print('Calculate final VELOCITY (vf) when the object hits the ground')
     print('  vf² = v0² + 2a(df-d0)')
-    print('  vf² = {0:.2f}² + 2*{1}*({2}-{3}) '.format((d0 - 0.5 * a * t0 ** 2) / t0, a, df, d0))
-    print('  vf² = {0:.2f} + {1}*({2}) '.format((d0 - 0.5 * a * t0 ** 2 / t0) ** 2, 2 * a , df - d0))
-    print('  vf² = {0:.2f} + {1} '.format((d0 - 0.5 * a * t0 ** 2 / t0) ** 2, (2 * a) * (df - d0)))
-    print('  vf² = {0} '.format((d0 - 0.5 * a * t0 ** 2 / t0) ** 2 + (2 * a) * (df - d0)))
-    print('  vf  = √{0} '.format((d0 - 0.5 * a * t0 ** 2 / t0) ** 2 + (2 * a) * (df - d0)))
-    print('░ vf  = {0} m/s ░'.format(math.sqrt((d0 - 0.5 * a * t0 ** 2 / t0) ** 2 + (2 * a) * (df - d0))))
+    print('  vf² = {0:.2f}² + 2*{1}*({2}-{3}) '.format(v0, a, df, d0))
+    print('  vf² = {0:.2f} + {1}*({2}) '.format(v0 ** 2, 2 * a , df - d0))
+    print('  vf² = {0:.2f} + {1} '.format(v0 ** 2, (2 * a) * (df - d0)))
+    print('  vf² = {0} '.format(v0 ** 2 + (2 * a) * (df - d0)))
+    print('  vf  = √{0} '.format(v0 ** 2 + (2 * a) * (df - d0)))
+    print('░ vf  = {0} m/s ░'.format(math.sqrt(v0 ** 2 + (2 * a) * (df - d0))))
+    vf = math.sqrt(v0 ** 2 + (2 * a) * (df - d0))
 
     print('The kinematic equation to find VELOCITY (vf) given distance (x) is:')
     print('░ vf² = v0² + 2aΔx ░')
@@ -104,10 +106,10 @@ def height_fallen_calc(d0, t0, a):
     print('░ vf² = vi² + 2a(di) ░')
     print('░ di  = (vi² - vf²) / 2a ░')
 
-    print('  di  = ({0}² - {1:.2f}²) / 2*{2}'.format(vi, (d0 - 0.5 * a * t0 ** 2) / t0, a))
-    print('  di  = ({0} - {1}) / {2}'.format(vi ** 2, ((d0 - 0.5 * a * t0 ** 2) / t0) ** 2, 2 * a))
-    print('  di  = ({0}) / {1}'.format((vi ** 2) - ((d0 - 0.5 * a * t0 ** 2) / t0) ** 2, 2 * a))
-    print('  di  = {0} m'.format((vi ** 2) - ((d0 - 0.5 * a * t0 ** 2) / t0) ** 2 / 2 * a))
+    print('  di  = ({0}² - {1:.2f}²) / 2*{2}'.format(vi, vf, a))
+    print('  di  = ({0} - {1}) / {2}'.format(vi ** 2, vf ** 2, 2 * a))
+    print('  di  = ({0}) / {1}'.format((vi ** 2) - vf ** 2, 2 * a))
+    print('  di  = {0} m'.format((vi ** 2) - vf ** 2 / (2 * a)))
 
 main()
 
