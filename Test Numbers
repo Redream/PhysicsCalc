@@ -1,0 +1,21 @@
+# http://physics.info/velocity/
+# can used as initial velocity, all figures are in m/s
+9.81      # gravity
+19.62     # gravity * 2
+8         # maximum comfortable elevator speed
+10        # falling raindrops
+10.453    # fastest human: running (Usain Bolt) - often appears in quizzes
+40        # falling hailstones
+80        # peregrine falcon in a dive
+200       # tsunami
+248       # cruising speed of a boeing 777
+295       # speed of sound
+343       # speed of sound in air
+600       # cruising speed of a concorde
+980.433   # fastest airplane (SR-71 Blackbird)
+1200      # bullets
+8000      # space shuttle in orbit
+11171     # fastest manned spacecraft (Apollo 10)
+11180     # escape velocity (11.2 km/s) - http://nova.stanford.edu/projects/mod-x/ad-escvel.html
+29790     # earth in orbit
+299792458 # speed of light in a vacuum
