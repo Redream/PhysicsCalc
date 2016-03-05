@@ -12,10 +12,10 @@ def main():
 
     rocket_up_calc(vi, vf, a)
 
-    d0 = 29.5 # initial altitude/displacement (distance in m)
-    t0 = 1.55 # time in seconds, can use s or t for unit
-    #d0 = 30.0 # initial altitude/displacement (distance in m)
-    #t0 = 1.50 # time in seconds, use t or hr/m/s for unit
+    #d0 = 29.5 # initial altitude/displacement (distance in m)
+    #t0 = 1.55 # time in seconds, can use s or t for unit
+    d0 = 30.0 # initial altitude/displacement (distance in m)
+    t0 = 1.50 # time in seconds, use t or hr/m/s for unit
     height_fallen_calc(d0, t0, a)
 
 
