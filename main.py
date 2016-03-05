@@ -14,8 +14,8 @@ def main():
 
     d0 = 29.5 # initial altitude/displacement (distance in m)
     t0 = 1.55 # time in seconds, can use s or t for unit
-    #d0 = 35.5 # initial altitude/displacement (distance in m)
-    #t0 = 1.25 # time in seconds, use t or hr/m/s for unit
+    d0 = 35.5 # initial altitude/displacement (distance in m)
+    t0 = 1.25 # time in seconds, use t or hr/m/s for unit
     height_fallen_calc(d0, t0, a)
 
 
