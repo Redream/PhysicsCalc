@@ -50,6 +50,7 @@ def main():
                     qselect = check_valid_int(qselect, 1, len(qmenu))
                     if qselect != -1:
                         webassign_do_question(weekselect, qselect)
+                        input("Press enter to exit. ")
                 
 def webassign_get_questions(week):
     return {
