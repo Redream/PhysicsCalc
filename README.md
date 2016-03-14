@@ -8,9 +8,10 @@ as well as try to learn physics calculations and formulas.
 It will also display the formulas that it is doing, so you can follow, why something does something.
 
 Contributors:
-Matthew A
-Tim B
-Josh L
-nsy16 - Nate
+* Matthew A
+* Tim B
+* Josh L
+* nsy16 - Nate
+* Alexander M
 
 and anyone else who is a keen UC student
