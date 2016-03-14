@@ -66,7 +66,17 @@ def webassign_get_questions(week):
     "Question 4E",
     "Question 5A",
     "Question 5B",
-    "Question 5C"]}.get(week, "Week not supported.")
+    "Question 5C"],
+    3:["Question 1A",
+    "Question 1B",
+    "Question 2A",
+    "Question 2B",
+    "Question 2C",
+    "Question 3A",
+    "Question 3B",
+    "Question 4A",
+    "Question 4B",
+    "Question 5A/B"]}.get(week, "Week not supported.")
 
 def webassign_do_question(week, question):
     if week == 2:
@@ -76,6 +86,28 @@ def webassign_do_question(week, question):
             angle = float(input("Please enter the angle (degrees): "))
             answer = force*distance*math.cos(to_radians(angle))
             print("Answer to a) and d): "+str(round(answer,2))+" J")
+        else:
+            print("Question not supported.")
+    elif week == 3:
+        if question == 10:
+            m1 = float(input("Please input mass m1 (kg): "))
+            m2 = float(input("Please input mass m2 (kg): "))
+            radius = float(input("Please input radius (m): "))
+            hm1 = float(input("Please input height of m1 from floor (m): "))
+            moment = 0.5*5*radius**2 + m1*radius**2 + m2*radius**2
+            tnet = (m1-m2)*9.81*radius
+            alpha = tnet/moment
+            lina = radius*alpha
+            temp = hm1/0.5/lina
+            time = math.sqrt(temp)
+            print("Answer to 5a) "+str(round(time,4))+" s")
+            
+            moment = m1*radius**2 + m2*radius**2
+            alpha = tnet/moment
+            lina = radius*alpha
+            temp = hm1/0.5/lina
+            time = math.sqrt(temp)
+            print("Answer to 5b) "+str(round(time,4))+" s")
         else:
             print("Question not supported.")
     else:
