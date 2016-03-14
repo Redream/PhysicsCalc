@@ -5,20 +5,106 @@ GLOBAL_CONSTANT_GRAVITY = -9.81
 
 
 def main():
+    print("MAIN MENU:")
+    menu = ["Rocket Height Calculator", "Height Fallen Calculator", "WebAssign Homework"]
+    
+    menucount = 0
+    for s in menu:
+        menucount += 1
+        print(str(menucount)+") "+s)
+    
+    menuselect = input("Please select an option 1-"+str(len(menu))+": ")
+    menuselect = check_valid_int(menuselect, 1, len(menu))
+    if menuselect != -1:
+        if menuselect == 1:
+            vi = 9.81   # initial velocity in m/s
+            vf = 0      # final velocity in m/s
+            a = GLOBAL_CONSTANT_GRAVITY # displayed acceleration (a) or gravity (g)
 
-    vi = 9.81   # initial velocity in m/s
-    vf = 0      # final velocity in m/s
-    a = GLOBAL_CONSTANT_GRAVITY # displayed acceleration (a) or gravity (g)
+            rocket_up_calc(vi, vf, a)
+        elif menuselect == 2:
+            d0 = 29.5 # initial altitude/displacement (distance in m)
+            t0 = 1.55 # time in seconds, can use s or t for unit
+            d0 = 30.0 # initial altitude/displacement (distance in m)
+            t0 = 1.50 # time in seconds, use t or hr/m/s for unit
+            height_fallen_calc(d0, t0, a)
+        elif menuselect == 3:
+            webmenu = ["WebAssign Week 1","WebAssign Week 2","WebAssign Week 3"]
+            menucount = 0
+            for s in webmenu:
+                menucount += 1
+                print(str(menucount)+") "+s)            
+            weekselect = input("Please select an option 1-"+str(len(webmenu))+": ")
+            weekselect = check_valid_int(weekselect, 1, len(webmenu))
+            if weekselect != -1:
+                qmenu = webassign_get_questions(weekselect)
+                if type(qmenu) is str:
+                    print(qmenu)
+                    input("Press enter to exit. ")
+                else:
+                    menucount = 0
+                    for s in qmenu:
+                        menucount += 1
+                        print(str(menucount)+") "+s)                
+                    qselect = input("Please select an option 1-"+str(len(qmenu))+": ")
+                    qselect = check_valid_int(qselect, 1, len(qmenu))
+                    if qselect != -1:
+                        webassign_do_question(weekselect, qselect)
+                
+def webassign_get_questions(week):
+    return {
+    2:["Question 1A / D",
+    "Question 1B / C",
+    "Question 2A",
+    "Question 2B",
+    "Question 3A",
+    "Question 3B",
+    "Question 4A",
+    "Question 4B",
+    "Question 4C",
+    "Question 4D",
+    "Question 4E",
+    "Question 5A",
+    "Question 5B",
+    "Question 5C"]}.get(week, "Week not supported.")
 
-    rocket_up_calc(vi, vf, a)
+def webassign_do_question(week, question):
+    if week == 2:
+        if question == 1:
+            distance = float(input("Please enter the distance (m): "))
+            force = float(input("Please enter the applied force (N): "))
+            angle = float(input("Please enter the angle (degrees): "))
+            answer = force*distance*math.cos(to_radians(angle))
+            print("Answer to a) and d): "+str(round(answer,2))+" J")
+        else:
+            print("Question not supported.")
+    else:
+        #this shouldn't happen because we already checked for invalid weeks
+        print("Week not supported.")
+            
+def to_radians(degrees):
+    return degrees * (math.pi/180)
 
-    d0 = 29.5 # initial altitude/displacement (distance in m)
-    t0 = 1.55 # time in seconds, can use s or t for unit
-    d0 = 30.0 # initial altitude/displacement (distance in m)
-    t0 = 1.50 # time in seconds, use t or hr/m/s for unit
-    height_fallen_calc(d0, t0, a)
+def to_degrees(radians):
+    return radians * (180/math.pi)
 
-
+def check_valid_int(number, min_num, max_num):
+    try:
+        number = int(number)  
+    except ValueError:    
+        show_invalid_option()
+        return -1
+    else:
+        if number > max_num or number <= min_num-1:
+            show_invalid_option()
+            return -1
+        else:
+            return number
+    
+def show_invalid_option():
+    print("Invalid option.")
+    input("Press enter to exit. ")
+    
 def rocket_up_calc(vi, vf, a):
     """Calculate distance and time it takes a rocket to get up before it stops midair
         take initial velocity, final velocity and acceleration as arguments"""
