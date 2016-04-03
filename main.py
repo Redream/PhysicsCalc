@@ -6,7 +6,7 @@ GLOBAL_CONSTANT_GRAVITY = -9.81
 
 def main():
     print("MAIN MENU:")
-    menu = ["Rocket Height Calculator", "Height Fallen Calculator", "WebAssign Homework"]
+    menu = ["WebAssign Homework", "Manual"]
     
     menucount = 0
     for s in menu:
@@ -16,19 +16,8 @@ def main():
     menuselect = input("Please select an option 1-"+str(len(menu))+": ")
     menuselect = check_valid_int(menuselect, 1, len(menu))
     if menuselect != -1:
-        if menuselect == 1:
-            vi = 9.81   # initial velocity in m/s
-            vf = 0      # final velocity in m/s
-            a = GLOBAL_CONSTANT_GRAVITY # displayed acceleration (a) or gravity (g)
 
-            rocket_up_calc(vi, vf, a)
-        elif menuselect == 2:
-            d0 = 29.5 # initial altitude/displacement (distance in m)
-            t0 = 1.55 # time in seconds, can use s or t for unit
-            d0 = 30.0 # initial altitude/displacement (distance in m)
-            t0 = 1.50 # time in seconds, use t or hr/m/s for unit
-            height_fallen_calc(d0, t0, a)
-        elif menuselect == 3:
+        if menuselect == 1:
             webmenu = ["WebAssign Week 1","WebAssign Week 2","WebAssign Week 3"]
             menucount = 0
             for s in webmenu:
@@ -51,9 +40,35 @@ def main():
                     if qselect != -1:
                         webassign_do_question(weekselect, qselect)
                         input("Press enter to exit. ")
-                
+
+        elif menuselect == 2:
+            manualmenu = ["Rocket Height Calculator",
+                       "Height Fallen Calculator",
+                       "Race car on a circular race track"]
+            menucount = 0
+            for s in manualmenu:
+                menucount += 1
+                print(str(menucount)+") "+s)
+
+            manualselect = input("Please select an option 1-"+str(len(manualmenu))+": ")
+            manualselect = check_valid_int(manualselect, 1, len(manualmenu))
+            if manualselect != -1:
+                if manualselect == 1:
+                    vi = 119   # initial velocity in m/s 
+                    vf = 0      # final velocity in m/s
+                    a = GLOBAL_CONSTANT_GRAVITY # displayed acceleration (a) or gravity (g)
+                    rocket_up_calc(vi, vf, a)
+                elif manualselect == 2:
+                    d0 = 25.0 # initial altitude/displacement (distance in m) 
+                    t0 = 1.80 # time in seconds, use t or hr/m/s for unit
+                    a = GLOBAL_CONSTANT_GRAVITY # displayed acceleration (a) or gravity (g)
+                    height_fallen_calc(d0, t0, a)
+
+
 def webassign_get_questions(week):
     return {
+    1:["Question 3",
+    "Question 4"],
     2:["Question 1A / D",
     "Question 1B / C",
     "Question 2A",
@@ -80,7 +95,15 @@ def webassign_get_questions(week):
     "Question 5A/B"]}.get(week, "Week not supported.")
 
 def webassign_do_question(week, question):
-    if week == 2:
+    if week == 1:
+        if question == 1:
+            vi = float(input("Please enter the initial velocity (m/s): "))
+            rocket_up_calc(vi, 0, GLOBAL_CONSTANT_GRAVITY)
+        if question == 2:
+            d0 = float(input("Please enter the last distance (m): "))
+            t0 = float(input("Please enter the last time (s): "))
+            height_fallen_calc(d0, t0, GLOBAL_CONSTANT_GRAVITY)
+    elif week == 2:
         if question == 1:
             distance = float(input("Please enter the distance (m): "))
             force = float(input("Please enter the applied force (N): "))
@@ -137,7 +160,10 @@ def check_valid_int(number, min_num, max_num):
 def show_invalid_option():
     print("Invalid option.")
     input("Press enter to exit. ")
-    
+
+
+
+
 def rocket_up_calc(vi, vf, a):
     """Calculate distance and time it takes a rocket to get up before it stops midair
         take initial velocity, final velocity and acceleration as arguments"""
@@ -255,6 +281,45 @@ def height_fallen_calc(d0, t0, a):
     print('Q: What was the total time spent in falling?')
     print('A: {0:.2f} s'.format(t))
 
+def race_car_circular_track():
+    """
+    brief:    Race car on a circular race track
+    from:     WebAssign Homework 5.1
+    category: circular motion
+    types:    velocity, angular momentum, tangential acceleration, angular momentum
+    """
+
+    # quantities
+
+    # related to dimensions of the circle
+    R = 444  # R: radius length        - m
+    C = 0    # C: circumference length - m (C =
+
+    # related to angular momentum in the the center of the circle
+    O = 0    # θ: angular displacement - rad
+    w = 0    # ω: angular velocity     - rad s⁻¹
+    a = 0    # α: angular acceleration - rad s⁻²
+
+    # related to the kinematics of the car travelling on the circumference of the circle
+    d = 0       # d: distance travels        - m
+    r = 0       # s: speed                   - m s⁻¹ (r = Rθ)
+    aT = 0.340  # aT: tangential acceleration - m s⁻² (aT = v²/R)
+
+
+    print("A race car starts from rest on a circular track of radius {} m."
+          "The car's speed increases at the constant rate of {}m/s²."
+          "At the point where the magnitudes of the centripetal and tangential accelerations are equal, find the following."
+          .format(R, aT))
+
+
+
+
+
+
+
+
+
+
 main()
 
 """
@@ -263,5 +328,5 @@ v = the final velocity
 Example: Car accelerates from 50mph to 70mph in 10seconds. What is the acceleration?
 Answer a = (v-u)/t
 = (70-50)/10
-= 0.5 mph / second^2
+= 0.5 mph / second²
 """
