@@ -293,7 +293,7 @@ def race_car_circular_track():
 
     # quantities
     # related to dimensions of the circle
-    r = [342, 'm'] # R: radius length - m
+    r = [444, 'm'] # R: radius length - m
 
     # related to angular momentum in the the center of the circle
     O = [0, 'rad']     # θ: angular displacement - rad     (θ = ωt)
@@ -305,6 +305,7 @@ def race_car_circular_track():
     d = [0, 'm']         # d: distance travelled       - m     (d = rθ)
     v = [0, 'm s⁻¹']     # v: velocity                 - m s⁻¹ (v = rω)
     aT = [0.34, 'm s⁻²'] # aT: tangential acceleration - m s⁻² (aT = v²/r) OR (aT = rα)
+    t = [0, 's']         # t: time                     - s
 
     print('-' * 30)
     print("A race car starts from rest on a circular track of radius {} {}.".format(r[0], r[1]))
@@ -345,6 +346,21 @@ def race_car_circular_track():
     print('d = {} {}'.format(d[0], d[1]))
 
     print('░ question c ░')
+    print('angular position: θ2 = θ1 + ωt + ½αt²')
+    print('since ω and θ is zero initially: θ = ½αt²')
+    print('rearrange to solve time: t = √(2 * θ / α)')
+    print('t = √(2 * {0} {1} / {2:.2e} {3})'.format(O[0], O[1], a[0], a[1]))
+    t[0] = math.sqrt(2 * O[0] / a[0])
+    print('t = {:.2f} {}'.format(t[0], t[1]))
+
+
+
+"""
+theta = theta0 + wt + .5angular acceleration * t^2
+theta = .5at^2, since angular speed is zero initially and angular displacement is zero.
+root(2theta/a) = t
+t = root(2*.5/9.94x10^-4) = 31.7 s
+"""
 
 
 
