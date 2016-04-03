@@ -63,7 +63,8 @@ def main():
                     t0 = 1.80 # time in seconds, use t or hr/m/s for unit
                     a = GLOBAL_CONSTANT_GRAVITY # displayed acceleration (a) or gravity (g)
                     height_fallen_calc(d0, t0, a)
-
+                elif manualselect == 3:
+                    race_car_circular_track()
 
 def webassign_get_questions(week):
     return {
@@ -281,6 +282,7 @@ def height_fallen_calc(d0, t0, a):
     print('Q: What was the total time spent in falling?')
     print('A: {0:.2f} s'.format(t))
 
+
 def race_car_circular_track():
     """
     brief:    Race car on a circular race track
@@ -290,43 +292,61 @@ def race_car_circular_track():
     """
 
     # quantities
-
     # related to dimensions of the circle
-    R = 444  # R: radius length        - m
-    C = 0    # C: circumference length - m (C =
+    r = [342, 'm'] # R: radius length - m
 
     # related to angular momentum in the the center of the circle
-    O = 0    # θ: angular displacement - rad
-    w = 0    # ω: angular velocity     - rad s⁻¹
-    a = 0    # α: angular acceleration - rad s⁻²
+    O = [0, 'rad']     # θ: angular displacement - rad     (θ = ωt)
+    w = [0, 'rad s⁻¹'] # ω: angular velocity     - rad s⁻¹ (ω = v/r)
+    a = [0, 'rad s⁻²'] # α: angular acceleration - rad s⁻² (α = ω/r)
 
     # related to the kinematics of the car travelling on the circumference of the circle
-    d = 0       # d: distance travels        - m
-    r = 0       # s: speed                   - m s⁻¹ (r = Rθ)
-    aT = 0.340  # aT: tangential acceleration - m s⁻² (aT = v²/R)
+    # http://www.slideshare.net/caitlinforan/rotational-motion-7142158
+    d = [0, 'm']         # d: distance travelled       - m     (d = rθ)
+    v = [0, 'm s⁻¹']     # v: velocity                 - m s⁻¹ (v = rω)
+    aT = [0.34, 'm s⁻²'] # aT: tangential acceleration - m s⁻² (aT = v²/r) OR (aT = rα)
 
+    print('-' * 30)
+    print("A race car starts from rest on a circular track of radius {} {}.".format(r[0], r[1]))
+    print("The car's speed increases at the constant rate of {} {}.".format(aT[0], aT[1]))
+    print("At the point where the magnitudes of the centripetal and tangential accelerations are equal, find the following.")
+    print("(a) the speed of the race car m/s")
+    print("(b) the distance traveled m")
+    print("(c) the elapsed time s")
 
-    print("A race car starts from rest on a circular track of radius {} m."
-          "The car's speed increases at the constant rate of {}m/s²."
-          "At the point where the magnitudes of the centripetal and tangential accelerations are equal, find the following."
-          .format(R, aT))
+    print('░ question a ░')
+    print('centripetal acceleration:   aT = v²/r')
+    print('rearrange to solve velocity: v = √(aT * r)')
+    print('v = √({} {} * {} {})'.format(aT[0], aT[1], r[0], r[1]))
+    v[0] = math.sqrt(aT[0] * r[0])
+    print('v = {:.2f} {}'.format(v[0], v[1]))
 
+    print('░ question b ░')
+    # http://physicsnet.co.uk/a-level-physics-as-a2/further-mechanics/circular-motion/
+    print('angular velocity: ω = v/r')
+    print('ω = {:.2f} {} / {} {}'.format(v[0], v[1], r[0], r[1]))
+    w[0] = v[0] / r[0]
+    print('ω = {:.5f} {}'.format(w[0], w[1]))
 
+    print('angular acceleration: α = aT/R')
+    print('α = {:.5f} {} / {} {}'.format(aT[0], aT[1], r[0], r[1]))
+    a[0] = aT[0] / r[0]
+    print('α = {:.2e} {}'.format(a[0], a[1]))
 
+    print('constant angular acceleration (without time): ω² = ω0² + 2αθ')
+    print('rearrange to solve angular displacement: θ = (ω² - ω0²) / 2α')
+    print('θ = ({0:.5f} {1} ² - 0 {1} ²) / (2 * {2:.2e} {3})'.format(w[0], w[1], a[0], a[1]))
+    O[0] = (w[0] ** 2) / (2 * a[0])
+    print('θ = {:.2f} {}'.format(O[0], O[1]))
 
+    print('linear angular displacement: d = rθ')
+    print('d = {} {} * {} {}'.format(r[0], r[1], O[0], O[1]))
+    d[0] = r[0] * O[0]
+    print('d = {} {}'.format(d[0], d[1]))
 
-
-
+    print('░ question c ░')
 
 
 
 main()
 
-"""
-u = the initial velocity (speed)
-v = the final velocity
-Example: Car accelerates from 50mph to 70mph in 10seconds. What is the acceleration?
-Answer a = (v-u)/t
-= (70-50)/10
-= 0.5 mph / second²
-"""
