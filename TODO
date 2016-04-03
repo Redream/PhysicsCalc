@@ -1,0 +1,36 @@
+
+Clean up the code to follow the physics book and reference it
+Serway Vuille College Physics
+
+Store variables in an array, because
+ - need to look up symbols, eg if equation looks for 'a' ask array where 'a' is
+ - need to do SI unit conversion, eg m/s <> km/h
+ - need to apply correct calculations if type is vector/scalar + determine direction
+
+예를드러
+name      = gravity
+value     = 9.81
+symbol    = g, a
+SI unit   = m/s^2
+type      = vector
+direction = -y
+
+name      = initial velocity
+value     = .
+symbol    = vi
+SI unit   = m/s
+type      = vector
+direction = .
+
+name      = speed
+value     = .
+symbol    = r
+SI unit   = m/s, km/h
+type      = scalar
+direction = N/A
+
+eg array would be like this
+['gravity', 9.81, g|a, m/s^2, 'vector', '-y']
+['velocity initial', , vi, m/s, 'vector', ]
+['speed', , r, m/s|km/hr, 'scalar', 0]
+
