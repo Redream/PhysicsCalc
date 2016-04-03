@@ -34,3 +34,28 @@ eg array would be like this
 ['velocity initial', , vi, m/s, 'vector', ]
 ['speed', , r, m/s|km/hr, 'scalar', 0]
 
+
+I propose to restructure the code into types
+Eg kinematics, dynamics, work&energy&power&elasticity etc
+From the menu driven, we can select from either
+webassign, past year exam questions, of types.
+
+Eg
+1. webassign
+    -> chose a week
+        -> chose a question
+
+        eg week 1 question 4
+        a car falls at rate of x to y direction (must have specific numbers, but ask to change)
+        you can select input variables
+
+        after calculations are complete, return to previous menu
+
+2. type
+    -> chose a type
+        -> kinematic
+              rocket up ()
+              a rocket is launched from y0 at etc
+              select input variables
+
+3. past year exams
