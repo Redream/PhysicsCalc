@@ -44,7 +44,9 @@ def main():
         elif menuselect == 2:
             manualmenu = ["Rocket Height Calculator",
                        "Height Fallen Calculator",
-                       "Race car on a circular race track"]
+                       "Race car on a circular race track",
+                       "Bucket falling",
+                        ]
             menucount = 0
             for s in manualmenu:
                 menucount += 1
@@ -65,6 +67,8 @@ def main():
                     height_fallen_calc(d0, t0, a)
                 elif manualselect == 3:
                     race_car_circular_track()
+                elif manualselect == 4:
+                    bucket_falling_into_well()
 
 def webassign_get_questions(week):
     return {
@@ -293,9 +297,9 @@ def race_car_circular_track():
 
     # quantities
     # related to dimensions of the circle
-    r = [444, 'm'] # R: radius length - m
+    r = [444, 'm'] # r: radius length - m
 
-    # related to angular momentum in the the center of the circle
+    # related to angular momentum in the center of the circle
     O = [0, 'rad']     # θ: angular displacement - rad     (θ = ωt)
     w = [0, 'rad s⁻¹'] # ω: angular velocity     - rad s⁻¹ (ω = v/r)
     a = [0, 'rad s⁻²'] # α: angular acceleration - rad s⁻² (α = ω/r)
@@ -334,9 +338,10 @@ def race_car_circular_track():
     a[0] = aT[0] / r[0]
     print('α = {:.2e} {}'.format(a[0], a[1]))
 
-    print('constant angular acceleration (without time): ω² = ω0² + 2αθ')
-    print('rearrange to solve angular displacement: θ = (ω² - ω0²) / 2α')
-    print('θ = ({0:.5f} {1} ² - 0 {1} ²) / (2 * {2:.2e} {3})'.format(w[0], w[1], a[0], a[1]))
+    print('constant angular acceleration (without time): ω² = ω₀² + 2αθ')
+    print('since ω is zero initially: ω² = 2αθ')
+    print('rearrange to solve angular displacement: θ = ω² / 2α')
+    print('θ = ({0:.5f} {1} ²) / (2 * {2:.2e} {3})'.format(w[0], w[1], a[0], a[1]))
     O[0] = (w[0] ** 2) / (2 * a[0])
     print('θ = {:.2f} {}'.format(O[0], O[1]))
 
@@ -346,13 +351,119 @@ def race_car_circular_track():
     print('d = {} {}'.format(d[0], d[1]))
 
     print('░ question c ░')
-    print('angular position: θ2 = θ1 + ωt + ½αt²')
+    print('angular position: θ₂ = θ₁ + ωt + ½αt²')
     print('since ω and θ is zero initially: θ = ½αt²')
     print('rearrange to solve time: t = √(2 * θ / α)')
     print('t = √(2 * {0} {1} / {2:.2e} {3})'.format(O[0], O[1], a[0], a[1]))
     t[0] = math.sqrt(2 * O[0] / a[0])
     print('t = {:.2f} {}'.format(t[0], t[1]))
 
+
+def bucket_falling_into_well():
+    """
+    brief:    Bucket attached via string to a spool falling down
+    from:     WebAssign Homework 5.4
+    category: circular motion
+    types:    conservation of energy
+    """
+
+    # related to the spool
+    M = [3.0, 'kg']    # M: mass of spool
+    R = [0.6, 'm']     # r: radius length
+    w = [0, 'rad s⁻¹'] # ω: angular velocity     - (ω = v/r)
+    I = [0, 'kg m²']   # I: moment of inertia    - (I = MR²) * default model
+
+    # related to the bucket
+    mB = [3.0, 'kg']    # mB: mass of bucket
+    d = [4.8, 'm']      # d: distance travelled
+    g = [9.81, 'm s⁻²'] # g: gravity
+
+    print('-' * 30)
+    print("Use conservation of energy to determine the angular speed of a spool (solid cylinder about a central axis)")
+    print("after the 3.00 kg bucket has fallen 4.80 m, starting from rest")
+    print("The light string attached to the bucket is wrapped around the spool and does not slip as it unwinds.")
+    print("(a) the angular speed rad/s")
+
+    print('░ question a ░')
+
+    print('GPEinit = KErotf + KEtransf')
+    print('GPEinit = mgd')
+    print('KErotf = ½Iω²')
+    print('KEtransf = ½mv²')
+
+    print('no-slip condition:')
+    print('v = ωr')
+
+    # http://spiff.rit.edu/classes/phys216/workshops/w9b/momi_table.png
+    # rotational inertia
+    print('rotational inertia (solid cylinder about a central axis): I = ½MR²')
+    print('I = 0.5 * {} {} * {} {} ²'.format(M[0], M[1], R[0], R[1]))
+    I[0] = 0.5 * M[0] * R[0]
+    print('I = {} {}'.format(I[0], I[1]))
+
+    print('You will end up deriving the angular speed of the spool to be this:')
+    print('ω = √(2*mB*gd / (I + mB*r²))')
+    print('ω = √(2 * {0} {1} * {2} {3} * {4} {5} / ({6} {7} + {0} {1} * {8} {9} ²))'.format(mB[0], mB[1], g[0], g[1], d[0], d[1], I[0], I[1], R[0], R[1]))
+    w[0] = math.sqrt(2 * mB[0] * g[0] * d[0] / (I[0] + mB[0] * R[0] ** 2))
+    print('ω = {:.2f} {}'.format(w[0], w[1]))
+
+    print('where:')
+    print('mB {} {}: is the mass of the bucket'.format(mB[0], mB[1]))
+    print('r {} {}: is the radius of the spool'.format(R[0], R[1]))
+    print('I {} {}: is the rotational inertia of the spool'.format(I[0], I[1]))
+    print('g {} {}: is Earths gravitational field'.format(g[0], g[1]))
+    print('d {} {}: is the distance of descent of the bucket from rest to final state.'.format(d[0], d[1]))
+
+
+
+
+"""
+T₁ - 0 = m₁∙a
+T₁ = 3∙a . . . . . . . equation 1
+
+Equation for m₂ :
+m₂∙g - T₂ = m₂∙a
+4∙9.8 - T₂ = 4∙a
+39.2 - T₂ = 4∙a
+T₂ = 39.2 - 4∙a . . . . . . . . equation 2
+
+Equation for the pulley:
+r∙T₂ - r∙T₁ = a ∙ I/r
+0.3∙T₂ - 0.3∙T₁ = a∙0.5/0.3
+0.18∙T₂ - 0.18∙T₁ = a . . . . . . . equation 3
+
+Substitute equation 1 and 2 in equation 3
+0.18∙(39.2 - 4∙a) - 0.18∙3∙a = a
+7.056 - 0.72∙a - 0.54∙a = a
+
+7.056 = 2.26∙a
+a = 3.12 m/s² < - - - - - - - - - - - - - - - - - - - - - - - - answer
+
+Substitute that value in equations 1 and 2
+
+T₁ = 3∙3.12 = 9.36 N < - - - - - - - - - - - - - - - - - - - answer
+
+T₂ = 39.2 - 4∙0.32 = 26.7 N < - - - - - - - - - - - - - -answer
+"""
+
+
+
+"""
+Tₐ - Tᵦ = Iα
+let mₐ = 4 kg, mᵦ = 3 kg
+Tₐ = ?, Tᵦ = ? a = ?
+moment due to the difference in tension is Tₐ - Tᵦ = Iα ---------------------> (i)
+mₐg - Tₐ = mₐa
+and mᵦa = Tᵦ
+adding equations => mₐg -(Tₐ - Tᵦ) = a[mₐ + mᵦ] = mₐg - Iα [from equation (i)]
+since α = a/r => 7a = 4g - 0.5(a)/0.290
+=> 8.7a = 4(9.81)
+or a = 4.498 m/s²
+Tᵦ = mᵦa = 3(4.498) = 13.494 N
+Tₐ = mₐ[g - a] = 21.25 N
+Check: [equation (i)]
+Tₐ - Tᵦ = Iα = 7.755 = 0.5(4.498/0.290) which is true
+"""
 
 
 """
