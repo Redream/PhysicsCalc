@@ -202,7 +202,6 @@ def rocket_up_calc(vi, vf, a):
 
     print('█' * 30)  # http://www.fileformat.info/info/unicode/block/block_elements/images.htm
 
-
 def height_fallen_calc(d0, t0, a):
     """Find the height something has fallen from, given the time and final distance before it hit the ground"""
 
@@ -294,7 +293,6 @@ def height_fallen_calc(d0, t0, a):
     print('Q: What was the total time spent in falling?')
     print('A: {0:.2f} s'.format(t))
 
-
 def race_car_circular_track():
     """
     brief:    Race car on a circular race track
@@ -366,7 +364,6 @@ def race_car_circular_track():
     t[0] = math.sqrt(2 * O[0] / a[0])
     print('t = {:.2f} {}'.format(t[0], t[1]))
 
-
 def bucket_falling_into_well():
     """
     brief:    Bucket attached via string to a spool falling down
@@ -422,9 +419,6 @@ def bucket_falling_into_well():
     print('g {} {}: is Earths gravitational field'.format(g[0], g[1]))
     print('d {} {}: is the distance of descent of the bucket from rest to final state.'.format(d[0], d[1]))
 
-
-
-
 def spring_potential_energy_velocity():
     """
     brief:    find velocity of an object attached to horizontal spring
@@ -471,7 +465,6 @@ def spring_potential_energy_velocity():
     print('v = √({} {} / (0.5 * {} {}))'.format(KE[0], KE[1], m[0], m[1]))
     v[0] = math.sqrt(KE[0] / (0.5 * m[0]))
     print('v = {:.2f} {}'.format(v[0], v[1]))
-
 
 def vertical_spring_mass():
     """
