@@ -5,6 +5,13 @@ GLOBAL_CONSTANT_GRAVITY = -9.81
 
 
 def main():
+    manualmenu = [
+        "Rocket Height Calculator",
+        "Height Fallen Calculator",
+        "Race car on a circular race track",
+        "Bucket falling",
+    ]
+
     print("MAIN MENU:")
     menu = ["WebAssign Homework", "Manual"]
     
@@ -42,11 +49,6 @@ def main():
                         input("Press enter to exit. ")
 
         elif menuselect == 2:
-            manualmenu = ["Rocket Height Calculator",
-                       "Height Fallen Calculator",
-                       "Race car on a circular race track",
-                       "Bucket falling",
-                        ]
             menucount = 0
             for s in manualmenu:
                 menucount += 1
