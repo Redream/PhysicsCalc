@@ -10,6 +10,8 @@ def main():
         "Height Fallen Calculator",
         "Race car on a circular race track",
         "Bucket falling",
+        "Spring 1",
+        "vertical_spring_mass",
     ]
 
     print("MAIN MENU:")
@@ -71,6 +73,10 @@ def main():
                     race_car_circular_track()
                 elif manualselect == 4:
                     bucket_falling_into_well()
+                elif manualselect == 5:
+                    spring_potential_energy_velocity()
+                elif manualselect == 6:
+                    vertical_spring_mass()
 
 def webassign_get_questions(week):
     return {
@@ -419,6 +425,170 @@ def bucket_falling_into_well():
 
 
 
+def spring_potential_energy_velocity():
+    """
+    brief:    find velocity of an object attached to horizontal spring
+    from:     WebAssign Homework 6.1
+    category: hookes law
+    types:    spring potential energy, conservation of energy, kinematics
+    """
+
+    # related to the spring
+    # https://scripts.mit.edu/~srayyan/PERwiki/images/e/e5/Hookeslawb.png
+    k = [10.0, 'N m⁻¹'] # k: spring constant
+    E = [0, 'J']        # E: spring potential energy (E = ½kx²)
+    E0 = [0, 'J']       # E0: spring potential energy at equilibrium position
+    KE = [0, 'J']       # KE: kinetic energy (KE = ½mv²)
+
+    # related to the mass
+    m = [0.04, 'kg']    # m: mass
+    x = [0.20, 'm']     # A|x: amplitude|displacement
+    v = [0, 'm s⁻¹']    # v: velocity
+
+    print('-' * 30)
+    print("A {} {} object is attached to a horizontal spring with a force constant of {} {}".format(m[0], m[1], k[0], k[1]))
+    print("It is released from rest with an amplitude of {} {}.".format(x[0], x[1]))
+    print("(a) What is the velocity of the object when it is halfway to the equilibrium position if the surface is frictionless? m/s")
+
+    print('░ question a ░')
+    print('spring potential energy: E = ½kx²')
+    print('E = 0.5 * {} {} * {} {} ²'.format(k[0], k[1], x[0], x[1]))
+    E[0] = 0.5 * k[0] * x[0] ** 2
+    print('E = {} {}'.format(E[0], E[1]))
+
+    print('spring potential energy at equilibrium position: x/2')
+    print('E₀ = 0.5 * {} {} * ({} {} / 2)²'.format(k[0], k[1], x[0], x[1]))
+    E0[0] = 0.5 * k[0] * (x[0] / 2) ** 2
+    print('E₀ = {} {}'.format(E0[0], E0[1]))
+
+    print('spring potential energy lost <==> kinetic energy : KE = E - E₀')
+    print('KE = {} {} - {} {}'.format(E[0], E[1], E0[0], E0[1]))
+    KE[0] = E[0] - E0[0]
+    print('KE = {} {}'.format(KE[0], KE[1]))
+
+    print('kinetic energy: KE = ½mv²')
+    print('rearrange to solve velocity: v = √(KE / ½m)')
+    print('v = √({} {} / (0.5 * {} {}))'.format(KE[0], KE[1], m[0], m[1]))
+    v[0] = math.sqrt(KE[0] / (0.5 * m[0]))
+    print('v = {:.2f} {}'.format(v[0], v[1]))
+
+
+def vertical_spring_mass():
+    """
+    brief:    find period of motion (oscillation) of a vertical spring-mass
+    from:     WebAssign Homework 6.2
+    category: oscillations
+    types:    simple harmonic motion
+    """
+
+    # related to the masses
+    m = [0.006, 'kg']   # m: initial mass
+    m2 = [0.028, 'kg']  # m2: mass that comes after
+    g = [9.81, 'm s⁻²'] # g: gravity
+
+    # related to the oscillation
+    k = [0, 'N m⁻¹']    # k: spring constant
+    x = [0.037, 'm']    # x|A: displacement|amplitude
+    T = [0, 's']        # T: Time PERIOD of oscillation in seconds (T = 2π√(m/k))
+
+    print('-' * 30)
+    print("A spring stretches {} {} when a {} {} object is hung from it.".format(x[0], x[1], m[0], m[1]))
+    print("The object is replaced with a block of mass {} {} that oscillates in simple harmonic motion".format(m2[0], m2[1]))
+    print("(a) calculate the period of motion (s)")
+
+    print('░ question a ░')
+    print('spring constant: k = mg/x')
+    print('k = {} {} * {} {} / {} {}'.format(m[0], m[1], g[0], g[1], x[0], x[1]))
+    k[0] = m[0] * g[0] / x[0]
+    print('k = {:.2f} {}'.format(k[0], k[1]))
+
+    print('simple harmonic motion - time period')
+    print('T = 2π√(m2 / k)')
+    print('T = 2π√({} {} / {:.2f} {})'.format(m2[0], m2[1], k[0], k[1]))
+    T[0] = 2 * math.pi * math.sqrt(m2[0] / k[0])
+    print('T = {:.2f} {}'.format(T[0], T[1]))
+
+
+
+
+
+
+
+
+main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def template():
+    """
+    brief:
+    from:     WebAssign Homework
+    category:
+    types:
+    """
+
+    # related to the
+    M = [3.0, 'kg']    # M: mass of spool
+    R = [0.6, 'm']     # r: radius length
+    w = [0, 'rad s⁻¹'] # ω: angular velocity     - (ω = v/r)
+    I = [0, 'kg m²']   # I: moment of inertia    - (I = MR²) * default model
+
+    # related to the
+    mB = [3.0, 'kg']    # mB: mass of bucket
+    d = [4.8, 'm']      # d: distance travelled
+    g = [9.81, 'm s⁻²'] # g: gravity
+
+    # related to dimensions of the circle
+    r = [444, 'm']  # r: radius length - m
+
+    # related to angular momentum in the center of the circle
+    O = [0, 'rad']  # θ: angular displacement - rad     (θ = ωt)
+    w = [0, 'rad s⁻¹']  # ω: angular velocity     - rad s⁻¹ (ω = v/r)
+    a = [0, 'rad s⁻²']  # α: angular acceleration - rad s⁻² (α = ω/r)
+
+    # related to the kinematics of the car travelling on the circumference of the circle
+    d = [0, 'm']  # d: distance travelled       - m     (d = rθ)
+    v = [0, 'm s⁻¹']  # v: velocity                 - m s⁻¹ (v = rω)
+    aT = [0.34, 'm s⁻²']  # aT: tangential acceleration - m s⁻² (aT = v²/r) OR (aT = rα)
+    t = [0, 's']  # t: time                     - s
+
+    # related to the spring
+    k = [10.0, 'N m⁻¹']  # k: spring constant
+    E = [0, 'J']  # E: spring potential energy (E = ½kx²)
+    E0 = [0, 'J']  # E0: spring potential energy at equilibrium position
+    KE = [0, 'J']  # KE: kinetic energy (KE = ½mv²)
+
+    # related to the mass
+    m = [0.04, 'kg']  # m: mass
+    x = [0.20, 'm']  # x: displacement
+    v = [0, 'm s⁻¹']  # v: velocity
+
+    print('-' * 30)
+    print("")
+    print("")
+    print("")
+    print("")
+
+    print('░ question a ░')
+
+
+
+
+
+
+
+
 """
 T₁ - 0 = m₁∙a
 T₁ = 3∙a . . . . . . . equation 1
@@ -448,8 +618,6 @@ T₁ = 3∙3.12 = 9.36 N < - - - - - - - - - - - - - - - - - - - answer
 T₂ = 39.2 - 4∙0.32 = 26.7 N < - - - - - - - - - - - - - -answer
 """
 
-
-
 """
 Tₐ - Tᵦ = Iα
 let mₐ = 4 kg, mᵦ = 3 kg
@@ -467,15 +635,9 @@ Check: [equation (i)]
 Tₐ - Tᵦ = Iα = 7.755 = 0.5(4.498/0.290) which is true
 """
 
-
 """
 theta = theta0 + wt + .5angular acceleration * t^2
 theta = .5at^2, since angular speed is zero initially and angular displacement is zero.
 root(2theta/a) = t
 t = root(2*.5/9.94x10^-4) = 31.7 s
 """
-
-
-
-main()
-
