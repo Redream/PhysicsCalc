@@ -352,15 +352,15 @@ def race_car_circular_track():
     print('θ = {:.2f} {}'.format(O[0], O[1]))
 
     print('linear angular displacement: d = rθ')
-    print('d = {} {} * {} {}'.format(r[0], r[1], O[0], O[1]))
+    print('d = {} {} * {:.2f} {}'.format(r[0], r[1], O[0], O[1]))
     d[0] = r[0] * O[0]
-    print('d = {} {}'.format(d[0], d[1]))
+    print('d = {:.0f} {}'.format(d[0], d[1]))
 
     print('░ question c ░')
     print('angular position: θ₂ = θ₁ + ωt + ½αt²')
     print('since ω and θ is zero initially: θ = ½αt²')
     print('rearrange to solve time: t = √(2 * θ / α)')
-    print('t = √(2 * {0} {1} / {2:.2e} {3})'.format(O[0], O[1], a[0], a[1]))
+    print('t = √(2 * {0:.2f} {1} / {2:.2e} {3})'.format(O[0], O[1], a[0], a[1]))
     t[0] = math.sqrt(2 * O[0] / a[0])
     print('t = {:.2f} {}'.format(t[0], t[1]))
 
@@ -402,20 +402,20 @@ def bucket_falling_into_well():
     # http://spiff.rit.edu/classes/phys216/workshops/w9b/momi_table.png
     # rotational inertia
     print('rotational inertia (solid cylinder about a central axis): I = ½MR²')
-    print('I = 0.5 * {} {} * {} {} ²'.format(M[0], M[1], R[0], R[1]))
+    print('I = 0.5 * {:.2f} {} * {} {} ²'.format(M[0], M[1], R[0], R[1]))
     I[0] = 0.5 * M[0] * R[0]
-    print('I = {} {}'.format(I[0], I[1]))
+    print('I = {:.2f} {}'.format(I[0], I[1]))
 
     print('You will end up deriving the angular speed of the spool to be this:')
     print('ω = √(2*mB*gd / (I + mB*r²))')
-    print('ω = √(2 * {0} {1} * {2} {3} * {4} {5} / ({6} {7} + {0} {1} * {8} {9} ²))'.format(mB[0], mB[1], g[0], g[1], d[0], d[1], I[0], I[1], R[0], R[1]))
+    print('ω = √(2 * {0} {1} * {2} {3} * {4} {5} / ({6:.2f} {7} + {0} {1} * {8} {9} ²))'.format(mB[0], mB[1], g[0], g[1], d[0], d[1], I[0], I[1], R[0], R[1]))
     w[0] = math.sqrt(2 * mB[0] * g[0] * d[0] / (I[0] + mB[0] * R[0] ** 2))
     print('ω = {:.2f} {}'.format(w[0], w[1]))
 
     print('where:')
     print('mB {} {}: is the mass of the bucket'.format(mB[0], mB[1]))
     print('r {} {}: is the radius of the spool'.format(R[0], R[1]))
-    print('I {} {}: is the rotational inertia of the spool'.format(I[0], I[1]))
+    print('I {:.2f} {}: is the rotational inertia of the spool'.format(I[0], I[1]))
     print('g {} {}: is Earths gravitational field'.format(g[0], g[1]))
     print('d {} {}: is the distance of descent of the bucket from rest to final state.'.format(d[0], d[1]))
 
