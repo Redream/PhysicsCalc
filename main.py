@@ -448,21 +448,21 @@ def spring_potential_energy_velocity():
     print('spring potential energy: E = ½kx²')
     print('E = 0.5 * {} {} * {} {} ²'.format(k[0], k[1], x[0], x[1]))
     E[0] = 0.5 * k[0] * x[0] ** 2
-    print('E = {} {}'.format(E[0], E[1]))
+    print('E = {:.2f} {}'.format(E[0], E[1]))
 
-    print('spring potential energy at equilibrium position: x/2')
-    print('E₀ = 0.5 * {} {} * ({} {} / 2)²'.format(k[0], k[1], x[0], x[1]))
+    print('spring potential energy at ½ equilibrium position: E = ½k(x/2)²')
+    print('E₀ = 0.5 * {:.2f} {} * ({} {} / 2)²'.format(k[0], k[1], x[0], x[1]))
     E0[0] = 0.5 * k[0] * (x[0] / 2) ** 2
-    print('E₀ = {} {}'.format(E0[0], E0[1]))
+    print('E₀ = {:.2f} {}'.format(E0[0], E0[1]))
 
     print('spring potential energy lost <==> kinetic energy : KE = E - E₀')
-    print('KE = {} {} - {} {}'.format(E[0], E[1], E0[0], E0[1]))
+    print('KE = {:.2f} {} - {:.2f} {}'.format(E[0], E[1], E0[0], E0[1]))
     KE[0] = E[0] - E0[0]
-    print('KE = {} {}'.format(KE[0], KE[1]))
+    print('KE = {:.2f} {}'.format(KE[0], KE[1]))
 
     print('kinetic energy: KE = ½mv²')
     print('rearrange to solve velocity: v = √(KE / ½m)')
-    print('v = √({} {} / (0.5 * {} {}))'.format(KE[0], KE[1], m[0], m[1]))
+    print('v = √({:.2f} {} / (0.5 * {} {}))'.format(KE[0], KE[1], m[0], m[1]))
     v[0] = math.sqrt(KE[0] / (0.5 * m[0]))
     print('v = {:.2f} {}'.format(v[0], v[1]))
 
@@ -495,8 +495,7 @@ def vertical_spring_mass():
     k[0] = m[0] * g[0] / x[0]
     print('k = {:.2f} {}'.format(k[0], k[1]))
 
-    print('simple harmonic motion - time period')
-    print('T = 2π√(m2 / k)')
+    print('simple harmonic motion - time period: T = 2π√(m2 / k)')
     print('T = 2π√({} {} / {:.2f} {})'.format(m2[0], m2[1], k[0], k[1]))
     T[0] = 2 * math.pi * math.sqrt(m2[0] / k[0])
     print('T = {:.2f} {}'.format(T[0], T[1]))
