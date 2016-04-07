@@ -12,27 +12,35 @@ def main():
         "Bucket falling",
         "Spring 1",
         "vertical_spring_mass",
+        "wave_period_speed",
     ]
 
     print("MAIN MENU:")
     menu = ["WebAssign Homework", "Manual"]
-    
+
     menucount = 0
     for s in menu:
         menucount += 1
-        print(str(menucount)+") "+s)
-    
-    menuselect = input("Please select an option 1-"+str(len(menu))+": ")
+        print(str(menucount) + ") " + s)
+
+    menuselect = input("Please select an option 1-" + str(len(menu)) + ": ")
     menuselect = check_valid_int(menuselect, 1, len(menu))
     if menuselect != -1:
 
         if menuselect == 1:
-            webmenu = ["WebAssign Week 1","WebAssign Week 2","WebAssign Week 3"]
+            webmenu = [
+                "WebAssign Week 1",
+                "WebAssign Week 2",
+                "WebAssign Week 3",
+                "WebAssign Week 4",
+                "WebAssign Week 5",
+                "WebAssign Week 6",
+            ]
             menucount = 0
             for s in webmenu:
                 menucount += 1
-                print(str(menucount)+") "+s)            
-            weekselect = input("Please select an option 1-"+str(len(webmenu))+": ")
+                print(str(menucount) + ") " + s)
+            weekselect = input("Please select an option 1-" + str(len(webmenu)) + ": ")
             weekselect = check_valid_int(weekselect, 1, len(webmenu))
             if weekselect != -1:
                 qmenu = webassign_get_questions(weekselect)
@@ -43,8 +51,8 @@ def main():
                     menucount = 0
                     for s in qmenu:
                         menucount += 1
-                        print(str(menucount)+") "+s)                
-                    qselect = input("Please select an option 1-"+str(len(qmenu))+": ")
+                        print(str(menucount) + ") " + s)
+                    qselect = input("Please select an option 1-" + str(len(qmenu)) + ": ")
                     qselect = check_valid_int(qselect, 1, len(qmenu))
                     if qselect != -1:
                         webassign_do_question(weekselect, qselect)
@@ -54,20 +62,20 @@ def main():
             menucount = 0
             for s in manualmenu:
                 menucount += 1
-                print(str(menucount)+") "+s)
+                print(str(menucount) + ") " + s)
 
-            manualselect = input("Please select an option 1-"+str(len(manualmenu))+": ")
+            manualselect = input("Please select an option 1-" + str(len(manualmenu)) + ": ")
             manualselect = check_valid_int(manualselect, 1, len(manualmenu))
             if manualselect != -1:
                 if manualselect == 1:
-                    vi = 119   # initial velocity in m/s 
-                    vf = 0      # final velocity in m/s
-                    a = GLOBAL_CONSTANT_GRAVITY # displayed acceleration (a) or gravity (g)
+                    vi = 119  # initial velocity in m/s 
+                    vf = 0  # final velocity in m/s
+                    a = GLOBAL_CONSTANT_GRAVITY  # displayed acceleration (a) or gravity (g)
                     rocket_up_calc(vi, vf, a)
                 elif manualselect == 2:
-                    d0 = 25.0 # initial altitude/displacement (distance in m) 
-                    t0 = 1.80 # time in seconds, use t or hr/m/s for unit
-                    a = GLOBAL_CONSTANT_GRAVITY # displayed acceleration (a) or gravity (g)
+                    d0 = 25.0  # initial altitude/displacement (distance in m) 
+                    t0 = 1.80  # time in seconds, use t or hr/m/s for unit
+                    a = GLOBAL_CONSTANT_GRAVITY  # displayed acceleration (a) or gravity (g)
                     height_fallen_calc(d0, t0, a)
                 elif manualselect == 3:
                     race_car_circular_track()
@@ -77,35 +85,46 @@ def main():
                     spring_potential_energy_velocity()
                 elif manualselect == 6:
                     vertical_spring_mass()
+                elif manualselect == 7:
+                    f = raw_input("Please enter the frequency (Hz): ")
+                    if not f: wave_period_speed()
+                    else: wave_period_speed(fc=float(f))
+
 
 def webassign_get_questions(week):
     return {
-    1:["Question 3",
-    "Question 4"],
-    2:["Question 1A / D",
-    "Question 1B / C",
-    "Question 2A",
-    "Question 2B",
-    "Question 3A",
-    "Question 3B",
-    "Question 4A",
-    "Question 4B",
-    "Question 4C",
-    "Question 4D",
-    "Question 4E",
-    "Question 5A",
-    "Question 5B",
-    "Question 5C"],
-    3:["Question 1A",
-    "Question 1B",
-    "Question 2A",
-    "Question 2B",
-    "Question 2C",
-    "Question 3A",
-    "Question 3B",
-    "Question 4A",
-    "Question 4B",
-    "Question 5A/B"]}.get(week, "Week not supported.")
+        1: ["Question 3",
+            "Question 4"],
+        2: ["Question 1A / D",
+            "Question 1B / C",
+            "Question 2A",
+            "Question 2B",
+            "Question 3A",
+            "Question 3B",
+            "Question 4A",
+            "Question 4B",
+            "Question 4C",
+            "Question 4D",
+            "Question 4E",
+            "Question 5A",
+            "Question 5B",
+            "Question 5C"],
+        3: ["Question 1A",
+            "Question 1B",
+            "Question 2A",
+            "Question 2B",
+            "Question 2C",
+            "Question 3A",
+            "Question 3B",
+            "Question 4A",
+            "Question 4B",
+            "Question 5A/B"],
+        6: ["Question 1",
+            "Question 2",
+            "Question 3",
+            "Question 4",
+            ]}.get(week, "Week not supported.")
+
 
 def webassign_do_question(week, question):
     if week == 1:
@@ -121,8 +140,8 @@ def webassign_do_question(week, question):
             distance = float(input("Please enter the distance (m): "))
             force = float(input("Please enter the applied force (N): "))
             angle = float(input("Please enter the angle (degrees): "))
-            answer = force*distance*math.cos(to_radians(angle))
-            print("Answer to a) and d): "+str(round(answer,2))+" J")
+            answer = force * distance * math.cos(to_radians(angle))
+            print("Answer to a) and d): " + str(round(answer, 2)) + " J")
         else:
             print("Question not supported.")
     elif week == 3:
@@ -131,51 +150,64 @@ def webassign_do_question(week, question):
             m2 = float(input("Please input mass m2 (kg): "))
             radius = float(input("Please input radius (m): "))
             hm1 = float(input("Please input height of m1 from floor (m): "))
-            moment = 0.5*5*radius**2 + m1*radius**2 + m2*radius**2
-            tnet = (m1-m2)*9.81*radius
-            alpha = tnet/moment
-            lina = radius*alpha
-            temp = hm1/0.5/lina
+            moment = 0.5 * 5 * radius ** 2 + m1 * radius ** 2 + m2 * radius ** 2
+            tnet = (m1 - m2) * 9.81 * radius
+            alpha = tnet / moment
+            lina = radius * alpha
+            temp = hm1 / 0.5 / lina
             time = math.sqrt(temp)
-            print("Answer to 5a) "+str(round(time,4))+" s")
-            
-            moment = m1*radius**2 + m2*radius**2
-            alpha = tnet/moment
-            lina = radius*alpha
-            temp = hm1/0.5/lina
+            print("Answer to 5a) " + str(round(time, 4)) + " s")
+
+            moment = m1 * radius ** 2 + m2 * radius ** 2
+            alpha = tnet / moment
+            lina = radius * alpha
+            temp = hm1 / 0.5 / lina
             time = math.sqrt(temp)
-            print("Answer to 5b) "+str(round(time,4))+" s")
+            print("Answer to 5b) " + str(round(time, 4)) + " s")
         else:
             print("Question not supported.")
+    elif week == 6:
+        if question == 1:
+            print("hi")
+        if question == 2:
+            print("hi")
+        if question == 3:
+            f = raw_input("Please enter the frequency (Hz): ")
+            if not f: wave_period_speed()
+            else: wave_period_speed(fc=float(f))
+        if question == 4:
+            print("hi")
+
     else:
-        #this shouldn't happen because we already checked for invalid weeks
+        # this shouldn't happen because we already checked for invalid weeks
         print("Week not supported.")
-            
+
+
 def to_radians(degrees):
-    return degrees * (math.pi/180)
+    return degrees * (math.pi / 180)
+
 
 def to_degrees(radians):
-    return radians * (180/math.pi)
+    return radians * (180 / math.pi)
+
 
 def check_valid_int(number, min_num, max_num):
     try:
-        number = int(number)  
-    except ValueError:    
+        number = int(number)
+    except ValueError:
         show_invalid_option()
         return -1
     else:
-        if number > max_num or number <= min_num-1:
+        if number > max_num or number <= min_num - 1:
             show_invalid_option()
             return -1
         else:
             return number
-    
+
+
 def show_invalid_option():
     print("Invalid option.")
     input("Press enter to exit. ")
-
-
-
 
 def rocket_up_calc(vi, vf, a):
     """Calculate distance and time it takes a rocket to get up before it stops midair
@@ -205,8 +237,8 @@ def rocket_up_calc(vi, vf, a):
 def height_fallen_calc(d0, t0, a):
     """Find the height something has fallen from, given the time and final distance before it hit the ground"""
 
-    df = 0 # height final distance in m (eg when it hits the ground) - (s) is the standard unit for displacement
-    vi = 0 # this is the initial velocity at which object started at, since it is free fall = 0 m/s
+    df = 0  # height final distance in m (eg when it hits the ground) - (s) is the standard unit for displacement
+    vi = 0  # this is the initial velocity at which object started at, since it is free fall = 0 m/s
 
     print('Calculate the initial DISTANCE (di) given a time (t0) and final altitude (d0)')
     print('an object as last recorded at for when an object hits the ground from free-fall')
@@ -215,17 +247,16 @@ def height_fallen_calc(d0, t0, a):
     print('displacement/altitude/height last    d0 = {0} m'.format(d0))
     print('displacement/altitude/height final   df = {0} m'.format(df))
 
-    #print('time initial                         ti = {0} s'.format('unknown'))
+    # print('time initial                         ti = {0} s'.format('unknown'))
     print('time last                            t0 = {0} s'.format(t0))
-    #print('time final                           tf = {0} s'.format('unknown')
+    # print('time final                           tf = {0} s'.format('unknown')
 
-    print('velocity initial (because dropped)   vi = {0} m/s'.format(vi))        # u = the initial velocity (speed)
+    print('velocity initial (because dropped)   vi = {0} m/s'.format(vi))  # u = the initial velocity (speed)
     print('velocity last                        v0 = {0} m/s'.format('unknown'))
-    print('velocity final                       vf = {0} m/s'.format('unknown')) # v = the final velocity
+    print('velocity final                       vf = {0} m/s'.format('unknown'))  # v = the final velocity
 
     print('acceleration (gravity)               a  = {0} m/s⁻²'.format(a))
     print('█' * 30)
-
 
     print('The standard physics formula to find distance of (h) given the time change is:')
     print('░ h = v0t + (½)gt² ░')
@@ -238,8 +269,8 @@ def height_fallen_calc(d0, t0, a):
 
     print('  v0 = ({0} - (½)*{1}*{2}²) / {2}'.format(d0, a, t0))
     print('  v0 = ({0} - {1}) / {2} #{3}'.format(d0, 0.5 * a * t0 ** 2, t0, " NB: subtract not add here!!!"))
-    print('  v0 = ({0}) / {1}'.format(d0 + 0.5 * a * t0 ** 2, t0))  # note: should be d0 - (½)a(t0)², but have changed to + sign
-    print('░ v0 = {0} m/s ░'.format((d0 + 0.5 * a * t0 ** 2) / t0)) # because multiplying by negative gravity changes sign
+    print('  v0 = ({0}) / {1}'.format(d0 + 0.5 * a * t0 ** 2,t0))  # note: should be d0 - (½)a(t0)², but have changed to + sign
+    print('░ v0 = {0} m/s ░'.format((d0 + 0.5 * a * t0 ** 2) / t0))  # because multiplying by negative gravity changes sign
     v0 = (d0 + 0.5 * a * t0 ** 2) / t0
 
     print('The kinematic equation to find VELOCITY (vf) given distance is:')
@@ -247,7 +278,7 @@ def height_fallen_calc(d0, t0, a):
     print('Calculate final VELOCITY (vf) when the object hits the ground')
     print('  vf² = v0² + 2a(df-d0)')
     print('  vf² = {0}² + 2*{1}*({2}-{3}) '.format(v0, a, df, d0))
-    print('  vf² = {0} + {1}*({2}) '.format(v0 ** 2, 2 * a , df - d0))
+    print('  vf² = {0} + {1}*({2}) '.format(v0 ** 2, 2 * a, df - d0))
     print('  vf² = {0} + {1} '.format(v0 ** 2, (2 * a) * (df - d0)))
     print('  vf² = {0} '.format(v0 ** 2 + (2 * a) * (df - d0)))
     print('  vf  = √{0} '.format(v0 ** 2 + (2 * a) * (df - d0)))
@@ -303,19 +334,19 @@ def race_car_circular_track():
 
     # quantities
     # related to dimensions of the circle
-    r = [444, 'm'] # r: radius length - m
+    r = [444, 'm']  # r: radius length - m
 
     # related to angular momentum in the center of the circle
-    O = [0, 'rad']     # θ: angular displacement - rad     (θ = ωt)
-    w = [0, 'rad s⁻¹'] # ω: angular velocity     - rad s⁻¹ (ω = v/r)
-    a = [0, 'rad s⁻²'] # α: angular acceleration - rad s⁻² (α = ω/r)
+    O = [0, 'rad']  # θ: angular displacement - rad     (θ = ωt)
+    w = [0, 'rad s⁻¹']  # ω: angular velocity     - rad s⁻¹ (ω = v/r)
+    a = [0, 'rad s⁻²']  # α: angular acceleration - rad s⁻² (α = ω/r)
 
     # related to the kinematics of the car travelling on the circumference of the circle
     # http://www.slideshare.net/caitlinforan/rotational-motion-7142158
-    d = [0, 'm']         # d: distance travelled       - m     (d = rθ)
-    v = [0, 'm s⁻¹']     # v: velocity                 - m s⁻¹ (v = rω)
-    aT = [0.34, 'm s⁻²'] # aT: tangential acceleration - m s⁻² (aT = v²/r) OR (aT = rα)
-    t = [0, 's']         # t: time                     - s
+    d = [0, 'm']  # d: distance travelled       - m     (d = rθ)
+    v = [0, 'm s⁻¹']  # v: velocity                 - m s⁻¹ (v = rω)
+    aT = [0.34, 'm s⁻²']  # aT: tangential acceleration - m s⁻² (aT = v²/r) OR (aT = rα)
+    t = [0, 's']  # t: time                     - s
 
     print('-' * 30)
     print("A race car starts from rest on a circular track of radius {} {}.".format(r[0], r[1]))
@@ -373,15 +404,15 @@ def bucket_falling_into_well():
     """
 
     # related to the spool
-    M = [3.0, 'kg']    # M: mass of spool
-    R = [0.6, 'm']     # r: radius length
-    w = [0, 'rad s⁻¹'] # ω: angular velocity     - (ω = v/r)
-    I = [0, 'kg m²']   # I: moment of inertia    - (I = MR²) * default model
+    M = [3.0, 'kg']  # M: mass of spool
+    R = [0.6, 'm']  # r: radius length
+    w = [0, 'rad s⁻¹']  # ω: angular velocity     - (ω = v/r)
+    I = [0, 'kg m²']  # I: moment of inertia    - (I = MR²) * default model
 
     # related to the bucket
-    mB = [3.0, 'kg']    # mB: mass of bucket
-    d = [4.8, 'm']      # d: distance travelled
-    g = [9.81, 'm s⁻²'] # g: gravity
+    mB = [3.0, 'kg']  # mB: mass of bucket
+    d = [4.8, 'm']  # d: distance travelled
+    g = [9.81, 'm s⁻²']  # g: gravity
 
     print('-' * 30)
     print("Use conservation of energy to determine the angular speed of a spool (solid cylinder about a central axis)")
@@ -429,15 +460,15 @@ def spring_potential_energy_velocity():
 
     # related to the spring
     # https://scripts.mit.edu/~srayyan/PERwiki/images/e/e5/Hookeslawb.png
-    k = [10.0, 'N m⁻¹'] # k: spring constant
-    E = [0, 'J']        # E: spring potential energy (E = ½kx²)
-    E0 = [0, 'J']       # E0: spring potential energy at equilibrium position
-    KE = [0, 'J']       # KE: kinetic energy (KE = ½mv²)
+    k = [10.0, 'N m⁻¹']  # k: spring constant
+    E = [0, 'J']  # E: spring potential energy (E = ½kx²)
+    E0 = [0, 'J']  # E0: spring potential energy at equilibrium position
+    KE = [0, 'J']  # KE: kinetic energy (KE = ½mv²)
 
     # related to the mass
-    m = [0.04, 'kg']    # m: mass
-    x = [0.20, 'm']     # A|x: amplitude|displacement
-    v = [0, 'm s⁻¹']    # v: velocity
+    m = [0.04, 'kg']  # m: mass
+    x = [0.20, 'm']  # A|x: amplitude|displacement
+    v = [0, 'm s⁻¹']  # v: velocity
 
     print('-' * 30)
     print("A {} {} object is attached to a horizontal spring with a force constant of {} {}".format(m[0], m[1], k[0], k[1]))
@@ -475,14 +506,14 @@ def vertical_spring_mass():
     """
 
     # related to the masses
-    m = [0.006, 'kg']   # m: initial mass
+    m = [0.006, 'kg']  # m: initial mass
     m2 = [0.028, 'kg']  # m2: mass that comes after
-    g = [9.81, 'm s⁻²'] # g: gravity
+    g = [9.81, 'm s⁻²']  # g: gravity
 
     # related to the oscillation
-    k = [0, 'N m⁻¹']    # k: spring constant
-    x = [0.037, 'm']    # x|A: displacement|amplitude
-    T = [0, 's']        # T: Time PERIOD of oscillation in seconds (T = 2π√(m/k))
+    k = [0, 'N m⁻¹']  # k: spring constant
+    x = [0.037, 'm']  # x|A: displacement|amplitude
+    T = [0, 's']  # T: Time PERIOD of oscillation in seconds (T = 2π√(m/k))
 
     print('-' * 30)
     print("A spring stretches {} {} when a {} {} object is hung from it.".format(x[0], x[1], m[0], m[1]))
@@ -500,26 +531,42 @@ def vertical_spring_mass():
     T[0] = 2 * math.pi * math.sqrt(m2[0] / k[0])
     print('T = {:.2f} {}'.format(T[0], T[1]))
 
+def wave_period_speed(Ac=0.09, hlc=0.20, fc=17.0):
+    """
+    brief:    find period and speed of a wave
+    from:     WebAssign Homework 6.3
+    category: wave motion
+    types:    wave oscillation
+    """
 
+    # related to the wave
+    v = ['wave speed', 0, 'v', 'm s⁻¹', '.2f', 'scalar']  # v: speed of a wave (v = fλ OR v = λ/T)
+    f = ['frequency', fc, 'f', 'Hz', '.1f', 'scalar']     # f: frequency (also m s⁻¹)
+    hl = ['wavelength', hlc, 'λ', 'm', '.2f','vector']    # λ: wavelength
 
+    A = ['amplitude', Ac, 'A', 'm', '.2f', 'scalar']      # A: amplitude
+    T = ['period', 0, 'T', 's', '.3f', 'scalar']          # T: Time PERIOD of oscillation in seconds, must be at least 3 dp for webassign (T = 2π√(m/k))
 
+    print('-' * 30)
+    print("A wave travelling in the positive x-direction has a {} ({}) of {:{}} {}".format(f[0], f[2], f[1], f[4], f[3]))
+    print("An {} ({}) of {:{}} {} and {} ({}) of {:{}} {}".format(A[0], A[2], A[1], A[4], A[3], hl[0], hl[2], hl[1], hl[4], hl[3]))
+    print("Find the following")
+    print("(c) the period s")
+    print("(d) the speed of the wave m/s")
 
+    print('░ question c ░')
+    print('wave period: T = 1/f')
+    print('T = 1 / {:{}} {}'.format(f[1], f[4], f[3]))
+    T[1] = 1 / f[1]
+    print('T = {:{}} {}'.format(T[1], T[4], T[3]))
 
-
+    print('░ question d ░')
+    print('speed of a wave: v = fλ')
+    print('v = {:{}} {} * {:{}} {}'.format(f[1], f[4], f[3], hl[1], hl[4], hl[3]))
+    v[1] = f[1] * hl[1]
+    print('v = {:{}} {}'.format(v[1], v[4], v[3]))
 
 main()
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 def template():
@@ -531,15 +578,15 @@ def template():
     """
 
     # related to the
-    M = [3.0, 'kg']    # M: mass of spool
-    R = [0.6, 'm']     # r: radius length
-    w = [0, 'rad s⁻¹'] # ω: angular velocity     - (ω = v/r)
-    I = [0, 'kg m²']   # I: moment of inertia    - (I = MR²) * default model
+    M = [3.0, 'kg']  # M: mass of spool
+    R = [0.6, 'm']  # r: radius length
+    w = [0, 'rad s⁻¹']  # ω: angular velocity     - (ω = v/r)
+    I = [0, 'kg m²']  # I: moment of inertia    - (I = MR²) * default model
 
     # related to the
-    mB = [3.0, 'kg']    # mB: mass of bucket
-    d = [4.8, 'm']      # d: distance travelled
-    g = [9.81, 'm s⁻²'] # g: gravity
+    mB = [3.0, 'kg']  # mB: mass of bucket
+    d = [4.8, 'm']  # d: distance travelled
+    g = [9.81, 'm s⁻²']  # g: gravity
 
     # related to dimensions of the circle
     r = [444, 'm']  # r: radius length - m
@@ -573,12 +620,6 @@ def template():
     print("")
 
     print('░ question a ░')
-
-
-
-
-
-
 
 
 """
