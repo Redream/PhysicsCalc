@@ -1,11 +1,10 @@
 # coding: utf-8
 import math
 
-GLOBAL_CONSTANT_GRAVITY = -9.81
-
 
 def main():
     manualmenu = [
+        "Train Stopping Time",
         "Rocket Height Calculator",
         "Height Fallen Calculator",
         "Race car on a circular race track",
@@ -13,6 +12,15 @@ def main():
         "Spring 1",
         "vertical_spring_mass",
         "wave_period_speed",
+    ]
+
+    webmenu = [
+        "WebAssign Week 1",
+        "WebAssign Week 2",
+        "WebAssign Week 3",
+        "WebAssign Week 4",
+        "WebAssign Week 5",
+        "WebAssign Week 6",
     ]
 
     print("MAIN MENU:")
@@ -28,14 +36,7 @@ def main():
     if menuselect != -1:
 
         if menuselect == 1:
-            webmenu = [
-                "WebAssign Week 1",
-                "WebAssign Week 2",
-                "WebAssign Week 3",
-                "WebAssign Week 4",
-                "WebAssign Week 5",
-                "WebAssign Week 6",
-            ]
+            ## webmenu
             menucount = 0
             for s in webmenu:
                 menucount += 1
@@ -68,32 +69,33 @@ def main():
             manualselect = check_valid_int(manualselect, 1, len(manualmenu))
             if manualselect != -1:
                 if manualselect == 1:
-                    vi = 119  # initial velocity in m/s 
-                    vf = 0  # final velocity in m/s
-                    a = GLOBAL_CONSTANT_GRAVITY  # displayed acceleration (a) or gravity (g)
-                    rocket_up_calc(vi, vf, a)
+                    train_stopping_time()
                 elif manualselect == 2:
-                    d0 = 25.0  # initial altitude/displacement (distance in m) 
-                    t0 = 1.80  # time in seconds, use t or hr/m/s for unit
-                    a = GLOBAL_CONSTANT_GRAVITY  # displayed acceleration (a) or gravity (g)
-                    height_fallen_calc(d0, t0, a)
+                    v0 = input("Initial velocity (m/s): ")
+                    if not v0: arrow_shot_up()
+                    else: arrow_shot_up(v0c=float(v0))
                 elif manualselect == 3:
-                    race_car_circular_track()
+                    t = input("Time (s): ")
+                    x = input("Distance (m): ")
+                    if not (x and t): original_height_fallen_from()
+                    else: original_height_fallen_from(xc=float(x), tc=float(t))
                 elif manualselect == 4:
-                    bucket_falling_into_well()
+                    race_car_circular_track()
                 elif manualselect == 5:
-                    spring_potential_energy_velocity()
+                    bucket_falling_into_well()
                 elif manualselect == 6:
-                    vertical_spring_mass()
+                    spring_potential_energy_velocity()
                 elif manualselect == 7:
-                    f = raw_input("Please enter the frequency (Hz): ")
+                    vertical_spring_mass()
+                elif manualselect == 8:
+                    f = input("Please enter the frequency (Hz): ")
                     if not f: wave_period_speed()
                     else: wave_period_speed(fc=float(f))
 
-
 def webassign_get_questions(week):
     return {
-        1: ["Question 3",
+        1: ["Question 2",
+            "Question 3",
             "Question 4"],
         2: ["Question 1A / D",
             "Question 1B / C",
@@ -125,16 +127,23 @@ def webassign_get_questions(week):
             "Question 4",
             ]}.get(week, "Week not supported.")
 
-
 def webassign_do_question(week, question):
     if week == 1:
         if question == 1:
-            vi = float(input("Please enter the initial velocity (m/s): "))
-            rocket_up_calc(vi, 0, GLOBAL_CONSTANT_GRAVITY)
+            x = input("Length (m): ")
+            v0 = input("Initial speed (km/h): ")
+            vf = input("Final speed (km/h): ")
+            if not (v0 and vf and x): train_stopping_time()
+            else: train_stopping_time(v0c=float(v0), vfc=float(vf), xc=float(x))
         if question == 2:
-            d0 = float(input("Please enter the last distance (m): "))
-            t0 = float(input("Please enter the last time (s): "))
-            height_fallen_calc(d0, t0, GLOBAL_CONSTANT_GRAVITY)
+            v0 = input("Initial velocity (m/s): ")
+            if not v0: arrow_shot_up()
+            else: arrow_shot_up(v0c=float(v0))
+        if question == 3:
+            t = input("Time (s): ")
+            x = input("Distance (m): ")
+            if not (x and t): original_height_fallen_from()
+            else: original_height_fallen_from(xc=float(x), tc=float(t))
     elif week == 2:
         if question == 1:
             distance = float(input("Please enter the distance (m): "))
@@ -172,7 +181,7 @@ def webassign_do_question(week, question):
         if question == 2:
             print("hi")
         if question == 3:
-            f = raw_input("Please enter the frequency (Hz): ")
+            f = input("Please enter the frequency (Hz): ")
             if not f: wave_period_speed()
             else: wave_period_speed(fc=float(f))
         if question == 4:
@@ -182,14 +191,11 @@ def webassign_do_question(week, question):
         # this shouldn't happen because we already checked for invalid weeks
         print("Week not supported.")
 
-
 def to_radians(degrees):
     return degrees * (math.pi / 180)
 
-
 def to_degrees(radians):
     return radians * (180 / math.pi)
-
 
 def check_valid_int(number, min_num, max_num):
     try:
@@ -204,125 +210,198 @@ def check_valid_int(number, min_num, max_num):
         else:
             return number
 
-
 def show_invalid_option():
     print("Invalid option.")
     input("Press enter to exit. ")
 
-def rocket_up_calc(vi, vf, a):
-    """Calculate distance and time it takes a rocket to get up before it stops midair
-        take initial velocity, final velocity and acceleration as arguments"""
+def print_maths_multiply(a, b, c):
+    """
+    Prints a, which is b multiplied by c
+    Returns a
+    """
+    if isinstance(b, (int, float, complex)):
+        print('{} = {} * {:{}} {}'.format(a[2], b, c[1], c[4], c[3]))
+        a[1] = b * c[1]
+    elif isinstance(c, (int, float, complex)):
+        print('{} = {:{}} {} * {}'.format(a[2], b[1], b[4], b[3], c))
+        a[1] = b[1] * c
+    else:
+        print('{} = {:{}} {} * {:{}} {}'.format(a[2], b[1], b[4], b[3], c[1], c[4], c[3]))
+        a[1] = b[1] * c[1]
+    print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
+    return a
 
-    print('velocity initial       vi = {0} m/s'.format(vi))
-    print('velocity final         vf = {0} m/s'.format(vf))
-    print('acceleration (gravity) a  = {0} m/s⁻²'.format(a))
-    print('█' * 30)
+def print_maths_divide(a, b, c):
+    """
+    Prints a, which is b divided by c
+    Returns a
+    """
+    if isinstance(b, (int, float, complex)):
+        print('{} = {} / {:{}} {}'.format(a[2], b, c[1], c[4], c[3]))
+        a[1] = b / c[1]
+    elif isinstance(c, (int, float, complex)):
+        print('{} = {:{}} {} / {}'.format(a[2], b[1], b[4], b[3], c))
+        a[1] = b[1] / c
+    else:
+        print('{} = {:{}} {} / {:{}} {}'.format(a[2], b[1], b[4], b[3], c[1], c[4], c[3]))
+        a[1] = b[1] / c[1]
+    print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
+    return a
 
-    print('The formula to get the DISTANCE (d) travelled before it will stop midair')
-    print('░ d = (vf² - vi²) / 2a ░')
-    print('change in velocity:                        ({0}² - {1}²) m/s = {2} m/s'.format(vf, vi, vf ** 2 - vi ** 2))
-    print('acceleration is constant so multiply by 2: (2 x {0}) ms⁻² = {1} m/s⁻²'.format(a, 2 * a))
-    print('DISTANCE travelled (d) =                   {0} m'.format((vf ** 2 - vi ** 2) / (2 * a)))
+def print_convert_kmh_ms(a):
+    """
+    Divides a by 3.6
+    Returns a
+    """
+    a[1] = a[1] / 3.6
+    print('{0} = {1:{2}} {4} / 3.6 = {1:{2}} {3}'.format(a[2], a[1], a[4], a[3], 'km/h'))
 
-    print('█' * 30)
+def print_mechanics_motion1(solve, v, v0, a, t):
+    """ velocity (without x): v = v₀ + at """
+    print('velocity (without x): v = v₀ + at')
 
-    print('The formula to get the TIME (t) travelled before it will stop midair')
-    print('░ t = (vf - vi) / a ░')
-    print('change in velocity:     ({0} - {1}) m/s = {2} m/s'.format(vf, vi, vf - vi))
-    print('acceleration (gravity): ({0}) ms⁻² = {0} m/s⁻²'.format(a))
-    print('TIME travelled (t) =    {0} s'.format((vf - vi) / a))
+    if solve[2] == t[2]:
+        print('rearrange to solve time: t = Δv / a')
+        print('{} = ({:{}} {} - {:{}} {}) / {:{}} {}'.format(t[2], v[1], v[4], v[3], v0[1], v0[4], v0[3], a[1], a[4], a[3]))
+        t[1] = (v[1] - v0[1]) / a[1]
+        print('{} = {:{}} {}'.format(t[2], t[1], t[4], t[3]))
+        return t
 
-    print('█' * 30)  # http://www.fileformat.info/info/unicode/block/block_elements/images.htm
+def print_mechanics_motion2(solve, x, v0, v, a, t):
+    """ change in x (without acceleration): Δx = ½(v₀ + v)t """
 
-def height_fallen_calc(d0, t0, a):
-    """Find the height something has fallen from, given the time and final distance before it hit the ground"""
+def print_mechanics_motion3(solve, x, v0, t, a):
+    """ change in x (without final velocity): Δx = v₀t + ½at """
+    print('change in x (without final velocity): Δx = v₀t + ½at')
 
-    df = 0  # height final distance in m (eg when it hits the ground) - (s) is the standard unit for displacement
-    vi = 0  # this is the initial velocity at which object started at, since it is free fall = 0 m/s
+    if solve[2] == v0[2]:
+        print('rearrange to solve initial velocity: v₀ = Δx - ½at² / t')
+        print('{0} = ({1:{2}} {3} - 0.5 * {4:{5}} {6} * {7:{8}} {9} ^2) / {7:{8}} {9}'.format(v0[2], x[1], x[4], x[3], a[1], a[4], a[3], t[1], t[4], t[3]))
+        v0[1] = (x[1] - 0.5 * a[1] * t[1] ** 2) / t[1]
+        print('{} = {:{}} {}'.format(v0[2], v0[1], v0[4], v0[3]))
+        return v0
 
-    print('Calculate the initial DISTANCE (di) given a time (t0) and final altitude (d0)')
-    print('an object as last recorded at for when an object hits the ground from free-fall')
-    print('█' * 30)
-    print('displacement/altitude/height initial di = {0} m'.format('unknown'))
-    print('displacement/altitude/height last    d0 = {0} m'.format(d0))
-    print('displacement/altitude/height final   df = {0} m'.format(df))
+def print_mechanics_motion4(solve, v, v0, a, x):
+    """ velocity (without time): v² = v₀² + 2aΔx """
+    print('velocity (without time): v² = v₀² + 2aΔx')
 
-    # print('time initial                         ti = {0} s'.format('unknown'))
-    print('time last                            t0 = {0} s'.format(t0))
-    # print('time final                           tf = {0} s'.format('unknown')
+    if solve[2] == v[2]:
+        print('{0} = sqrt({1:{2}} {3} ^2 + 2 * {4:{5}} {6} * {7:{8}} {9})'.format(v[2], v0[1], v0[4], v0[3], a[1], a[4], a[3], x[1], x[4], x[3]))
+        v[1] = math.sqrt(v0[1] ** 2 + 2 * a[1] * x[1])
+        print('{} = {:{}} {}'.format(v[2], v[1], v[4], v[3]))
+        return v
 
-    print('velocity initial (because dropped)   vi = {0} m/s'.format(vi))  # u = the initial velocity (speed)
-    print('velocity last                        v0 = {0} m/s'.format('unknown'))
-    print('velocity final                       vf = {0} m/s'.format('unknown'))  # v = the final velocity
+    if solve[2] == a[2]:
+        print('rearrange to solve acceleration: a = Δv / 2Δx')
+        print('{} = ({:{}} {} ^2 - {:{}} {} ^2) / (2 * {:{}} {})'.format(a[2], v[1], v[4], v[3], v0[1], v0[4], v0[3], x[1], x[4], x[3]))
+        a[1] = (v[1] ** 2 - v0[1] ** 2) / (2 * x[1])
+        print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
+        return a
+    if solve[2] == x[2]:
+        print('rearrange to solve distance: Δx = Δv / 2a')
+        print('{} = ({:{}} {} ^2 - {:{}} {} ^2) / (2 * {:{}} {})'.format(x[2], v[1], v[4], v[3], v0[1], v0[4], v0[3], a[1], a[4], a[3]))
+        x[1] = (v[1] ** 2 - v0[1] ** 2) / (2 * a[1])
+        print('{} = {:{}} {}'.format(x[2], x[1], x[4], x[3]))
+        return x
 
-    print('acceleration (gravity)               a  = {0} m/s⁻²'.format(a))
-    print('█' * 30)
 
-    print('The standard physics formula to find distance of (h) given the time change is:')
-    print('░ h = v0t + (½)gt² ░')
-    # print('The standard physics formula to find velocity of (v) given the time change is:')
-    # print('░ v = v0 + at ░')
+def train_stopping_time(v0c=82.0, vfc=15.1, xc=350):
+    """
+    brief:    find time it takes for a train to pass during negative acceleration
+    from:     WebAssign Homework 1.2
+    category: acceleration
+    types:    motion in 1D
+    """
+    v0 = ['initial velocity', v0c, 'v₀', 'm s⁻¹', '.1f', 'vector']
+    vf = ['final velocity', vfc, 'vf', 'm s⁻¹', '.1f', 'vector']
+    x = ['change in distance', xc, 'Δx', 'm', '.0f', 'scalar']
+    t = ['time', 0, 't', 's', '.1f', 'scalar']
+    a = ['acceleration', 0, 'a', 'm s⁻²', '.2f', 'scalar']
 
-    print('Since last VELOCITY (v0) is unknown, find it by adjusting equation:')
-    print('░ d0 = v0(t0) + (½)a(t0)² ░')
-    print('░ v0 = (d0 -  (½)a(t0)²) / (t0) ░')
+    print('-' * 30)
+    print("A train {:{}} {} long is moving on a straight track with a speed of {:{}} {}".format(x[1], x[4], x[3], v0[1], v0[4], 'km/h'))
+    print("The engineer applies the brakes at a crossing, and later the last car passes the crossing with a speed of {:{}} {}.".format(vf[1], vf[4], 'km/h'))
+    print("Disregard the width of the crossing and assume constant acceleration,")
+    print("(a)determine how long the train blocked the crossing. s")
 
-    print('  v0 = ({0} - (½)*{1}*{2}²) / {2}'.format(d0, a, t0))
-    print('  v0 = ({0} - {1}) / {2} #{3}'.format(d0, 0.5 * a * t0 ** 2, t0, " NB: subtract not add here!!!"))
-    print('  v0 = ({0}) / {1}'.format(d0 + 0.5 * a * t0 ** 2,t0))  # note: should be d0 - (½)a(t0)², but have changed to + sign
-    print('░ v0 = {0} m/s ░'.format((d0 + 0.5 * a * t0 ** 2) / t0))  # because multiplying by negative gravity changes sign
-    v0 = (d0 + 0.5 * a * t0 ** 2) / t0
+    print('░ question a ░')
+    print('convert km/h to m/s: x / 3.6')
+    print_convert_kmh_ms(vf)
+    print_convert_kmh_ms(v0)
 
-    print('The kinematic equation to find VELOCITY (vf) given distance is:')
-    print('░ vf² = v0² + 2aΔx ░')
-    print('Calculate final VELOCITY (vf) when the object hits the ground')
-    print('  vf² = v0² + 2a(df-d0)')
-    print('  vf² = {0}² + 2*{1}*({2}-{3}) '.format(v0, a, df, d0))
-    print('  vf² = {0} + {1}*({2}) '.format(v0 ** 2, 2 * a, df - d0))
-    print('  vf² = {0} + {1} '.format(v0 ** 2, (2 * a) * (df - d0)))
-    print('  vf² = {0} '.format(v0 ** 2 + (2 * a) * (df - d0)))
-    print('  vf  = √{0} '.format(v0 ** 2 + (2 * a) * (df - d0)))
-    print('░ vf  = {0} m/s ░'.format(math.sqrt(v0 ** 2 + (2 * a) * (df - d0))))
-    vf = math.sqrt(v0 ** 2 + (2 * a) * (df - d0))
+    # solve acceleration: a = Δv / 2Δx'
+    print_mechanics_motion4(a, vf, v0, a, x)
 
-    print('The kinematic equation to find VELOCITY (vf) given distance (x) is:')
-    print('░ vf² = v0² + 2aΔx ░')
-    print('Since initial DISTANCE (di) is unknown, find it by adjusting equation:')
-    print('░ vf² = vi² + 2a(di) ░')
-    print('░ di  = (vi² - vf²) / 2a ░')
+    # solve time: t = Δv / a
+    print_mechanics_motion1(t, vf, v0, a, t)
 
-    print('  di  = ({0}² - {1}²) / 2*{2}'.format(vi, vf, a))
-    print('  di  = ({0} - {1}) / {2}'.format(vi ** 2, vf ** 2, 2 * a))
-    print('  di  = ({0}) / {1}'.format((vi ** 2) - vf ** 2, 2 * a))
-    print('░ di  = {0} m ░'.format((vi ** 2) - vf ** 2 / (2 * a)))
-    di = (vi ** 2) - vf ** 2 / (2 * a)
+def arrow_shot_up(v0c=119, vfc=0, ac=-9.81):
+    """
+    brief:    find time and distance of an arrow that will stop midair
+    from:     WebAssign Homework 1.3
+    category: acceleration
+    types:    motion in 1D
+    """
+    v0 = ['initial velocity', v0c, 'v₀', 'm s⁻¹', '.2f', 'vector']
+    vf = ['final velocity', vfc, 'vf', 'm s⁻¹', '.2f', 'vector']
+    x = ['change in distance', 0, 'Δx', 'm', '.0f', 'scalar']
+    g = ['gravity', ac, 'g', 'm s⁻²', '.2f', 'vector']
+    t = ['time', 0, 't', 's', '.1f', 'scalar']
 
-    print('The physics equation to find TIME (t) given displacement (d) and velocity (v) is:')
-    print('░ Δt = Δd / v ░')
-    print('   t = df - di / vf')
-    print('   t = {0} - {1} / {2}'.format(df, di, vf))
-    print('   t = {0} / {1}'.format(df - di, vf))
-    print('   t = {0} s'.format(df - di / vf))
-    print('This value is wrong because it not a scalar? vector?')
+    print('-' * 30)
+    print("It is possible to shoot an arrow at a speed as high as {:{}} {}".format(v0[1], v0[4], v0[3]))
+    print("If friction is neglected")
+    print("(a) how high would an arrow launched at this speed rise if shot straight up? m")
+    print("(b) how long would the arrow be in the air? s")
 
-    print('The physics equation to find TIME (t) given acceleration (a) and velocity (v) is:')
-    print('░ Δt = Δv / a ░')
-    print('   t = vf - vi / a')
-    print('   t = {0} - {1} / {2}'.format(vf, vi, a))
-    print('   t = {0} / {1}'.format(vf - vi, a))
-    print('░  t = {0} s ░ # NB: This value can be inverted'.format((vf - vi) / a))
-    t = (vf - vi) / a * -1
+    print('░ question a ░')
+    # solve distance: Δx = Δv / 2a
+    print_mechanics_motion4(x, vf, v0, g, x)
 
-    print('█' * 30)
-    print('A certain freely falling object requires {0} s to travel the last {1} m before it hits the ground.'.format(t0, d0))
-    print('Q: How fast was it travelling at the last {0} m?'.format(d0))
-    print('A: {0:.2f} m/s'.format(v0))
-    print('Q: How fast was it travelling when it hit the ground?')
-    print('A: {0:.2f} m/s'.format(vf))
-    print('Q: From what height above the ground did it fall?')
-    print('A: {0:.2f} m'.format(di))
-    print('Q: What was the total time spent in falling?')
-    print('A: {0:.2f} s'.format(t))
+    print('░ question b ░')
+    # solve time: t = Δv / a
+    print_mechanics_motion1(t, vf, v0, g, t)
+    print('multiply by 2 as the arrow must return to earth')
+    print_maths_multiply(t, t, 2)
+
+def original_height_fallen_from(xc=25, tc=1.8, ac=9.81):
+    """
+    brief:    find height of an object fallen from
+    from:     WebAssign Homework 1.4
+    category: acceleration
+    types:    motion in 1D
+    """
+    # height starts at 0 and increases, so use positive for both direction and acceleration
+    xi = ['start height', +0, 'xi', 'm', '.1f', 'scalar']
+    x0 = ['last height', xc, 'x₀', 'm', '.1f', 'scalar']
+    #xf = ['final height', 0, 'xf', 'm', '.1f', 'scalar'] # y-axis starts at 0 here
+
+    g = ['gravity', ac, 'g', 'm s⁻²', '.2f', 'vector']
+
+    # velocity gets faster
+    vi = ['start velocity', 0, 'vi', 'm s⁻¹', '.2f', 'vector']
+    v0 = ['last velocity', +0, 'v₀', 'm s⁻¹', '.2f', 'vector']
+    vf = ['final velocity', +0, 'vf', 'm s⁻¹', '.2f', 'vector']
+
+    # time counts up
+    #ti = ['start time', 0, 'ti', 's', '.2f', 'scalar']
+    t0 = ['last time', tc, 't₀', 's', '.2f', 'scalar']
+    #tf = ['final time', +0, 'tf', 's', '.2f', 'scalar']
+
+
+    print('A certain freely falling object requires {:{}} {} to travel the last {:{}} {} before it hits the ground.'.format(t0[1], t0[4], t0[3], x0[1], x0[4], x0[3]))
+    print('(a)From what height above the ground did it fall? m')
+
+    print('░ question a ░')
+    # solve last velocity: v₀ = Δx - ½at² / t
+    print_mechanics_motion3(v0, x0, v0, t0, g)
+
+    # velocity (without time): v² = v₀² + 2aΔx
+    print_mechanics_motion4(vf, vf, v0, g, x0)
+
+    # rearrange to solve start height: Δx = (v² - v₀²) / 2a
+    print_mechanics_motion4(xi, vf, vi, g, xi)
+
 
 def race_car_circular_track():
     """
@@ -556,15 +635,11 @@ def wave_period_speed(Ac=0.09, hlc=0.20, fc=17.0):
 
     print('░ question c ░')
     print('wave period: T = 1/f')
-    print('T = 1 / {:{}} {}'.format(f[1], f[4], f[3]))
-    T[1] = 1 / f[1]
-    print('T = {:{}} {}'.format(T[1], T[4], T[3]))
+    print_maths_divide(T, 1, f)
 
     print('░ question d ░')
     print('speed of a wave: v = fλ')
-    print('v = {:{}} {} * {:{}} {}'.format(f[1], f[4], f[3], hl[1], hl[4], hl[3]))
-    v[1] = f[1] * hl[1]
-    print('v = {:{}} {}'.format(v[1], v[4], v[3]))
+    print_maths_multiply(v, f, A)
 
 main()
 
