@@ -1,7 +1,6 @@
 # coding: utf-8
 import math
 
-
 def main():
     manualmenu = [
         "Train Stopping Time",
@@ -24,7 +23,7 @@ def main():
     ]
 
     print("MAIN MENU:")
-    menu = ["WebAssign Homework", "Manual"]
+    menu = ["PHYS111 WebAssign Homework", "Manual"]
 
     menucount = 0
     for s in menu:
@@ -101,16 +100,17 @@ def webassign_get_questions(week):
             "Question 2",
             "Question 3",
             "Question 4"],
-        3: ["Question 1A",
-            "Question 1B",
-            "Question 2A",
-            "Question 2B",
-            "Question 2C",
-            "Question 3A",
-            "Question 3B",
-            "Question 4A",
-            "Question 4B",
-            "Question 5A/B"],
+        3: ["Question 1",
+            "Question 2",
+            "Question 3"],
+        4: ["Question 1",
+            "Question 2",
+            "Question 3",
+            "Question 4"],
+        5: ["Question 1",
+            "Question 2",
+            "Question 3",
+            "Question 4"],
         6: ["Question 1",
             "Question 2",
             "Question 3",
@@ -166,27 +166,98 @@ def webassign_do_question(week, question):
             #print("Answer to a) and d): " + str(round(answer, 2)) + " J")
             #print("Question not supported.")
     elif week == 3:
-        if question == 10:
-            m1 = float(input("Please input mass m1 (kg): "))
-            m2 = float(input("Please input mass m2 (kg): "))
-            radius = float(input("Please input radius (m): "))
-            hm1 = float(input("Please input height of m1 from floor (m): "))
-            moment = 0.5 * 5 * radius ** 2 + m1 * radius ** 2 + m2 * radius ** 2
-            tnet = (m1 - m2) * 9.81 * radius
-            alpha = tnet / moment
-            lina = radius * alpha
-            temp = hm1 / 0.5 / lina
-            time = math.sqrt(temp)
-            print("Answer to 5a) " + str(round(time, 4)) + " s")
-
-            moment = m1 * radius ** 2 + m2 * radius ** 2
-            alpha = tnet / moment
-            lina = radius * alpha
-            temp = hm1 / 0.5 / lina
-            time = math.sqrt(temp)
-            print("Answer to 5b) " + str(round(time, 4)) + " s")
-        else:
-            print("Question not supported.")
+        if question == 1:
+            m = input("Mass (g): ")
+            v0 = input("Initial velocity (m/s): ")
+            x = input("Distance (cm): ")
+            if not (m and v0): energy_and_force_of_bullet()
+            else: energy_and_force_of_bullet(mc=float(m), v0c=float(v0), xc=float(x))
+        if question == 2:
+            a = input("Acceleration (m/s²): ")
+            m = input("Mass (kg): ")
+            if not (a and m): tension_two_masses_elevator()
+            else: tension_two_masses_elevator(mc=float(m), ac=float(a))
+        if question == 3:
+            m = input("Mass (kg): ")
+            v0 = input("Initial velocity (m/s): ")
+            vf = input("Final velocity (m/s): ")
+            t = input("Time (s): ")
+            if not (m and v0 and vf and t): force_distance_slowing_car()
+            else: force_distance_slowing_car(mc=float(m), v0c=float(v0), vfc=float(vf), tc=float(t))
+        if question == 4:
+            m1 = input("Mass 1 (kg): ")
+            m2 = input("Mass 2 (kg): ")
+            if not (m1 and m2): m2_gtr_m1_atwood_machine()
+            else: m2_gtr_m1_atwood_machine(m1c=float(m1), m2c=float(m2))
+        # if question == 10:
+        #     m1 = float(input("Please input mass m1 (kg): "))
+        #     m2 = float(input("Please input mass m2 (kg): "))
+        #     radius = float(input("Please input radius (m): "))
+        #     hm1 = float(input("Please input height of m1 from floor (m): "))
+        #     moment = 0.5 * 5 * radius ** 2 + m1 * radius ** 2 + m2 * radius ** 2
+        #     tnet = (m1 - m2) * 9.81 * radius
+        #     alpha = tnet / moment
+        #     lina = radius * alpha
+        #     temp = hm1 / 0.5 / lina
+        #     time = math.sqrt(temp)
+        #     print("Answer to 5a) " + str(round(time, 4)) + " s")
+        #
+        #     moment = m1 * radius ** 2 + m2 * radius ** 2
+        #     alpha = tnet / moment
+        #     lina = radius * alpha
+        #     temp = hm1 / 0.5 / lina
+        #     time = math.sqrt(temp)
+        #     print("Answer to 5b) " + str(round(time, 4)) + " s")
+        # else:
+        #     print("Question not supported.")
+    elif week == 4:
+        if question == 1:
+            m = input("Mass (m): ")
+            F = input("Force (F): ")
+            vf = input("Final velocity (km/h): ")
+            if not (m and F and vf): train_acceleration_time()
+            else: train_acceleration_time(mc=float(m), Fc=float(F), vfc=float(vf))
+        if question == 2:
+            a = input("Acceleration (m/s²): ")
+            m = input("Mass (kg): ")
+            if not (a and m): tension_two_masses_elevator()
+            else: tension_two_masses_elevator(mc=float(m), ac=float(a))
+        if question == 3:
+            m = input("Mass (kg): ")
+            v0 = input("Initial velocity (m/s): ")
+            vf = input("Final velocity (m/s): ")
+            t = input("Time (s): ")
+            if not (m and v0 and vf and t): force_distance_slowing_car()
+            else: force_distance_slowing_car(mc=float(m), v0c=float(v0), vfc=float(vf), tc=float(t))
+        if question == 4:
+            m1 = input("Mass 1 (kg): ")
+            m2 = input("Mass 2 (kg): ")
+            if not (m1 and m2): m2_gtr_m1_atwood_machine()
+            else: m2_gtr_m1_atwood_machine(m1c=float(m1), m2c=float(m2))
+    elif week == 5:
+        if question == 1:
+            m = input("Mass (m): ")
+            F = input("Force (F): ")
+            vf = input("Final velocity (km/h): ")
+            if not (m and F and vf): train_acceleration_time()
+            else: train_acceleration_time(mc=float(m), Fc=float(F), vfc=float(vf))
+        if question == 2:
+            a = input("Acceleration (m/s²): ")
+            m = input("Mass (kg): ")
+            if not (a and m): tension_two_masses_elevator()
+            else: tension_two_masses_elevator(mc=float(m), ac=float(a))
+        if question == 3:
+            m = input("Mass (kg): ")
+            v0 = input("Initial velocity (m/s): ")
+            vf = input("Final velocity (m/s): ")
+            t = input("Time (s): ")
+            if not (m and v0 and vf and t): force_distance_slowing_car()
+            else: force_distance_slowing_car(mc=float(m), v0c=float(v0), vfc=float(vf), tc=float(t))
+        if question == 4:
+            m1 = input("Mass 1 (kg): ")
+            m2 = input("Mass 2 (kg): ")
+            if not (m1 and m2): m2_gtr_m1_atwood_machine()
+            else: m2_gtr_m1_atwood_machine(m1c=float(m1), m2c=float(m2))
     elif week == 6:
         if question == 1:
             print("hi")
@@ -202,6 +273,10 @@ def webassign_do_question(week, question):
     else:
         # this shouldn't happen because we already checked for invalid weeks
         print("Week not supported.")
+
+
+
+
 
 def to_radians(degrees):
     return degrees * (math.pi / 180)
@@ -239,7 +314,7 @@ def print_maths_evaluate(operator, a, b, c):
     elif isinstance(c, (int, float, complex)):
         print('{} = {:{}} {} {} {}'.format(a[2], b[1], b[4], b[3], operator, c))
         a[1] = eval('{} {} {}'.format(b[1], operator, c))
-        print('{} = {:{}}'.format(a[2], a[1], a[4]))
+        print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
     else:
         print('{} = {:{}} {} {} {:{}} {}'.format(a[2], b[1], b[4], b[3], operator, c[1], c[4], c[3]))
         a[1] = eval('{} {} {}'.format(b[1], operator, c[1]))
@@ -330,8 +405,6 @@ def print_mechanics_motion4(solve, v, v0, a, x):
         print('{} = {:{}} {}'.format(x[2], x[1], x[4], x[3]))
         return x
 
-
-
 def print_atwood_machine(solve, m1, m2, g, a, T):
     """solve acceleration or tension in an atwood machine"""
     print('In an atwood machine: T1 = T2')
@@ -365,6 +438,37 @@ def print_atwood_machine(solve, m1, m2, g, a, T):
 
 
 
+def print_work_done(solve, W, F, O, x):
+    """
+    Work: ‘Transfer of energy’
+    Quantitatively: The work W done by a constant force on an object is the product of the force along the direction of displacement and the magnitude of displacement.
+    W=(Fcosθ)Δx
+    Units: =Nm=Joule
+    Work: (Fcosθ)Δx
+    ΔW = KE
+    """
+
+def print_potential_energy_gravity(solve, m, g, h):
+    """Potential Energy of gravity: PEgravity = mgh"""
+
+def print_potential_spring_energy(solve, KE, k, v):
+    """Potential Energy of spring: PEspring = ½kv²"""
+
+def print_kinectic_energy(solve, KE, m, v):
+    """
+    kinetic energy: KE = ½mv²
+    ΔW = KE
+    """
+    print('kinetic energy: KE = ½mv²')
+
+    if solve[2] == KE[2]:
+        print('{} = 0.5 * {:{}} {} * {:{}} {} ^2'.format(KE[2], m[1], m[4], m[3], v[1], v[4], v[3]))
+        KE[1] = 0.5 * m[1] * v[1] ** 2
+        print('{} = {:{}} {}'.format(KE[2], KE[1], KE[4], KE[3]))
+        return KE
+
+
+# webassign 1
 def train_stopping_time(v0c=82.0, vfc=15.1, xc=350):
     """
     brief:    find time it takes for a train to pass during negative acceleration
@@ -462,6 +566,7 @@ def original_height_fallen_from(xc=25, tc=1.8, ac=9.81):
     # rearrange to solve start height: Δx = (v² - v₀²) / 2a
     print_mechanics_motion4(xi, vf, vi, g, xi)
 
+# webassign 2
 def train_acceleration_time(mc=17000000, Fc=740000, vfc=76, v0c=0):
     """
     brief:    find time it takes for object to reach speed
@@ -599,9 +704,71 @@ def m2_gtr_m1_atwood_machine(m1c=1, m2c=6):
     # solve distance: Δx = v₀t + ½at
     print_mechanics_motion3(x, x, v0, t, a)
 
+# webassign 3
+def energy_and_force_of_bullet(mc=2.0, v0c=280, xc=43):
+    """
+    brief:
+    from:     WebAssign Homework 3.1
+    category:
+    types:
+    """
+
+    m = ['mass', mc, 'm', 'kg', '.2e', 'scalar']
+    v = ['velocity', v0c, 'v', 'm s⁻¹', '.2f', 'scalar']
+    x = ['distance', xc, 'x', 'm', '.3f', 'scalar']
+    F = ['force', 0, 'F', 'N', '.2f', 'scalar']
+    KE = ['kinetic energy', 0, 'KE', 'J', '.1f', 'scalar']  # KE: kinetic energy (KE = ½mv²)
+    W = ['work', 0, 'W', 'J', '.2f', 'scalar']  # W: work (W = Fd)
+
+    print('-' * 30)
+    print('A {:{}} g bullet leaves the barrel of a gun at a speed of {:{}} {}.'.format(m[1], m[4], v[1], v[4], v[3]))
+    print('(a) Find its kinetic energy. J')
+    print('(b) Find the average force exerted by the expanding gases on the bullet as it moves the length of the {:{}} cm long barrel. N'.format(x[1], x[4]))
+
+    print('░ question a ░')
+    print('convert g to kg: x / 1000')
+    print_maths_evaluate('/', m, m, 1000)
+    # solve KEf
+    print_kinectic_energy(KE, KE, m, v)
+
+    print('░ question b ░')
+    print('convert cm to m: x / 100')
+    print_maths_evaluate('/', x, x, 100)
+    # F = W/d
+    print_maths_evaluate('/', F, KE, x)
 
 
 
+
+
+"""
+A 5.30 kg steel ball is dropped onto a copper plate from a height of 10.0 m.
+If the ball leaves a dent 2.90 mm deep in the plate
+(a) what is the average force exerted by the plate on the ball during the impact?
+179103.45  N
+
+Two masses are connected by a light string passing over a light, frictionless pulley
+The m1 = 5.15 kg object is released from rest at a point 4.00 m above the floor, where the m2 = 3.45 kg object rests.
+(a) Determine the speed of each object when the two pass each other. m/s
+(b) Determine the speed of each object at the moment the 5.15 kg mass hits the floor. m/s
+(c) How much higher does the 3.45 kg mass travel after the 5.15 kg mass hits the floor? m
+
+
+# webassign 4
+The force shown in the force-time diagram in Figure P6.11 acts on a 2.2 kg object.
+
+Figure P6.11
+(a) Find the impulse of the force. N·s
+
+(b) Find the final velocity of the mass if it is initially at rest. m/s
+
+(c) Find the final velocity of the mass if it is initially moving along the x axis with a velocity of -1.7 m/s. m/s
+
+
+"""
+
+
+# webassign 5
 def race_car_circular_track():
     """
     brief:    Race car on a circular race track
@@ -728,6 +895,7 @@ def bucket_falling_into_well():
     print('g {} {}: is Earths gravitational field'.format(g[0], g[1]))
     print('d {} {}: is the distance of descent of the bucket from rest to final state.'.format(d[0], d[1]))
 
+# webassign 6
 def spring_potential_energy_velocity():
     """
     brief:    find velocity of an object attached to horizontal spring
