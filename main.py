@@ -246,7 +246,6 @@ def print_maths_evaluate(operator, a, b, c):
         print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
     return a
 
-
 def print_convert_kmh_ms(a):
     """
     Divides a by 3.6
@@ -262,7 +261,6 @@ def print_convert_ms_kmh(a):
     """
     a[1] = a[1] * 3.6
     print('{0} = {1:{2}} {3} * 3.6 = {1:{2}} {4}'.format(a[2], a[1], a[4], a[3], 'km/h'))
-
 
 def print_mechanics_motion1(solve, v, v0, a, t):
     """ velocity (without x): v = v₀ + at """
@@ -332,6 +330,8 @@ def print_mechanics_motion4(solve, v, v0, a, x):
         print('{} = {:{}} {}'.format(x[2], x[1], x[4], x[3]))
         return x
 
+
+
 def print_atwood_machine(solve, m1, m2, g, a, T):
     """solve acceleration or tension in an atwood machine"""
     print('In an atwood machine: T1 = T2')
@@ -362,6 +362,8 @@ def print_atwood_machine(solve, m1, m2, g, a, T):
         T[1] = (2 * m1[1] * m2[1] * g[1]) / (m1[1] + m2[1])
         print('{} = {:{}} {}'.format(T[2], T[1], T[4], T[3]))
         return T
+
+
 
 def train_stopping_time(v0c=82.0, vfc=15.1, xc=350):
     """
@@ -556,7 +558,6 @@ def force_distance_slowing_car(mc=2000, v0c=19.0, vfc=10.0, tc=5.60):
     print('░ question b ░')
     # solve distance: Δx = ∑v*t / 2'
     print_mechanics_motion2(x, x, v0, vf, t)
-
 
 def m2_gtr_m1_atwood_machine(m1c=1, m2c=6):
     """
@@ -846,15 +847,6 @@ main()
 
 
 """
-T₁ - 0 = m₁∙a
-T₁ = 3∙a . . . . . . . equation 1
-
-Equation for m₂ :
-m₂∙g - T₂ = m₂∙a
-4∙9.8 - T₂ = 4∙a
-39.2 - T₂ = 4∙a
-T₂ = 39.2 - 4∙a . . . . . . . . equation 2
-
 Equation for the pulley:
 r∙T₂ - r∙T₁ = a ∙ I/r
 0.3∙T₂ - 0.3∙T₁ = a∙0.5/0.3
@@ -872,9 +864,8 @@ Substitute that value in equations 1 and 2
 T₁ = 3∙3.12 = 9.36 N < - - - - - - - - - - - - - - - - - - - answer
 
 T₂ = 39.2 - 4∙0.32 = 26.7 N < - - - - - - - - - - - - - -answer
-"""
 
-"""
+
 Tₐ - Tᵦ = Iα
 let mₐ = 4 kg, mᵦ = 3 kg
 Tₐ = ?, Tᵦ = ? a = ?
@@ -889,9 +880,8 @@ Tᵦ = mᵦa = 3(4.498) = 13.494 N
 Tₐ = mₐ[g - a] = 21.25 N
 Check: [equation (i)]
 Tₐ - Tᵦ = Iα = 7.755 = 0.5(4.498/0.290) which is true
-"""
 
-"""
+
 theta = theta0 + wt + .5angular acceleration * t^2
 theta = .5at^2, since angular speed is zero initially and angular displacement is zero.
 root(2theta/a) = t
