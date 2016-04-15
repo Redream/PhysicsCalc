@@ -1,39 +1,91 @@
+# TEMPLATE
+
+def template():
+    """
+    brief:
+    from:     WebAssign Homework
+    category:
+    types:
+    """
+
+    g = ['gravity', ac, 'g', 'm s⁻²', '.2f', 'vector']
+
+    m = ['mass', mc, 'm', 'kg', '.0f', 'scalar']
+    v0 = ['initial velocity', v0c, 'v₀', 'm s⁻¹', '.1f', 'vector']
+    vf = ['final velocity', vfc, 'vf', 'm s⁻¹', '.1f', 'vector']
+    t = ['time', tc, 't', 's', '.2f', 'scalar']
+    F = ['force', Fc, 'F', 'N', '.2f', 'scalar']
+    x = ['change in distance', xc, 'Δx', 'm', '.2f', 'scalar']
+    a = ['acceleration', ac, 'a', 'm s⁻²', '.2f', 'scalar']
+
+    T1 = ['force', 0, 'F', 'N', '.2f', 'scalar']
+    T2 = ['force', 0, 'F', 'N', '.2f', 'scalar']
+    Em = ['combined mass acting on the top rope', mc, '∑m', 'kg', '.1f', 'scalar']
+
+    # related to the wave
+    v = ['wave speed', 0, 'v', 'm s⁻¹', '.2f', 'scalar']  # v: speed of a wave (v = fλ OR v = λ/T)
+    f = ['frequency', fc, 'f', 'Hz', '.1f', 'scalar']     # f: frequency (also m s⁻¹)
+    hl = ['wavelength', hlc, 'λ', 'm', '.2f','vector']    # λ: wavelength
+
+    A = ['amplitude', Ac, 'A', 'm', '.2f', 'scalar']      # A: amplitude
+    T = ['period', 0, 'T', 's', '.3f', 'scalar']          # T: Time PERIOD of oscillation in seconds, must be at least 3 dp for webassign (T = 2π√(m/k))
+
+    print('-' * 30)
+    print('
+    print('
+    print('
+    print('
+    ')
+    {:{}} {}
+
+    .format(a[1], a[4], a[3]))
+    .format(a[1], a[4], a[3], b[1], b[4], b[3]))
+    .format(a[1], a[4], a[3], b[1], b[4], b[3], c[1], c[4], c[3]))
+    .format(a[1], a[4], a[3], b[1], b[4], b[3], c[1], c[4], c[3], d[1], d[4], d[3]))
+
+    print('░ question a ░')
+    print('░ question b ░')
+    print('░ question c ░')
+
+    # solve acceleration: a = Δv / t'
+    print_mechanics_motion1(a, vf, v0, a, t)
+    # solve acceleration: a = v² - v₀² / 2Δx'
+    print_mechanics_motion4(a, vf, v0, a, x)
+
+    # solve time: t = Δv / a
+    print_mechanics_motion1(t, vf, v0, a, t)
+    # solve time: t = ∑v / 2a'
+    print_mechanics_motion2(t, x, v0, vf, t)
+
+    # solve last velocity: v₀ = Δx - ½at² / t
+    print_mechanics_motion3(v0, x0, v0, t0, g)
+    # solve final velocity: v² = v₀² + 2aΔx
+    print_mechanics_motion4(vf, vf, v0, g, x0)
+
+    # solve distance: Δx = ∑v*t / 2'
+    print_mechanics_motion2(x, x, v0, vf, t)
+    # solve distance: Δx = Δv / 2a
+    print_mechanics_motion4(x, vf, v0, g, x)
+    # rearrange to solve start height: Δx = (v² - v₀²) / 2a
+    print_mechanics_motion4(xi, vf, vi, g, xi)
+    # solve distance: Δx = v₀t + ½at
+    print_mechanics_motion3(x, x, v0, t, a)
+
+    # F = ma
+    print_maths_evaluate('*', F, m, a)
+
+
+
+
+
 
 Clean up the code to follow the physics book and reference it
 Serway Vuille College Physics
 
-Store variables in an array, because
+extra bonuses
  - need to look up symbols, eg if equation looks for 'a' ask array where 'a' is
  - need to do SI unit conversion, eg m/s <> km/h
  - need to apply correct calculations if type is vector/scalar + determine direction
-
-예를드러
-name      = gravity
-value     = 9.81
-symbol    = g, a
-SI unit   = m/s^2
-type      = vector
-direction = -y
-
-name      = initial velocity
-value     = .
-symbol    = vi
-SI unit   = m/s
-type      = vector
-direction = .
-
-name      = speed
-value     = .
-symbol    = r
-SI unit   = m/s, km/h
-type      = scalar
-direction = N/A
-
-eg array would be like this
-['gravity', 9.81, g|a, m/s^2, 'vector', '-y']
-['velocity initial', , vi, m/s, 'vector', ]
-['speed', , r, m/s|km/hr, 'scalar', 0]
-
 
 I propose to restructure the code into types
 Eg kinematics, dynamics, work&energy&power&elasticity etc
