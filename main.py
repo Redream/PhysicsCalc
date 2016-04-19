@@ -406,18 +406,16 @@ def print_mechanics_motion4(solve, v, v0, a, x):
 def print_atwood_machine(solve, m1, m2, g, aT):
     """
     solve acceleration or tension in an atwood machine
-    Both are solved independently or each other
+    Both are solved independently of each other
     """
     a = ['acceleration', 0, 'a', 'm s⁻²', '.2f', 'scalar']
-    T = ['tension', 0, 'T', 'N', '.1f', 'scalar'] # T: tension
+    T = ['tension', 0, 'T', 'N', '.1f', 'scalar']
     if aT[2] == 'a':
         a = aT
     elif aT[2] == 'T':
         T = aT
     else:
         print('ERROR')
-    print(m1)
-    print(m2)
     if m1[1] > m2[1]:
         x = m1 # x = heavier
         y = m2 # y = lighter
@@ -478,13 +476,20 @@ def print_work_done(solve, W, F, x, O=1):
         return F
 
 
-
-
-def print_potential_energy_gravity(solve, m, g, h):
-    """Potential Energy of gravity: PE-grav = mgh"""
-
 def print_potential_spring_energy(solve, KE, k, v):
     """Potential Energy of spring: PEspring = ½kv²"""
+
+def print_potential_energy_gravity(solve, PE, m, g, h):
+    """
+    Potential Energy of gravity: PE-grav = mgh
+    """
+    print('potential energy of gravity: PE-grav = mgh')
+    if solve[2] == h[2]:
+        print('rearrange to solve height: h = PE-grav/mg')
+        print('{} = {:{}} {} / ({:{}} {} * {:{}} {})'.format(h[2], PE[1], PE[4], PE[3], m[1], m[4], m[3], g[1], g[4], g[3]))
+        h[1] = PE[1] / (m[1] * g[1])
+        print('{} = {:{}} {}'.format(h[2], h[1], h[4], h[3]))
+        return PE
 
 def print_kinectic_energy(solve, KE, m, v):
     """
@@ -498,6 +503,22 @@ def print_kinectic_energy(solve, KE, m, v):
         KE[1] = 0.5 * m[1] * v[1] ** 2
         print('{} = {:{}} {}'.format(KE[2], KE[1], KE[4], KE[3]))
         return KE
+
+def print_conservation_energy(solve, KE, PE, m, v, g, h):
+    """
+    kinetic energy: KE = ½mv²
+    potential energy: PE = mgh
+    KE = PE
+    """
+    print('kinetic energy: KE = ½mv²')
+
+    if solve[2] == KE[2]:
+        print('{} = 0.5 * {:{}} {} * {:{}} {} ^2'.format(KE[2], m[1], m[4], m[3], v[1], v[4], v[3]))
+        KE[1] = 0.5 * m[1] * v[1] ** 2
+        print('{} = {:{}} {}'.format(KE[2], KE[1], KE[4], KE[3]))
+        return KE
+
+
 
 def print_rotational_motion1(solve, s, r, O):
     """ rotational motion: s = rθ """
@@ -844,13 +865,13 @@ def atwood_machine_passing(m1c=5.15, m2c=3.45, xhc=4):
 
     m1 = ['mass1', m1c, 'm1', 'kg', '.2f', 'scalar']
     m2 = ['mass2', m2c, 'm2', 'kg', '.2f', 'scalar']
-    xh = ['height', xhc, 'xh', 'm', '.2f', 'scalar']
+    xh = ['height', xhc, 'h', 'm', '.3f', 'scalar']
 
     g = ['gravity', 9.81, 'a', 'm s⁻²', '.2f', 'scalar']
-    v0 = ['initial velocity', 0, 'v₀', 'm s⁻¹', '.2f', 'vector']
     v = ['velocity', 0, 'v', 'm s⁻¹', '.2f', 'scalar']
     x = ['change in distance', 0, 'Δx', 'm', '.2f', 'scalar']
     a = ['acceleration', 0, 'a', 'm s⁻²', '.2f', 'scalar']
+    KE = ['kinetic energy', 0, 'KE', 'J', '.1f', 'scalar'] # KE: kinetic energy (KE = ½mv²)
 
     print('-' * 30)
     print('Two masses are connected by a light string passing over a light, frictionless pulley')
@@ -859,11 +880,27 @@ def atwood_machine_passing(m1c=5.15, m2c=3.45, xhc=4):
     print('(b) Determine the speed of each object at the moment the {:{}} {} mass hits the floor. m/s'.format(m1[1], m1[4], m1[3]))
     print('(c) How much higher does the {:{}} {} mass travel after the {:{}} {} mass hits the floor? m'.format(m2[1], m2[4], m2[3], m1[1], m1[4], m1[3]))
 
+    print('░ question a ░')
     # solve acceleration
     print_atwood_machine(a, m1, m2, g, a)
+    # change in distance is half height
+    x[1] = xh[1] / 2
+    # solve velocity: v² = v₀² + 2aΔx
+    print_mechanics_motion4(v, v, 0, a, x)
 
+    print('░ question b ░')
+    # change in distance is complete height
+    x[1] = xh[1]
+    # solve velocity: v² = v₀² + 2aΔx
+    print_mechanics_motion4(v, v, 0, a, x)
 
+    print('░ question c ░')
+    # change in kinetic energy: KE = ½mv²
+    print_kinectic_energy(KE, KE, m2, v)
+    # solve PE=KE = h=KE/mg
+    print_potential_energy_gravity(xh, KE, m2, g, xh)
 
+# webassign 4
 
 """
 
