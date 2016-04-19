@@ -52,6 +52,23 @@ def template(v0c=82.0, vfc=15.1, xc=350):
     # F = ma
     print_maths_evaluate('*', F, m, a)
 
+    # change in kinetic energy: KE = ½mv²
+    print_kinectic_energy(KE, KE, m, v)
+
+    # solve Force: F = W/d
+    print_work_done(F, KE, F, xd)
+
+
+
+
+    print('convert m to mm: x / 1000')
+    print_maths_evaluate('/', xd, xd, 1000)
+
+
+
+
+
+
 
 
 

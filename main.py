@@ -173,22 +173,17 @@ def webassign_do_question(week, question):
             if not (m and v0): energy_and_force_of_bullet()
             else: energy_and_force_of_bullet(mc=float(m), v0c=float(v0), xc=float(x))
         if question == 2:
-            a = input("Acceleration (m/s²): ")
             m = input("Mass (kg): ")
-            if not (a and m): tension_two_masses_elevator()
-            else: tension_two_masses_elevator(mc=float(m), ac=float(a))
+            xh = input("Height (m): ")
+            xd = input("Depth (mm): ")
+            if not (m and xh and xd): impact_of_ball_on_plate()
+            else: impact_of_ball_on_plate(mc=float(m), xhc=float(xh), xdc=float(xd))
         if question == 3:
-            m = input("Mass (kg): ")
-            v0 = input("Initial velocity (m/s): ")
-            vf = input("Final velocity (m/s): ")
-            t = input("Time (s): ")
-            if not (m and v0 and vf and t): force_distance_slowing_car()
-            else: force_distance_slowing_car(mc=float(m), v0c=float(v0), vfc=float(vf), tc=float(t))
-        if question == 4:
-            m1 = input("Mass 1 (kg): ")
-            m2 = input("Mass 2 (kg): ")
-            if not (m1 and m2): m2_gtr_m1_atwood_machine()
-            else: m2_gtr_m1_atwood_machine(m1c=float(m1), m2c=float(m2))
+            m1 = input("mass1 (kg): ")
+            m2 = input("mass2 (kg): ")
+            xh = input("height (m): ")
+            if not (m1 and m2 and xh): atwood_machine_passing()
+            else: atwood_machine_passing(m1c=float(m1), m2c=float(m2), xhc=float(xh))
         # if question == 10:
         #     m1 = float(input("Please input mass m1 (kg): "))
         #     m2 = float(input("Please input mass m2 (kg): "))
@@ -386,6 +381,9 @@ def print_mechanics_motion4(solve, v, v0, a, x):
     """ velocity (without time): v² = v₀² + 2aΔx """
     print('velocity (without time): v² = v₀² + 2aΔx')
 
+    if v0 == 0:
+        v0 = ['initial velocity', 0, 'v₀', 'm s⁻¹', '.2f', 'vector']
+
     if solve[2] == v[2]:
         print('{0} = sqrt({1:{2}} {3} ^2 + 2 * {4:{5}} {6} * {7:{8}} {9})'.format(v[2], v0[1], v0[4], v0[3], a[1], a[4], a[3], x[1], x[4], x[3]))
         v[1] = math.sqrt(v0[1] ** 2 + 2 * a[1] * x[1])
@@ -405,40 +403,64 @@ def print_mechanics_motion4(solve, v, v0, a, x):
         print('{} = {:{}} {}'.format(x[2], x[1], x[4], x[3]))
         return x
 
-def print_atwood_machine(solve, m1, m2, g, a, T):
-    """solve acceleration or tension in an atwood machine"""
+def print_atwood_machine(solve, m1, m2, g, aT):
+    """
+    solve acceleration or tension in an atwood machine
+    Both are solved independently or each other
+    """
+    a = ['acceleration', 0, 'a', 'm s⁻²', '.2f', 'scalar']
+    T = ['tension', 0, 'T', 'N', '.1f', 'scalar'] # T: tension
+    if aT[2] == 'a':
+        a = aT
+    elif aT[2] == 'T':
+        T = aT
+    else:
+        print('ERROR')
+    print(m1)
+    print(m2)
+    if m1[1] > m2[1]:
+        x = m1 # x = heavier
+        y = m2 # y = lighter
+    if m2[1] > m1[1]:
+        x = m2 # x = heavier
+        y = m1 # y = lighter
+
     print('In an atwood machine: T1 = T2')
-    print('where m2 > m1')
-    print('T - m1g = m1a')
-    print('m2g - T = m2a')
+    print('where {} > {}'.format(x[2],y[2]))
+    print('T - {0}g = {0}a'.format(y[2]))
+    print('{0}g - T = {0}a'.format(x[2]))
+
     if solve[2] == a[2]:
         print('rearrange to solve for a')
-        print('m2g - T + T - m1g = m1a + m2a')
-        print('m2g - m1g = m1a + m2a')
-        print('(m2 - m1)g = (m1 + m2)a')
-        print('a = (m2 - m1)g /(m1 + m2)')
-        print('{0} = (({4:{5}} {6} - {1:{2}} {3}) * {7:{8}} {9}) / ({1:{2}} {3} + {4:{5}} {6})'.format(a[2], m1[1], m1[4], m1[3], m2[1], m2[4], m2[3], g[1], g[4], g[3]))
-        a[1] = ((m2[1] - m1[1]) * g[1]) / (m1[1] + m2[1])
+        print('{0}g - T + T - {1}g = {0}a + {1}a'.format(x[2], y[2]))
+        print('{0}g - {1}g = {0}a + {1}a'.format(x[2], y[2]))
+        print('({0} - {1})g = ({0} + {1})a'.format(x[2], y[2]))
+        print('({0} - {1})g = ({0} + {1})a'.format(x[2], y[2]))
+        print('a = ({0} - {1})g / ({0} + {1})'.format(x[2], y[2]))
+        print('{0} = (({1:{2}} {3} - {4:{5}} {6}) * {7:{8}} {9}) / ({4:{5}} {6} + {1:{2}} {3})'.format(a[2], x[1], x[4], x[3], y[1], y[4], y[3], g[1], g[4], g[3]))
+        a[1] = ((x[1] - y[1]) * g[1]) / (y[1] + x[1])
         print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
         return a
     if solve[2] == T[2]:
         print('rearrange to solve for T')
-        print('a = (T - m1g) / m1')
-        print('a = (m2g - T) / m2')
-        print('(T - m1g) / m1 = (m2g - T) / m2')
-        print('m2(T - m1g) = m1(m2g - T)')
-        print('m2T - m1m2g = m1m2g - m1T')
-        print('m2T + m1T = m1m2g + m1m2g')
-        print('T(m2 + m1) = 2(m1m2g)')
-        print('T = (2(m1m2g))/(m2 + m1)')
-        print('{0} = (2 * {1:{2}} {3} * {4:{5}} {6} * {7:{8}} {9}) / ({4:{5}} {6} + {1:{2}} {3})'.format(T[2], m1[1], m1[4], m1[3], m2[1], m2[4], m2[3], g[1], g[4], g[3]))
-        T[1] = (2 * m1[1] * m2[1] * g[1]) / (m1[1] + m2[1])
+        print('a = (T - {0}g) / {0}'.format(y[2]))
+        print('a = ({0}g - T) / {0}'.format(x[2]))
+        print('(T - {0}g) / {0} = ({1}g - T) / {1}'.format(y[2], x[2]))
+        print('{1}(T - {0}g) = {0}({1}g - T)'.format(y[2], x[2]))
+        print('{1}T - {0}{1}g = {0}{1}g - {0}T'.format(y[2], x[2]))
+        print('{1}T + {0}T = {0}{1}g + {0}{1}g'.format(y[2], x[2]))
+        print('T({1} + {0}) = 2({0}{1}g)'.format(y[2], x[2]))
+        print('T = (2({0}{1}g))/({1} + {0})'.format(y[2], x[2]))
+        print('{0} = (2 * {1:{2}} {3} * {4:{5}} {6} * {7:{8}} {9}) / ({4:{5}} {6} + {1:{2}} {3})'.format(T[2], y[1], y[4], y[3], x[1], x[4], x[3], g[1], g[4], g[3]))
+        T[1] = (2 * y[1] * x[1] * g[1]) / (y[1] + x[1])
         print('{} = {:{}} {}'.format(T[2], T[1], T[4], T[3]))
         return T
 
 
+def print_impulse(solve, F, t):
+    """ hi """
 
-def print_work_done(solve, W, F, O, x):
+def print_work_done(solve, W, F, x, O=1):
     """
     Work: ‘Transfer of energy’
     Quantitatively: The work W done by a constant force on an object is the product of the force along the direction of displacement and the magnitude of displacement.
@@ -448,8 +470,18 @@ def print_work_done(solve, W, F, O, x):
     ΔW = KE
     """
 
+    print('work: W=(Fcosθ)Δx')
+
+    if solve[2] == F[2]:
+        print('rearrange to solve force: F = W/Δx')
+        print_maths_evaluate('/',F,W,x)
+        return F
+
+
+
+
 def print_potential_energy_gravity(solve, m, g, h):
-    """Potential Energy of gravity: PEgravity = mgh"""
+    """Potential Energy of gravity: PE-grav = mgh"""
 
 def print_potential_spring_energy(solve, KE, k, v):
     """Potential Energy of spring: PEspring = ½kv²"""
@@ -466,6 +498,38 @@ def print_kinectic_energy(solve, KE, m, v):
         KE[1] = 0.5 * m[1] * v[1] ** 2
         print('{} = {:{}} {}'.format(KE[2], KE[1], KE[4], KE[3]))
         return KE
+
+def print_rotational_motion1(solve, s, r, O):
+    """ rotational motion: s = rθ """
+    print('linear angular displacement: s = rθ')
+
+"""
+    print('tangental velocity: v-tan = rω')
+    print('tangental acceleration: a-tan = rα')
+
+    print('centripetal acceleration: a-cen = v²/r = ω²r')
+
+
+    τ = Iα
+    τ = rFsinθ
+    L = Iω
+
+    Angular kinetic energy E in Joules: E = ½Iω²
+    ω is angular velocity in radians/sec
+    I = moment of inertia in kg*m²
+
+    moment of inertia
+    I is moment of inertia in kg•m²
+    I = cMR²
+    M is mass (kg), R is radius (meters)
+    c = 1 for a ring or hollow cylinder
+    c = 2/5 solid sphere
+    c = ⅔ hollow sphere
+    c = ½ solid cylinder or disk around its center
+    c = 1/12 rod around its center, R = length
+    c = ⅓ for a rod around its end, R = length
+"""
+
 
 
 # webassign 1
@@ -691,10 +755,12 @@ def m2_gtr_m1_atwood_machine(m1c=1, m2c=6):
     print('(c) Determine the distance each object will move in the first second of motion if both objects start from rest. m')
 
     print('░ question a ░')
-    print_atwood_machine(T, m1, m2, g, a, T)
+    # solve tension
+    print_atwood_machine(T, m1, m2, g, T)
 
     print('░ question b ░')
-    print_atwood_machine(a, m1, m2, g, a, T)
+    # solve acceleration
+    print_atwood_machine(a, m1, m2, g, a)
 
     print('░ question c ░')
     # time is 1 second
@@ -737,22 +803,69 @@ def energy_and_force_of_bullet(mc=2.0, v0c=280, xc=43):
     # F = W/d
     print_maths_evaluate('/', F, KE, x)
 
+def impact_of_ball_on_plate(mc=5.30, xhc=10.0, xdc=2.90):
+    """
+    brief:
+    from:     WebAssign Homework 3.2
+    category:
+    types:
+    """
+
+    m = ['mass', mc, 'mc', 'kg', '.2f', 'scalar']
+    xh = ['change in height', xhc, 'Δheight', 'm', '.2f', 'scalar']
+    xd = ['change in depth', xdc, 'Δdepth', 'm', '.4f', 'scalar']
+    g = ['gravity', 9.81, 'a', 'm s⁻²', '.2f', 'scalar']
+    F = ['force', 0, 'F', 'N', '.2f', 'scalar']
+    v = ['velocity', 0, 'v', 'm s⁻¹', '.2f', 'scalar']
+    KE = ['kinetic energy', 0, 'KE', 'J', '.1f', 'scalar']
+
+    print('-' * 30)
+    print('A {:{}} {} steel ball is dropped onto a copper plate from a height of {:{}} {}.'.format(m[1], m[4], m[3], xh[1], xh[4], xh[3]))
+    print('If the ball leaves a dent {:{}} mm deep in the plate'.format(xd[1], xd[4]))
+    print('(a) what is the average force exerted by the plate on the ball during the impact? N')
+
+    print('░ question a ░')
+    # solve final velocity: v² = v₀² + 2aΔx
+    print_mechanics_motion4(v, v, 0, g, xh)
+    # change in kinetic energy: KE = ½mv²
+    print_kinectic_energy(KE, KE, m, v)
+    print('convert mm to m: x / 1000')
+    print_maths_evaluate('/', xd, xd, 1000)
+    # solve Force: F = W/d
+    print_work_done(F, KE, F, xd)
+
+def atwood_machine_passing(m1c=5.15, m2c=3.45, xhc=4):
+    """
+    brief:
+    from:     WebAssign Homework 3.3
+    category:
+    types:
+    """
+
+    m1 = ['mass1', m1c, 'm1', 'kg', '.2f', 'scalar']
+    m2 = ['mass2', m2c, 'm2', 'kg', '.2f', 'scalar']
+    xh = ['height', xhc, 'xh', 'm', '.2f', 'scalar']
+
+    g = ['gravity', 9.81, 'a', 'm s⁻²', '.2f', 'scalar']
+    v0 = ['initial velocity', 0, 'v₀', 'm s⁻¹', '.2f', 'vector']
+    v = ['velocity', 0, 'v', 'm s⁻¹', '.2f', 'scalar']
+    x = ['change in distance', 0, 'Δx', 'm', '.2f', 'scalar']
+    a = ['acceleration', 0, 'a', 'm s⁻²', '.2f', 'scalar']
+
+    print('-' * 30)
+    print('Two masses are connected by a light string passing over a light, frictionless pulley')
+    print('The {} = {:{}} {} object is released from rest at a point {:{}} {} above the floor, where the {} = {:{}} {} object rests.'.format(m1[2], m1[1], m1[4], m1[3], xh[1], xh[4], xh[3], m2[2], m2[1], m2[4], m2[3]))
+    print('(a) Determine the speed of each object when the two pass each other. m/s')
+    print('(b) Determine the speed of each object at the moment the {:{}} {} mass hits the floor. m/s'.format(m1[1], m1[4], m1[3]))
+    print('(c) How much higher does the {:{}} {} mass travel after the {:{}} {} mass hits the floor? m'.format(m2[1], m2[4], m2[3], m1[1], m1[4], m1[3]))
+
+    # solve acceleration
+    print_atwood_machine(a, m1, m2, g, a)
 
 
 
 
 """
-A 5.30 kg steel ball is dropped onto a copper plate from a height of 10.0 m.
-If the ball leaves a dent 2.90 mm deep in the plate
-(a) what is the average force exerted by the plate on the ball during the impact?
-179103.45  N
-
-Two masses are connected by a light string passing over a light, frictionless pulley
-The m1 = 5.15 kg object is released from rest at a point 4.00 m above the floor, where the m2 = 3.45 kg object rests.
-(a) Determine the speed of each object when the two pass each other. m/s
-(b) Determine the speed of each object at the moment the 5.15 kg mass hits the floor. m/s
-(c) How much higher does the 3.45 kg mass travel after the 5.15 kg mass hits the floor? m
-
 
 # webassign 4
 The force shown in the force-time diagram in Figure P6.11 acts on a 2.2 kg object.

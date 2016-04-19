@@ -1,3 +1,4 @@
+
 def get_resources(*required):
     """
     This is to help building functions in the main calculator faster
@@ -18,7 +19,7 @@ def get_resources(*required):
     "m2 = ['mass2', m2c, 'm2', 'kg', '.2f', 'scalar'] | " \
     "t = ['time', tc, 't', 's', '.2f', 'scalar'] | " \
     "T = ['tension force', Tc, 'T', 'N', '.1f', 'scalar'] # T: tension | " \
-    "T = ['period', Tc, 'T', 's', '.3f', 'scalar'] | "
+    "T = ['period', Tc, 'T', 's', '.3f', 'scalar'] | " \
     "v = ['wave speed', vc, 'v', 'm s⁻¹', '.2f', 'scalar'] | " \
     "v = ['velocity', vc, 'v', 'm s⁻¹', '.2f', 'scalar'] | " \
     "v0 = ['initial velocity', v0c, 'v₀', 'm s⁻¹', '.2f', 'vector'] | " \
@@ -27,15 +28,70 @@ def get_resources(*required):
     "x = ['change in distance', xc, 'Δx', 'm', '.2f', 'scalar'] | " \
     "x = ['distance', xc, 'x', 'm', '.2f', 'scalar'] | "
 
-    variables = (longstring.split('|'))
+    # build a list with variables to use
+    function_string = 'def newfunction('
+    input_list = []
+    question_list = []
 
+    variables = (longstring.split('|'))
+    for i in required:
+        for j in variables:
+            k = j.split('=')
+            k[0] = k[0].strip()
+            if i == k[0]:
+                question_list.append(i)
+                l = k[1].split(',')
+                text= l[0]
+                SIunit = l[3]
+                input_list.append(k[0] + ' = input("' + text[3:-1] + ' (' + SIunit[2:-1] + '): ")')
+                variable = l[1]
+                function_string += variable[1:] + '=0, '
+
+    # build choice menu
+    print('if question == 3:')
+    for i in input_list:
+        print('    {}'.format(i))
+    # build if not choice
+    if_string = '    if not ('
+    if_string += ' and '.join(question_list)
+    if_string += '): newfunction()'
+    # build else choice
+    else_string = '    else: newfunction('
+    for i in range(0, len(question_list)):
+        question_list[i] = question_list[i] + 'c=float(' + question_list[i] + '), '
+    else_string += ''.join(question_list)
+    else_string = else_string[0:-2] + ')'
+
+    # print choices
+    print(if_string)
+    print(else_string)
+    print('')
+
+    function_string = function_string[0:-2] + '):'
+    print(function_string)
+    print('    """')
+    print("    brief:")
+    print("    from:     WebAssign Homework ")
+    print("    category:")
+    print("    types:")
+    print('    """')
+    print('')
+
+    variables = (longstring.split('|'))
     for i in required:
         for j in variables:
             k = j.split('=')
             k[0] = k[0].strip()
             if i == k[0]:
                 k[1] = k[1].strip()
-                print('{} = {}'.format(k[0], k[1]))
+                print('    {} = {}'.format(k[0], k[1]))
+
+    print("")
+    print("    print('-' * 30)")
+    print("    print('A {:{}} {} thing of {:{}} {}.'.format(m[1], m[4], v[1], v[4], v[3]))")
+    print("    print('(a) Find its kinetic energy. J')")
 
 #get_resources('m1', 'm2', 'T', 'a', 'g', 't', 'x', 'v0')
-get_resources('m','v','KE','x','F', 'T', 'f')
+#get_resources('m','v','KE','x','F', 'T', 'f')
+#get_resources('m', 'x', 'g', 'F', 'v')
+get_resources('m1', 'm2', 'g', 'v0', 'v', 'x', 'a')
