@@ -51,12 +51,38 @@ def template(v0c=82.0, vfc=15.1, xc=350):
 
     # F = ma
     print_maths_evaluate('*', F, m, a)
+    # solve momentum: p = mv
+    print_maths_evaluate('*', p, m, v)
+    # force: F = Δp/Δt
+    print_maths_evaluate('/', xF, p, t)
 
     # change in kinetic energy: KE = ½mv²
     print_kinectic_energy(KE, KE, m, v)
-
-    # solve Force: F = W/d
+    # solve force: F = W/d
     print_work_done(F, KE, F, xd)
+
+    print('velocity: x direction travelling y angle: sin=opp/hyp : v * sin(θ)')
+    print_maths_evaluate('*', v, v, math.sin(to_radians(O[1])))
+    print('initial momentum: : p = m * v')
+    print_maths_evaluate('*', pi, m, v)
+    print('final momentum, velocity vector reversed direction: : p = m * -v')
+    print_maths_evaluate('*', pf, m, v[1] * -1)
+    print('change in momentum: Δp = pf - pi')
+    print_maths_evaluate('-', p, pf, pi)
+    print('force: F = Δp/Δt')
+    print_maths_evaluate('/', xF, p, t)
+
+    print('initial momentum: : p₀ = m1 * v₀')
+    print_maths_evaluate('*', p0, m1, v0)
+    print('final momentum: : pf = m1 * vf')
+    print_maths_evaluate('*', pf, m1, vf)
+    print('change in momentum: Δp = pf - p₀')
+    print_maths_evaluate('-', p, pf, p0)
+
+    # solve velocity: Δv = J/m = Δp/t
+    print_impulse(v, p, v, m2)
+    # solve velocity: Δv = J/m
+    print_impulse(v, J, v, m)
 
 
 

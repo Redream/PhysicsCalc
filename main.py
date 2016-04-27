@@ -207,23 +207,25 @@ def webassign_do_question(week, question):
         #     print("Question not supported.")
     elif week == 4:
         if question == 1:
-            m = input("Mass (m): ")
-            F = input("Force (F): ")
-            vf = input("Final velocity (km/h): ")
-            if not (m and F and vf): train_acceleration_time()
-            else: train_acceleration_time(mc=float(m), Fc=float(F), vfc=float(vf))
+            J = input("impulse (N s⁻¹): ")
+            m = input("mass (kg): ")
+            v0 = input("initial velocity (m s⁻¹): ")
+            if not (J and m and v0): impulse_collision()
+            else: impulse_collision(Jc=float(J), mc=float(m), v0c=float(v0))
         if question == 2:
-            a = input("Acceleration (m/s²): ")
-            m = input("Mass (kg): ")
-            if not (a and m): tension_two_masses_elevator()
-            else: tension_two_masses_elevator(mc=float(m), ac=float(a))
+            m = input("mass (kg): ")
+            v = input("velocity (m s⁻¹): ")
+            O = input("angle (degrees): ")
+            t = input("time (s): ")
+            if not (m and v and O and t): ball_bounce_wall_angle()
+            else: ball_bounce_wall_angle(mc=float(m), vc=float(v), Oc=float(O), tc=float(t))
         if question == 3:
-            m = input("Mass (kg): ")
-            v0 = input("Initial velocity (m/s): ")
-            vf = input("Final velocity (m/s): ")
-            t = input("Time (s): ")
-            if not (m and v0 and vf and t): force_distance_slowing_car()
-            else: force_distance_slowing_car(mc=float(m), v0c=float(v0), vfc=float(vf), tc=float(t))
+            m1 = input("mass golf club (g): ")
+            m2 = input("mass golf ball (g): ")
+            v0 = input("initial velocity (m s⁻¹): ")
+            vf = input("final velocity (m s⁻¹): ")
+            if not (m1 and m2 and v0 and vf): golf_ball_speed()
+            else: golf_ball_speed(m1c=float(m1), m2c=float(m2), v0c=float(v0), vfc=float(vf))
         if question == 4:
             m1 = input("Mass 1 (kg): ")
             m2 = input("Mass 2 (kg): ")
@@ -297,24 +299,24 @@ def show_invalid_option():
     input("Press enter to exit. ")
 
 
-def print_maths_evaluate(operator, a, b, c):
+def print_maths_evaluate(operator, solve, t1, t2):
     """
-    Prints a, which is b operated by c
-    Returns a
+    Prints solve, which is term 1 (t1) operated by term 2 (t2)
+    Returns solve
     """
-    if isinstance(b, (int, float, complex)):
-        print('{} = {} {} {:{}} {}'.format(a[2], b, operator, c[1], c[4], c[3]))
-        a[1] = eval('{} {} {}'.format(b, operator, c[1]))
-        print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
-    elif isinstance(c, (int, float, complex)):
-        print('{} = {:{}} {} {} {}'.format(a[2], b[1], b[4], b[3], operator, c))
-        a[1] = eval('{} {} {}'.format(b[1], operator, c))
-        print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
+    if isinstance(t1, (int, float, complex)):
+        print('{} = {} {} {:{}} {}'.format(solve[2], t1, operator, t2[1], t2[4], t2[3]))
+        solve[1] = eval('{} {} {}'.format(t1, operator, t2[1]))
+        print('{} = {:{}} {}'.format(solve[2], solve[1], solve[4], solve[3]))
+    elif isinstance(t2, (int, float, complex)):
+        print('{} = {:{}} {} {} {}'.format(solve[2], t1[1], t1[4], t1[3], operator, t2))
+        solve[1] = eval('{} {} {}'.format(t1[1], operator, t2))
+        print('{} = {:{}} {}'.format(solve[2], solve[1], solve[4], solve[3]))
     else:
-        print('{} = {:{}} {} {} {:{}} {}'.format(a[2], b[1], b[4], b[3], operator, c[1], c[4], c[3]))
-        a[1] = eval('{} {} {}'.format(b[1], operator, c[1]))
-        print('{} = {:{}} {}'.format(a[2], a[1], a[4], a[3]))
-    return a
+        print('{} = {:{}} {} {} {:{}} {}'.format(solve[2], t1[1], t1[4], t1[3], operator, t2[1], t2[4], t2[3]))
+        solve[1] = eval('{} {} {}'.format(t1[1], operator, t2[1]))
+        print('{} = {:{}} {}'.format(solve[2], solve[1], solve[4], solve[3]))
+    return solve
 
 def print_convert_kmh_ms(a):
     """
@@ -331,6 +333,15 @@ def print_convert_ms_kmh(a):
     """
     a[1] = a[1] * 3.6
     print('{0} = {1:{2}} {3} * 3.6 = {1:{2}} {4}'.format(a[2], a[1], a[4], a[3], 'km/h'))
+
+def print_convert_absolute(a):
+    """
+    converts a into absolute, may be useful for convert vector to scalar
+    Returns a
+    """
+    print('convert vector to absolute value for scalar')
+    a[1] = abs(a[1])
+    print('abs({0}) = {1:{2}} {3}'.format(a[2], a[1], a[4], a[3]))
 
 def print_mechanics_motion1(solve, v, v0, a, t):
     """ velocity (without x): v = v₀ + at """
@@ -454,16 +465,36 @@ def print_atwood_machine(solve, m1, m2, g, aT):
         print('{} = {:{}} {}'.format(T[2], T[1], T[4], T[3]))
         return T
 
+def print_impulse(solve, J, v, m):
+    """
+    Impulse: a quantity that describes the effect of a net force acting on an object (a kind of "moving force")
+    a vector quantity (since force is a vector and time is a scalar)
+    N s = kg m/s
 
-def print_impulse(solve, F, t):
-    """ hi """
+    product of the average net force acting on an object and its duration
+    J = FΔt
+
+    The impulse-momentum theorem states that the change in momentum of an object equals the impulse applied to it.
+    J = Δp
+    p = mv
+
+    If mass is constant
+    FΔt = mΔv
+    """
+
+    print('impulse: J = FΔt = mΔv')
+
+    if solve[2] == v[2]:
+        print('rearrange to solve velocity: Δv = J/m')
+        print_maths_evaluate('/', v, J, m)
+        return v
 
 def print_work_done(solve, W, F, x, O=1):
     """
     Work: ‘Transfer of energy’
     Quantitatively: The work W done by a constant force on an object is the product of the force along the direction of displacement and the magnitude of displacement.
-    W=(Fcosθ)Δx
-    Units: =Nm=Joule
+    W = (Fcosθ)Δx
+    Units: N/m = Joule
     Work: (Fcosθ)Δx
     ΔW = KE
     """
@@ -474,7 +505,6 @@ def print_work_done(solve, W, F, x, O=1):
         print('rearrange to solve force: F = W/Δx')
         print_maths_evaluate('/',F,W,x)
         return F
-
 
 def print_potential_spring_energy(solve, KE, k, v):
     """Potential Energy of spring: PEspring = ½kv²"""
@@ -902,17 +932,130 @@ def atwood_machine_passing(m1c=5.15, m2c=3.45, xhc=4):
 
 # webassign 4
 
+def impulse_collision(Jc=8, mc=2.2, v0c=-1.7):
+    """
+    brief:
+    from:     WebAssign Homework 4.1
+    category:
+    types:
+    """
+
+    J = ['impulse', Jc, 'J', 'N s⁻¹', '.2f', 'vector']
+    m = ['mass', mc, 'mc', 'kg', '.2f', 'scalar']
+    v0 = ['initial velocity', v0c, 'v₀', 'm s⁻¹', '.2f', 'vector']
+    v = ['velocity', 0, 'v', 'm s⁻¹', '.2f', 'scalar']
+
+
+    print('-' * 30)
+    print('A {:{}} {} object has impulse force of {:{}} {} upon collision.'.format(m[1], m[4], m[3], J[1], J[4], J[3]))
+    print('(b) Find the final velocity of the mass if it is initially at rest. m/s')
+    print('(c) Find the final velocity of the mass if it is initially moving along the x axis with a velocity of {:{}} {}. m/s'.format(v0[1], v0[4], v0[3]))
+
+    print('░ question b ░')
+    # solve velocity: Δv = J/m
+    print_impulse(v, J, v, m)
+
+    print('░ question c ░')
+    # solve velocity given initial velocity: v = v0 + vf
+    print_maths_evaluate('+', v, v0, v)
+
+def ball_bounce_wall_angle(mc=2.90, vc=10.0, Oc=60, tc=0.16):
+    """
+    brief:    Force on a ball bouncing of a wall at an angle
+    from:     WebAssign Homework 4.2
+    category:
+    types:
+    """
+
+    m = ['mass', mc, 'mc', 'kg', '.2f', 'scalar']
+    v = ['velocity', vc, 'v', 'm s⁻¹', '.2f', 'vector']
+    O = ['angle', Oc, 'θ', '°', '.0f', 'scalar']
+    t = ['time', tc, 't', 's', '.3f', 'scalar']
+    pi = ['initial momentum', 0, 'pi', 'kg m/s', '.2f', 'vector']
+    pf = ['final momentum', 0, 'pf', 'kg m/s', '.2f', 'vector']
+    p = ['change in momentum', 0, 'Δp', 'kg m/s', '.2f', 'vector']
+    xF = ['x component force', 0, 'xF', 'N', '.0f', 'vector']
+
+    print('-' * 30)
+    print('A {:{}} {} steel ball strikes a wall with a speed of {:{}} {} at an angle of {:{}}{} with the surface.'.format(m[1], m[4], m[3], v[1], v[4], v[3], O[1], O[4], O[3]))
+    print('It bounces off with the same speed and angle.')
+    print('If the ball is in contact with the wall for {:{}} {}, what is the average force exerted on the ball by the wall?'.format(t[1], t[4], t[3]))
+    print('(a) x-component N')
+    print('(a) y-component N')
+
+    print('░ question a ░')
+    # Fm=Δp/Δt
+    # Δpx = (m * v2 * sin(θ)) - (-m * v1 * sin(θ)) ; the negative sign in the second term is because the orientation of the trajectory reverses
+    # Δpy = (m * v2 * cos(θ)) - (m * v1 * cos(θ)) = 0
+    # Use the sin and cos in this way, as the angle is measured from the hypotenuse and opposite side
+
+    print('velocity: x direction travelling y angle: sin=opp/hyp : v * sin(θ)')
+    print_maths_evaluate('*', v, v, math.sin(to_radians(O[1])))
+    print('initial momentum: : p = m * v')
+    print_maths_evaluate('*', pi, m, v)
+    print('final momentum, velocity vector reversed direction: : p = m * -v')
+    print_maths_evaluate('*', pf, m, v[1] * -1)
+    print('change in momentum: Δp = pf - pi')
+    print_maths_evaluate('-', p, pf, pi)
+    print('force: F = Δp/Δt')
+    print_maths_evaluate('/', xF, p, t)
+
+    print('░ question b ░')
+    print('Δpy = (m * v2 * cos(θ)) - (m * v1 * cos(θ)) = 0')
+    print('Fm = 0/Δt = 0')
+    print('Since the ball is still travelling in this direction, no impulse has occurred')
+
+def golf_ball_speed(m1c=280, m2c=46, v0c=47, vfc=34):
+    """
+    brief:    Initial velocity of a golf ball given impact force
+    from:     WebAssign Homework 4.3
+    category:
+    types:
+    """
+
+    m1 = ['mass1', m1c, 'm1', 'kg', '.3f', 'scalar']
+    m2 = ['mass2', m2c, 'm2', 'kg', '.3f', 'scalar']
+    v0 = ['initial velocity', v0c, 'v₀', 'm s⁻¹', '.2f', 'vector']
+    vf = ['final velocity', vfc, 'vf', 'm s⁻¹', '.2f', 'vector']
+    v = ['velocity', 0, 'v', 'm s⁻¹', '.0f', 'vector']
+    p0 = ['initial momentum', 0, 'p₀', 'kg m/s', '.2f', 'vector']
+    pf = ['final momentum', 0, 'pf', 'kg m/s', '.2f', 'vector']
+    p = ['momentum', 0, 'Δp₀', 'kg m/s', '.2f', 'vector']
+
+    print('-' * 30)
+    print('High-speed stroboscopic photographs show that the head of a {:{}} {} golf club is traveling at {:{}} {}'.format(m1[1], m1[4], m1[3], v0[1], v0[4], v0[3]))
+    print('just before it strikes a {:{}} {} golf ball at rest on a tee.'.format(m2[1], m2[4], m2[3]))
+    print('After the collision, the club head travels (in the same direction) at {:{}} {}.'.format(vf[1], vf[4], vf[3]))
+    print('(a) Find the speed of the golf ball just after impact. m/s')
+
+    print('░ question a ░')
+    print('convert g to kg: x / 1000')
+    print_maths_evaluate('/', m1, m1, 1000)
+    print_maths_evaluate('/', m2, m2, 1000)
+
+    print('initial momentum: : p₀ = m1 * v₀')
+    print_maths_evaluate('*', p0, m1, v0)
+    print('final momentum: : pf = m1 * vf')
+    print_maths_evaluate('*', pf, m1, vf)
+    print('change in momentum: Δp = pf - p₀')
+    print_maths_evaluate('-', p, pf, p0)
+
+    print('░ question b ░')
+    # solve velocity: Δv = J/m = Δp/t
+    print_impulse(v, p, v, m2)
+    print_convert_absolute(v)
+
 """
+A 2200 kg car moving east at 10.0 m/s collides with a 3000 kg car moving north.
+The cars stick together and move as a unit after the collision, at an angle of 42.0° north of east and at a speed of 5.69 m/s.
+Find the speed of the 3000 kg car before the collision. m/s north
 
-# webassign 4
-The force shown in the force-time diagram in Figure P6.11 acts on a 2.2 kg object.
+m1
+m2
+v1
+v2
+vf
 
-Figure P6.11
-(a) Find the impulse of the force. N·s
-
-(b) Find the final velocity of the mass if it is initially at rest. m/s
-
-(c) Find the final velocity of the mass if it is initially moving along the x axis with a velocity of -1.7 m/s. m/s
 
 
 """
