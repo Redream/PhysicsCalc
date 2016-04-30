@@ -3,14 +3,7 @@ import math
 
 def main():
     manualmenu = [
-        "Train Stopping Time",
-        "Rocket Height Calculator",
-        "Height Fallen Calculator",
-        "Race car on a circular race track",
-        "Bucket falling",
-        "Spring 1",
-        "vertical_spring_mass",
-        "wave_period_speed",
+        "Water Bottle Experiment",
     ]
 
     webmenu = [
@@ -23,7 +16,7 @@ def main():
     ]
 
     print("MAIN MENU:")
-    menu = ["PHYS111 WebAssign Homework", "Manual"]
+    menu = ["PHYS111 WebAssign Homework", "PHYS101 WebAssign Homework","Own"]
 
     menucount = 0
     for s in menu:
@@ -58,7 +51,7 @@ def main():
                         webassign_do_question(weekselect, qselect)
                         input("Press enter to exit. ")
 
-        elif menuselect == 2:
+        elif menuselect == 3:
             menucount = 0
             for s in manualmenu:
                 menucount += 1
@@ -68,28 +61,13 @@ def main():
             manualselect = check_valid_int(manualselect, 1, len(manualmenu))
             if manualselect != -1:
                 if manualselect == 1:
-                    train_stopping_time()
+                    water_bottle_experiment()
                 elif manualselect == 2:
                     v0 = input("Initial velocity (m/s): ")
-                    if not v0: arrow_shot_up()
-                    else: arrow_shot_up(v0c=float(v0))
                 elif manualselect == 3:
                     t = input("Time (s): ")
-                    x = input("Distance (m): ")
-                    if not (x and t): original_height_fallen_from()
-                    else: original_height_fallen_from(xc=float(x), tc=float(t))
                 elif manualselect == 4:
                     race_car_circular_track()
-                elif manualselect == 5:
-                    bucket_falling_into_well()
-                elif manualselect == 6:
-                    spring_potential_energy_velocity()
-                elif manualselect == 7:
-                    vertical_spring_mass()
-                elif manualselect == 8:
-                    f = input("Please enter the frequency (Hz): ")
-                    if not f: wave_period_speed()
-                    else: wave_period_speed(fc=float(f))
 
 def webassign_get_questions(week):
     return {
@@ -227,34 +205,22 @@ def webassign_do_question(week, question):
             if not (m1 and m2 and v0 and vf): golf_ball_speed()
             else: golf_ball_speed(m1c=float(m1), m2c=float(m2), v0c=float(v0), vfc=float(vf))
         if question == 4:
-            m1 = input("Mass 1 (kg): ")
-            m2 = input("Mass 2 (kg): ")
-            if not (m1 and m2): m2_gtr_m1_atwood_machine()
-            else: m2_gtr_m1_atwood_machine(m1c=float(m1), m2c=float(m2))
+            m1 = input("mass 1 (kg): ")
+            v1 = input("velocity 1 (m s⁻¹): ")
+            m2 = input("mass 2 (kg): ")
+            O = input("angle (°): ")
+            vf = input("final velocity (m s⁻¹): ")
+            if not (m1 and v1 and m2 and O and vf): car_collision_angle()
+            else: car_collision_angle(m1c=float(m1), v1c=float(v1), m2c=float(m2), Oc=float(O), vfc=float(vf))
     elif week == 5:
         if question == 1:
-            m = input("Mass (m): ")
-            F = input("Force (F): ")
-            vf = input("Final velocity (km/h): ")
-            if not (m and F and vf): train_acceleration_time()
-            else: train_acceleration_time(mc=float(m), Fc=float(F), vfc=float(vf))
+            race_car_circular_track()
         if question == 2:
-            a = input("Acceleration (m/s²): ")
-            m = input("Mass (kg): ")
-            if not (a and m): tension_two_masses_elevator()
-            else: tension_two_masses_elevator(mc=float(m), ac=float(a))
+            print("hi")
         if question == 3:
-            m = input("Mass (kg): ")
-            v0 = input("Initial velocity (m/s): ")
-            vf = input("Final velocity (m/s): ")
-            t = input("Time (s): ")
-            if not (m and v0 and vf and t): force_distance_slowing_car()
-            else: force_distance_slowing_car(mc=float(m), v0c=float(v0), vfc=float(vf), tc=float(t))
+            print("hi")
         if question == 4:
-            m1 = input("Mass 1 (kg): ")
-            m2 = input("Mass 2 (kg): ")
-            if not (m1 and m2): m2_gtr_m1_atwood_machine()
-            else: m2_gtr_m1_atwood_machine(m1c=float(m1), m2c=float(m2))
+            bucket_falling_into_well()
     elif week == 6:
         if question == 1:
             print("hi")
@@ -686,8 +652,8 @@ def train_acceleration_time(mc=17000000, Fc=740000, vfc=76, v0c=0):
     """
     brief:    find time it takes for object to reach speed
     from:     WebAssign Homework 2.1
-    category: force
-    types:    constant acceleration
+    category: Newton's second law
+    types:    force, constant acceleration
     """
 
     m = ['mass', mc, 'm', 'kg', '.1e', 'scalar']
@@ -719,7 +685,7 @@ def tension_two_masses_elevator(ac=2.30, mc=13.5, gc=9.81):
     brief:    find tension in 2 attached masses in a moving elevator
     from:     WebAssign Homework 2.2
     category: tension force
-    types:    constant acceleration, opposing acceleration
+    types:    constant acceleration, opposing acceleration, Newton's second law
     """
 
     m = ['mass', mc, 'm', 'kg', '.1f', 'scalar']
@@ -752,8 +718,8 @@ def force_distance_slowing_car(mc=2000, v0c=19.0, vfc=10.0, tc=5.60):
     """
     brief:    find force and distance of a car decelerating
     from:     WebAssign Homework 2.3
-    category: force
-    types:    constant negative acceleration
+    category: Newton's second law
+    types:    force, uniform negative acceleration,
     """
 
     m = ['mass', mc, 'm', 'kg', '.0f', 'scalar']
@@ -824,10 +790,10 @@ def m2_gtr_m1_atwood_machine(m1c=1, m2c=6):
 # webassign 3
 def energy_and_force_of_bullet(mc=2.0, v0c=280, xc=43):
     """
-    brief:
+    brief:    find the kinetic energy and force of a bullet given its speed
     from:     WebAssign Homework 3.1
-    category:
-    types:
+    category: kinetic energy
+    types:    energy, work
     """
 
     m = ['mass', mc, 'm', 'kg', '.2e', 'scalar']
@@ -856,10 +822,10 @@ def energy_and_force_of_bullet(mc=2.0, v0c=280, xc=43):
 
 def impact_of_ball_on_plate(mc=5.30, xhc=10.0, xdc=2.90):
     """
-    brief:
+    brief:    find the force exerted on a plate from a dropped ball
     from:     WebAssign Homework 3.2
-    category:
-    types:
+    category: kinetic energy
+    types:    energy, work, kinematics
     """
 
     m = ['mass', mc, 'mc', 'kg', '.2f', 'scalar']
@@ -887,10 +853,10 @@ def impact_of_ball_on_plate(mc=5.30, xhc=10.0, xdc=2.90):
 
 def atwood_machine_passing(m1c=5.15, m2c=3.45, xhc=4):
     """
-    brief:
+    brief:    find the speed and distance of uneven masses on an atwood machine
     from:     WebAssign Homework 3.3
-    category:
-    types:
+    category: atwood machine
+    types:    energy, kinematics
     """
 
     m1 = ['mass1', m1c, 'm1', 'kg', '.2f', 'scalar']
@@ -934,9 +900,9 @@ def atwood_machine_passing(m1c=5.15, m2c=3.45, xhc=4):
 
 def impulse_collision(Jc=8, mc=2.2, v0c=-1.7):
     """
-    brief:
+    brief:    determine final velocity of an object given its impact force
     from:     WebAssign Homework 4.1
-    category:
+    category: impulse
     types:
     """
 
@@ -961,10 +927,10 @@ def impulse_collision(Jc=8, mc=2.2, v0c=-1.7):
 
 def ball_bounce_wall_angle(mc=2.90, vc=10.0, Oc=60, tc=0.16):
     """
-    brief:    Force on a ball bouncing of a wall at an angle
+    brief:    force on a ball bouncing off a wall at an angle
     from:     WebAssign Homework 4.2
-    category:
-    types:
+    category: impulsive force
+    types:    momentum conservation
     """
 
     m = ['mass', mc, 'mc', 'kg', '.2f', 'scalar']
@@ -999,6 +965,7 @@ def ball_bounce_wall_angle(mc=2.90, vc=10.0, Oc=60, tc=0.16):
     print_maths_evaluate('-', p, pf, pi)
     print('force: F = Δp/Δt')
     print_maths_evaluate('/', xF, p, t)
+    print('Since the ball has reversed direction, an impulse has occurred')
 
     print('░ question b ░')
     print('Δpy = (m * v2 * cos(θ)) - (m * v1 * cos(θ)) = 0')
@@ -1007,10 +974,10 @@ def ball_bounce_wall_angle(mc=2.90, vc=10.0, Oc=60, tc=0.16):
 
 def golf_ball_speed(m1c=280, m2c=46, v0c=47, vfc=34):
     """
-    brief:    Initial velocity of a golf ball given impact force
+    brief:    initial velocity of a golf ball given impact force of being hit by a golf club
     from:     WebAssign Homework 4.3
-    category:
-    types:
+    category: impulse
+    types:    impulsive force, Newton's second law, momentum
     """
 
     m1 = ['mass1', m1c, 'm1', 'kg', '.3f', 'scalar']
@@ -1045,21 +1012,37 @@ def golf_ball_speed(m1c=280, m2c=46, v0c=47, vfc=34):
     print_impulse(v, p, v, m2)
     print_convert_absolute(v)
 
-"""
-A 2200 kg car moving east at 10.0 m/s collides with a 3000 kg car moving north.
-The cars stick together and move as a unit after the collision, at an angle of 42.0° north of east and at a speed of 5.69 m/s.
-Find the speed of the 3000 kg car before the collision. m/s north
+def car_collision_angle(m1c=2200, v1c=10, m2c=3000, Oc=42, vfc=5.69):
+    """
+    brief:    Calculate velocity of cars in a collision
+    from:     WebAssign Homework 4.4
+    category: inelastic collision at right angles
+    types:
+    """
 
-m1
-m2
-v1
-v2
-vf
+    m1 = ['mass1', m1c, 'm1', 'kg', '.0f', 'scalar']
+    v1 = ['velocity object 1', v1c, 'v1', 'm s⁻¹', '.2f', 'vector']
+    m2 = ['mass2', m2c, 'm2', 'kg', '.0f', 'scalar']
+    O = ['angle', Oc, 'θ', '°', '.0f', 'scalar']
+    vf = ['final velocity', vfc, 'vf', 'm s⁻¹', '.2f', 'vector']
+    pE = ['momentum East', 0, 'pE', 'kg m/s', '.0f', 'vector']
+    pN = ['momentum North', 0, 'pN', 'kg m/s', '.0f', 'vector']
+    v2 = ['velocity object 2', 0, 'v2', 'm s⁻¹', '.2f', 'vector']
 
+    print('-' * 30)
+    print('A {:{}} {} car moving east at {:{}} {} collides with a {:{}} {} car moving north.'.format(m1[1], m1[4], m1[3], v1[1], v1[4], v1[3], m2[1], m2[4], m2[3]))
+    print('The cars stick together and move as a unit after the collision, at an angle of {:{}}{} north of east and at a speed of {:{}} {}.'.format(O[1], O[4], O[3], vf[1], vf[4], vf[3]))
+    print('(a) Find the speed of the {:{}} {} car before the collision. m/s north'.format(m2[1], m2[4], m2[3]))
 
+    print('░ question a ░')
+    print('momentum car east (ADJ): : pE = m1 * v1')
+    print_maths_evaluate('*', pE, m1, v1)
 
-"""
+    print('momentum north (OPP): : pN = pE * tan(θ)')
+    print_maths_evaluate('*', pN, pE, math.tan(to_radians(O[1])))
 
+    print('velocity car north (OPP): pN=m2*v2 <==> v2=pN/m2')
+    print_maths_evaluate('/', v2, pN, m2)
 
 # webassign 5
 def race_car_circular_track():
@@ -1300,6 +1283,97 @@ def wave_period_speed(Ac=0.09, hlc=0.20, fc=17.0):
     print('░ question d ░')
     print('speed of a wave: v = fλ')
     print_maths_evaluate('*', v, f, A)
+
+
+
+
+def water_bottle_experiment(rc=4.6, Vc=1500):
+    """
+    water bottle experiment
+    take a bottle size, eg 1.5L and radius eg 3cm
+    take a series of x targets want to hi, eg 5cm, 12cm, 18cm, 25cm
+
+    1) equation 1
+    take 2 hole sizes, 2mm and 3mm and calculate where to position the holes to hit the targets
+
+    2) equation 2
+    using a base of 10cm, calculate the area of a hole and velocity required to hit furthest target
+    then take this hole size and use it to calculate the heights of lower targets
+
+    A =
+
+    u = 2gh
+    u = Q/A
+
+    """
+
+    g = ['gravity', 9.81, 'a', 'm s⁻²', '.2f', 'scalar']
+
+    rB = ['radius Bottle', rc, 'r', 'cm', '.3f', 'scalar']
+    VB = ['volume Bottle', Vc, 'V', 'mL³', '.2f', 'scalar']
+    bB = ['base Bottle', 0, 'h', 'cm²', '.2f', 'scalar']
+    hB = ['height Bottle', 0, 'h', 'cm', '.6f', 'scalar']
+
+
+
+    # calculate the height of the bottle given the volume and radius
+    # V = Bh
+    # B = πr²
+    # V = πr²h
+    # h = V/πr²
+
+    # B = πr²
+    bB[1] = math.pi * rB[1]**2
+    print('base of bottle: {:{}} {}'.format(bB[1], bB[4], bB[3]))
+    # h = V/πr²
+    print_maths_evaluate('/', hB, VB, bB)
+
+    # display how many millilitres (cm³) are in 1cm height of bottle
+    Vcm = ['volume per cm/h', 0, 'Vcm', 'mL³', '.6f', 'scalar']
+    print_maths_evaluate('/', Vcm, VB, hB)
+
+    # calculate 25 x horizontal using 2mm
+    # A = πr2
+    # targets = [25, 18, 12, 5]
+    # holeradius = [2, 3]
+
+    rH = ['radius Hole', 0.2, 'r', 'cm', '.3f', 'scalar'] # 2 mm
+    aH = ['radius Area', 0, 'r', 'cm²', '.3f', 'scalar']
+    x1 = ['x1 horizontal distance', 25, 'x1', 'cm', '.2f', 'scalar']
+
+    # A = πr²
+    aH[1] = math.pi * rH[1]**2
+    # print('convert mm to cm: x / 10')
+    # print_maths_evaluate('/', aH, aH, 10)
+    print('area of hole: {:{}} {}'.format(aH[1], aH[4], aH[3]))
+
+    # print('convert mL to L: x / 1000')
+    # print_maths_evaluate('/', V, V, 1000)
+
+
+    # v = Q/As : flow rate = flow rate / surface area
+
+    # volumetric flowrate
+    # volume = area * length
+    # volume flow = area * velocity
+
+    # v = √(2gh)
+    # Q = A * V
+
+    # solve velocity full bottle: v² = v₀² + 2aΔx
+    v = ['velocity', 0, 'v', 'cm s⁻¹', '.2f', 'vector']
+    # print('convert cm to m: x / 100')
+    # print_maths_evaluate('/', hB, hB, 100)
+    print_mechanics_motion4(v, v, 0, g, hB)
+
+    # # solve velocity 1cm: v² = v₀² + 2aΔx
+    # hB[1]=1
+    # print_mechanics_motion4(v, v, 0, g, hB)
+
+    # Q = Av
+    Q = ['flow rate', 0, 'Q', 'cm³ s⁻¹', '.2f', 'vector']
+    print_maths_evaluate('*', Q, aH, v)
+
 
 main()
 

@@ -20,11 +20,15 @@ def get_resources(*required):
     "m2 = ['mass2', m2c, 'm2', 'kg', '.2f', 'scalar'] | " \
     "O = ['angle', Oc, 'θ', '°', '.0f', 'scalar'] | " \
     "p = ['momentum', pc, 'p', 'kg m/s', '.2f', 'vector'] | " \
+    "pN = ['momentum North', pNc, 'pN', 'kg m/s', '.2f', 'vector'] | " \
+    "pE = ['momentum East', pEc, 'pE', 'kg m/s', '.2f', 'vector'] | " \
     "t = ['time', tc, 't', 's', '.2f', 'scalar'] | " \
     "T = ['tension force', Tc, 'T', 'N', '.1f', 'scalar'] # T: tension | " \
     "T = ['period', Tc, 'T', 's', '.3f', 'scalar'] | " \
     "v = ['wave speed', vc, 'v', 'm s⁻¹', '.2f', 'scalar'] | " \
     "v = ['velocity', vc, 'v', 'm s⁻¹', '.2f', 'vector'] | " \
+    "v1 = ['velocity object 1', v1c, 'v1', 'm s⁻¹', '.2f', 'vector'] | " \
+    "v2 = ['velocity object 2', v2c, 'v2', 'm s⁻¹', '.2f', 'vector'] | " \
     "v0 = ['initial velocity', v0c, 'v₀', 'm s⁻¹', '.2f', 'vector'] | " \
     "vf = ['final velocity', vfc, 'vf', 'm s⁻¹', '.2f', 'vector'] | " \
     "W = ['work', Wc, 'W','J', '.2f', 'scalar']  # W: work (W = Fd) | " \
@@ -32,6 +36,9 @@ def get_resources(*required):
     "x = ['distance', xc, 'x', 'm', '.2f', 'scalar'] | " \
     "xF = ['x component force', 0, 'x', 'N', '.2f', 'vector'] | " \
     "yF = ['y component force', 0, 'y', 'N', '.2f', 'vector'] | "
+
+
+
 
     # build a list with variables to use
     function_string = 'def newfunction('
@@ -108,3 +115,5 @@ get_resources('J', 'm', 'v', 'v0')
 get_resources('m','v','O','p','t','F','xF','yF')
 
 get_resources('m1', 'm2', 'v0', 'vf', 'v', 'p')
+
+get_resources('m1','v1','m2','O','vf','pE','pN','v2')

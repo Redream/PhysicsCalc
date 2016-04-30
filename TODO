@@ -79,6 +79,9 @@ def template(v0c=82.0, vfc=15.1, xc=350):
     print('change in momentum: Δp = pf - p₀')
     print_maths_evaluate('-', p, pf, p0)
 
+    print('momentum car east: : p = m1 * v1')
+    print_maths_evaluate('*', pE, m1, v1)
+
     # solve velocity: Δv = J/m = Δp/t
     print_impulse(v, p, v, m2)
     # solve velocity: Δv = J/m
