@@ -26,6 +26,7 @@ def get_resources(func_name, *required):
     "pE = ['momentum East', pEc, 'pE', 'kg m/s', '.2f', 'vector'] | " \
     "Q = ['coulomb', 'Qc', 'Q', 'C', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹) | " \
     "Qe = ['electrons per coulomb', 0.00000000000000000016021766208, 'Qe', 'electrons', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹) | " \
+    "R = ['ohms', 'Rc', 'R', 'Ω', '.0f', 'scalar'] # R: ohms | " \
     "t = ['time', tc, 't', 's', '.2f', 'scalar'] | " \
     "T = ['tension force', Tc, 'T', 'N', '.1f', 'scalar'] # T: tension | " \
     "T = ['period', Tc, 'T', 's', '.3f', 'scalar'] | " \
@@ -121,3 +122,5 @@ def get_resources(func_name, *required):
 #get_resources('m1','v1','m2','O','vf','pE','pN','v2')
 
 get_resources('electrons_hitting_tv','I','Q','t','Qe',)
+
+get_resources('current_light_bulb','R','Q','t','Qe',)
