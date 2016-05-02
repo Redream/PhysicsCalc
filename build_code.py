@@ -24,12 +24,13 @@ def get_resources(func_name, *required):
     "p = ['momentum', pc, 'p', 'kg m/s', '.2f', 'vector'] | " \
     "pN = ['momentum North', pNc, 'pN', 'kg m/s', '.2f', 'vector'] | " \
     "pE = ['momentum East', pEc, 'pE', 'kg m/s', '.2f', 'vector'] | " \
-    "Q = ['coulomb', 'Qc', 'Q', 'C', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹) | " \
-    "Qe = ['electrons per coulomb', 0.00000000000000000016021766208, 'Qe', 'electrons', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹) | " \
-    "R = ['ohms', 'Rc', 'R', 'Ω', '.0f', 'scalar'] # R: ohms | " \
+    "Q = ['coulomb', Qc, 'Q', 'C', '.2e', 'scalar'] # Q: coulomb (C = Amps/second C = A s⁻¹) | " \
+    "Qe = ['electrons per coulomb', 0.00000000000000000016021766208, 'Qe', 'electrons', '.2e', 'scalar'] # Q: coulomb (C = Amps/second C = A s⁻¹) | " \
+    "R = ['ohms', Rc, 'R', 'Ω', '.0f', 'scalar'] # R: ohms | " \
     "t = ['time', tc, 't', 's', '.2f', 'scalar'] | " \
     "T = ['tension force', Tc, 'T', 'N', '.1f', 'scalar'] # T: tension | " \
     "T = ['period', Tc, 'T', 's', '.3f', 'scalar'] | " \
+    "V = ['voltage', Vc, 'V', 'V', '.0f', 'scalar'] # V: voltage | " \
     "v = ['wave speed', vc, 'v', 'm s⁻¹', '.2f', 'scalar'] | " \
     "v = ['velocity', vc, 'v', 'm s⁻¹', '.2f', 'vector'] | " \
     "v1 = ['velocity object 1', v1c, 'v1', 'm s⁻¹', '.2f', 'vector'] | " \
@@ -122,5 +123,4 @@ def get_resources(func_name, *required):
 #get_resources('m1','v1','m2','O','vf','pE','pN','v2')
 
 get_resources('electrons_hitting_tv','I','Q','t','Qe',)
-
-get_resources('current_light_bulb','R','Q','t','Qe',)
+get_resources('current_light_bulb','R','V','I')

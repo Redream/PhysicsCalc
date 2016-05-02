@@ -242,6 +242,11 @@ def webassign_do_question(week, question):
             I = input("ampere (µA): ")
             if not (I): electrons_hitting_tv()
             else: electrons_hitting_tv(Ic=float(I))
+        if question == 2:
+            R = input("ohms (Ω): ")
+            V = input("voltage (V): ")
+            if not (R and V): current_light_bulb()
+            else: current_light_bulb(Rc=float(R), Vc=float(V))
 
     else:
         # this shouldn't happen because we already checked for invalid weeks
@@ -533,8 +538,6 @@ def print_conservation_energy(solve, KE, PE, m, v, g, h):
         print('{} = {:{}} {}'.format(KE[2], KE[1], KE[4], KE[3]))
         return KE
 
-
-
 def print_rotational_motion1(solve, s, r, O):
     """ rotational motion: s = rθ """
     print('linear angular displacement: s = rθ')
@@ -586,8 +589,8 @@ def print_amps_and_coulomb_equivalent(solve, A, Q):
     name 	 	 	 	symbol 	 conversion 	 example    
     microampere (microamps) 	 	µA 	1µA = 10^-6A 	I = 50µA
     milliampere (milliamps) 	 	mA 	1mA = 10^-3A 	I = 3mA
-    ampere (amps) 	 	 	A 	- 	 	I = 10A
-    kiloampere (kiloamps) 	 	kA 	1kA = 10^3A 	I = 2kA
+    ampere (amps) 	 			 	A 	- 	 			I = 10A
+    kiloampere (kiloamps) 		 	kA 	1kA = 10^3A 	I = 2kA
 
     """
     print('Ampere: a unit of electrical change equal to one coulomb of charge per second 1A = 1C/s')    
@@ -618,7 +621,7 @@ def print_ohms_law(solve, V, I, R):
     print('Ohms Law: V = IR')
 
     if solve[2] == V[2]:
-        print('solve voltae: V = IR')
+        print('solve voltage: V = IR')
         print('{} = {:{}} {} * {:{}} {})'.format(V[2], I[1], I[4], I[3], R[1], R[4], R[3]))
         V[1] = I[1] * R[1]
         print('{} = {:{}} {}'.format(V[2], V[1], V[4], V[3]))
@@ -626,7 +629,7 @@ def print_ohms_law(solve, V, I, R):
 
     if solve[2] == I[2]:
         print('rearrange to solve current: I = V/R')
-        print('{} = {:{}} {} * {:{}} {})'.format(V[2], I[1], I[4], I[3], R[1], R[4], R[3]))
+        print('{} = {:{}} {} * {:{}} {}'.format(V[2], I[1], I[4], I[3], R[1], R[4], R[3]))
         I[1] = V[1] / R[1]
         print('{} = {:{}} {}'.format(I[2], I[1], I[4], I[3]))
         return I
@@ -636,8 +639,6 @@ def print_ohms_law(solve, V, I, R):
         R[1] = V[1] / I[1]
         print('{} = {:{}} {}'.format(R[2], R[1], R[4], R[3]))
         return R
-    
-
 
 
 # webassign 1
@@ -1376,22 +1377,19 @@ def wave_period_speed(Ac=0.09, hlc=0.20, fc=17.0):
     print('speed of a wave: v = fλ')
     print_maths_evaluate('*', v, f, A)
 
-
-
-
-
+# webassign 7
 def electrons_hitting_tv(Ic=55.0):
     """
-    brief:
-    from:     WebAssign Homework 
-    category:
+    brief:    Measure the amount of electrons in a current of a TV
+    from:     WebAssign Homework 7.1
+    category: charge
     types:
     """
 
     I = ['ampere', Ic, 'I', 'µA', '.1f', 'scalar'] # I: ampere (Amperes are used to express flow rate of electric charge 1A = 1C/s) The unit symbol is dynamic!
-    Q = ['coulomb', '0', 'Q', 'C', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹)
+    Q = ['coulomb', '0', 'Q', 'C', '.2e', 'scalar'] # Q: coulomb (C = Amps/second C = A s⁻¹)
     t = ['time', 0, 't', 's', '.2f', 'scalar']
-    Qe = ['electrons per coulomb', 0.00000000000000000016021766208, 'Qe', 'electrons', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹)
+    Qe = ['electrons per coulomb', 0.00000000000000000016021766208, 'Qe', 'electrons', '.2e', 'scalar'] # Q: coulomb (C = Amps/second C = A s⁻¹)
     e = ['electrons', 0, 'e', 'electrons', '.2e', 'scalar']
 
     print('-' * 30)
@@ -1407,12 +1405,38 @@ def electrons_hitting_tv(Ic=55.0):
     print('solve how many electrons are in charge Q')
     print_maths_evaluate('/', e, Q, Qe)
 
+def current_light_bulb(Rc=300, Vc=160):
+    """
+    brief:    Find the current in a light bulb given resistance and voltage
+    from:     WebAssign Homework 7.2
+    category: charge
+    types:    ohms law
+    """
+
+    R = ['ohms', Rc, 'R', 'Ω', '.0f', 'scalar'] # R: ohms
+    V = ['voltage', Vc, 'V', 'V', '.0f', 'scalar'] # V: voltage
+    I = ['ampere', 0, 'I', 'A', '.2f', 'scalar'] # I: ampere (Amperes are used to express flow rate of electric charge 1A = 1C/s) The unit symbol is dynamic!
+
+    print('-' * 30)
+    print('A light bulb has a resistance of {:{}} {} when operating at a voltage of {:{}} {}.'.format(R[1], R[4], R[3], V[1], V[4], V[3]))
+    print('(a) What is the current in the bulb?. mA')
+
+    print('░ question a ░')
+    print_ohms_law(I, V, I, R)
+    print('convert A to mA * 1000')
+    I[1] = I[1] * 1000
+    I[3] = 'mA'
+    print('{} = {:{}} {}'.format(I[2], I[1], I[4], I[3]))
+
 """
-In a particular television picture tube, the measured beam current is 55.0 µA. How many electrons strike the screen every second?
+A length of metal wire has a radius of 5.10  10-3 m and a resistance of 0.100 .
+When the potential difference across the wire is 15.0 V, the electron drift speed is found to be 3.17 ✕ 10-4 m/s. On the basis of these data, calculate the density of free electrons in the wire.
 
 
 print_area_of_circle(A, r)
 
+
+A 6.0  resistor, an 7.0  resistor, and a 15  resistor are connected in series with a 30 V battery.
 """
 
 
