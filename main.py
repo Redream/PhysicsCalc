@@ -629,13 +629,13 @@ def print_ohms_law(solve, V, I, R):
 
     if solve[2] == I[2]:
         print('rearrange to solve current: I = V/R')
-        print('{} = {:{}} {} * {:{}} {}'.format(V[2], I[1], I[4], I[3], R[1], R[4], R[3]))
+        print('{} = {:{}} {} / {:{}} {}'.format(I[2], V[1], V[4], V[3], R[1], R[4], R[3]))
         I[1] = V[1] / R[1]
         print('{} = {:{}} {}'.format(I[2], I[1], I[4], I[3]))
         return I
     if solve[2] == R[2]:
         print('rearrange to solve resistance: R = V/I')
-        print('{} = {:{}} {} * {:{}} {})'.format(V[2], I[1], I[4], I[3], R[1], R[4], R[3]))
+        print('{} = {:{}} {} / {:{}} {})'.format(R[2], V[1], V[4], V[3], I[1], I[4], I[3]))
         R[1] = V[1] / I[1]
         print('{} = {:{}} {}'.format(R[2], R[1], R[4], R[3]))
         return R
