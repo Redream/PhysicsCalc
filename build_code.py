@@ -120,7 +120,7 @@ def get_resources(func_name, *required):
 #get_resources('J', 'm', 'v', 'v0')
 #get_resources('m','v','O','p','t','F','xF','yF')
 #get_resources('m1', 'm2', 'v0', 'vf', 'v', 'p')
-#get_resources('m1','v1','m2','O','vf','pE','pN','v2')
+
 
 get_resources('electrons_hitting_tv','I','Q','t','Qe',)
 get_resources('current_light_bulb','R','V','I')

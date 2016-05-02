@@ -1431,7 +1431,7 @@ def current_light_bulb(Rc=300, Vc=160):
 """
 A length of metal wire has a radius of 5.10  10-3 m and a resistance of 0.100 .
 When the potential difference across the wire is 15.0 V, the electron drift speed is found to be 3.17 ✕ 10-4 m/s. On the basis of these data, calculate the density of free electrons in the wire.
-
+p
 
 print_area_of_circle(A, r)
 
