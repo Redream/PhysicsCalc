@@ -1,5 +1,5 @@
 
-def get_resources(*required):
+def get_resources(func_name, *required):
     """
     This is to help building functions in the main calculator faster
     returns lists of resources needed, in the order requested
@@ -7,12 +7,14 @@ def get_resources(*required):
     print('-'*30)
     longstring = \
     "a = ['acceleration', ac, 'a', 'm s⁻²', '.2f', 'scalar'] | " \
-    "A = ['amplitude', Ac, 'Ac', 'm', '.2f', 'scalar'] # A: amplitude | " \
+    "A = ['amplitude', Ac, 'A', 'm', '.2f', 'scalar'] # A: amplitude | " \
+    "e = ['electrons', 0, 'e', 'electrons', '.2e', 'scalar'] | " \
     "Em = ['combined mass', Emc, '∑m', 'kg', '.2f', 'scalar'] | " \
     "f = ['frequency', fc, 'f', 'Hz', '.1f', 'scalar'] f: frequency (also m s⁻¹) | " \
     "F = ['force', Fc, 'F', 'N', '.2f', 'vector'] | " \
     "g = ['gravity', 9.81, 'a', 'm s⁻²', '.2f', 'scalar'] | " \
     "hl = ['wavelength', hlc, 'λ', 'm', '.2f', 'vector'] | " \
+    "I = ['ampere', Ic, 'I', 'A', '.2f', 'scalar'] # I: ampere (Amperes are used to express flow rate of electric charge 1A = 1C/s) The unit symbol is dynamic! | " \
     "J = ['impulse', Jc, 'J', 'N s⁻¹', '.2f', 'vector'] | " \
     "KE = ['kinetic energy', KEc, 'KE', 'J', '.1f', 'scalar'] # KE: kinetic energy (KE = ½mv²) | " \
     "m = ['mass', mc, 'mc', 'kg', '.2f', 'scalar'] | " \
@@ -22,6 +24,8 @@ def get_resources(*required):
     "p = ['momentum', pc, 'p', 'kg m/s', '.2f', 'vector'] | " \
     "pN = ['momentum North', pNc, 'pN', 'kg m/s', '.2f', 'vector'] | " \
     "pE = ['momentum East', pEc, 'pE', 'kg m/s', '.2f', 'vector'] | " \
+    "Q = ['coulomb', 'Qc', 'Q', 'C', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹) | " \
+    "Qe = ['electrons per coulomb', 0.00000000000000000016021766208, 'Qe', 'electrons', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹) | " \
     "t = ['time', tc, 't', 's', '.2f', 'scalar'] | " \
     "T = ['tension force', Tc, 'T', 'N', '.1f', 'scalar'] # T: tension | " \
     "T = ['period', Tc, 'T', 's', '.3f', 'scalar'] | " \
@@ -41,7 +45,7 @@ def get_resources(*required):
 
 
     # build a list with variables to use
-    function_string = 'def newfunction('
+    function_string = 'def {}('.format(func_name)
     input_list = []
     question_list = []
 
@@ -66,9 +70,9 @@ def get_resources(*required):
     # build if not choice
     if_string = '    if not ('
     if_string += ' and '.join(question_list)
-    if_string += '): newfunction()'
+    if_string += '): {}()'.format(func_name)
     # build else choice
-    else_string = '    else: newfunction('
+    else_string = '    else: {}('.format(func_name)
     for i in range(0, len(question_list)):
         question_list[i] = question_list[i] + 'c=float(' + question_list[i] + '), '
     else_string += ''.join(question_list)
@@ -92,7 +96,7 @@ def get_resources(*required):
     variables = (longstring.split('|'))
     for i in required:
         for j in variables:
-            k = j.split('=')
+            k = j.split('=',1) # only split on the first = character
             k[0] = k[0].strip()
             if i == k[0]:
                 k[1] = k[1].strip()
@@ -107,13 +111,13 @@ def get_resources(*required):
     print("    print('░ question a ░')")
     print("    print('░ question b ░')")
 
-get_resources('m1', 'm2', 'T', 'a', 'g', 't', 'x', 'v0')
-get_resources('m','v','KE','x','F', 'T', 'f')
-get_resources('m', 'x', 'g', 'F', 'v')
-get_resources('m1', 'm2', 'g', 'v0', 'v', 'x', 'a')
-get_resources('J', 'm', 'v', 'v0')
-get_resources('m','v','O','p','t','F','xF','yF')
+#get_resources('m1', 'm2', 'T', 'a', 'g', 't', 'x', 'v0')
+#get_resources('m','v','KE','x','F', 'T', 'f')
+#get_resources('m', 'x', 'g', 'F', 'v')
+#get_resources('m1', 'm2', 'g', 'v0', 'v', 'x', 'a')
+#get_resources('J', 'm', 'v', 'v0')
+#get_resources('m','v','O','p','t','F','xF','yF')
+#get_resources('m1', 'm2', 'v0', 'vf', 'v', 'p')
+#get_resources('m1','v1','m2','O','vf','pE','pN','v2')
 
-get_resources('m1', 'm2', 'v0', 'vf', 'v', 'p')
-
-get_resources('m1','v1','m2','O','vf','pE','pN','v2')
+get_resources('electrons_hitting_tv','I','Q','t','Qe',)
