@@ -13,6 +13,7 @@ def main():
         "WebAssign Week 4",
         "WebAssign Week 5",
         "WebAssign Week 6",
+        "WebAssign Week 7",
     ]
 
     print("MAIN MENU:")
@@ -90,6 +91,10 @@ def webassign_get_questions(week):
             "Question 3",
             "Question 4"],
         6: ["Question 1",
+            "Question 2",
+            "Question 3",
+            "Question 4"],        
+        7: ["Question 1",
             "Question 2",
             "Question 3",
             "Question 4",
@@ -232,6 +237,11 @@ def webassign_do_question(week, question):
             else: wave_period_speed(fc=float(f))
         if question == 4:
             print("hi")
+    elif week == 7:
+        if question == 1:
+            I = input("ampere (µA): ")
+            if not (I): electrons_hitting_tv()
+            else: electrons_hitting_tv(Ic=float(I))
 
     else:
         # this shouldn't happen because we already checked for invalid weeks
@@ -308,6 +318,15 @@ def print_convert_absolute(a):
     print('convert vector to absolute value for scalar')
     a[1] = abs(a[1])
     print('abs({0}) = {1:{2}} {3}'.format(a[2], a[1], a[4], a[3]))
+    
+def print_area_of_circle(A, r):
+    """
+    Takes r (radius) and converts to area of a circle
+    Returns A (Area)
+    """
+    print('area of a circle: πr²')
+    A[1] = math.pi * r[1]**2
+    print('{0} = {1:{2}} {3}'.format(A[2], A[1], A[4], A[3]))
 
 def print_mechanics_motion1(solve, v, v0, a, t):
     """ velocity (without x): v = v₀ + at """
@@ -547,6 +566,78 @@ def print_rotational_motion1(solve, s, r, O):
     c = ⅓ for a rod around its end, R = length
 """
 
+def print_amps_and_coulomb_equivalent(solve, A, Q):
+    """
+    ⁰¹²³⁴⁵⁶⁷⁸⁹₀₁₂₃₄₅₆₇₈₉ ⁻
+    SI multiples for coulomb (C) Submultiples 		Multiples
+    Value 	SI symbol 	Name 	Value 	 	SI symbol 	Name
+    10^−1 C 	dC 	decicoulomb 	10^1 C 	 	daC 	decacoulomb
+    10^−2 C 	cC 	centicoulomb 	10^2 C 	 	hC 	hectocoulomb
+    10^−3 C 	mC 	millicoulomb 	10^3 C 	 	kC 	kilocoulomb
+    10^−6 C 	µC 	microcoulomb 	10^6 C 	 	MC 	megacoulomb
+    10^−9 C 	nC 	nanocoulomb 	10^9 C 	 	GC 	gigacoulomb
+    10^−12 C 	pC 	picocoulomb 	10^12 C 	TC 	teracoulomb
+    10^−15 C 	fC 	femtocoulomb 	10^15 C 	PC 	petacoulomb
+    10^−18 C 	aC 	attocoulomb 	10^18 C 	EC 	exacoulomb
+    10^−21 C 	zC 	zeptocoulomb 	10^21 C 	ZC 	zettacoulomb
+    10^−24 C 	yC 	yoctocoulomb 	10^24 C 	YC 	yottacoulomb
+
+    Table of ampere unit prefixes
+    name 	 	 	 	symbol 	 conversion 	 example    
+    microampere (microamps) 	 	µA 	1µA = 10^-6A 	I = 50µA
+    milliampere (milliamps) 	 	mA 	1mA = 10^-3A 	I = 3mA
+    ampere (amps) 	 	 	A 	- 	 	I = 10A
+    kiloampere (kiloamps) 	 	kA 	1kA = 10^3A 	I = 2kA
+
+    """
+    print('Ampere: a unit of electrical change equal to one coulomb of charge per second 1A = 1C/s')    
+    print('Amperes are used to express flow rate of electric charge 1A = 1C/s')
+    # print('C = amps/sec')
+    # print('Amps = coul/sec')
+    print('Current = Charge/Time')
+    print('I = Q/t')
+    print('Where:')
+    print('I = Current in Amperes (A)')
+    print('Q = Charge in Coulombs (C)')
+    print('t = time (s)')
+    
+    if solve[2] == Q[2]:
+        if A[3] == 'µA':
+            print('equivalent of a microampere (µA) is microcoulomb (µC)')
+            print('1 µA = 1 µC/s = 10⁻⁶ C/s')
+            Q[1] = A[1] * 0.000001
+            Q[3] = 'µC'
+            print('{} = {:{}} {}'.format(Q[2], Q[1], Q[4], Q[3]))
+            return Q
+
+def print_ohms_law(solve, V, I, R):
+    """
+    Ohm's Law is V = I x R where V = Voltage, I = Current and R = Resistance
+    One ohm is the resistance value through which one volt will maintain a current of one ampere
+    """
+    print('Ohms Law: V = IR')
+
+    if solve[2] == V[2]:
+        print('solve voltae: V = IR')
+        print('{} = {:{}} {} * {:{}} {})'.format(V[2], I[1], I[4], I[3], R[1], R[4], R[3]))
+        V[1] = I[1] * R[1]
+        print('{} = {:{}} {}'.format(V[2], V[1], V[4], V[3]))
+        return V
+
+    if solve[2] == I[2]:
+        print('rearrange to solve current: I = V/R')
+        print('{} = {:{}} {} * {:{}} {})'.format(V[2], I[1], I[4], I[3], R[1], R[4], R[3]))
+        I[1] = V[1] / R[1]
+        print('{} = {:{}} {}'.format(I[2], I[1], I[4], I[3]))
+        return I
+    if solve[2] == R[2]:
+        print('rearrange to solve resistance: R = V/I')
+        print('{} = {:{}} {} * {:{}} {})'.format(V[2], I[1], I[4], I[3], R[1], R[4], R[3]))
+        R[1] = V[1] / I[1]
+        print('{} = {:{}} {}'.format(R[2], R[1], R[4], R[3]))
+        return R
+    
+
 
 
 # webassign 1
@@ -557,6 +648,7 @@ def train_stopping_time(v0c=82.0, vfc=15.1, xc=350):
     category: acceleration
     types:    motion in 1D
     """
+    
     v0 = ['initial velocity', v0c, 'v₀', 'm s⁻¹', '.1f', 'vector']
     vf = ['final velocity', vfc, 'vf', 'm s⁻¹', '.1f', 'vector']
     x = ['change in distance', xc, 'Δx', 'm', '.0f', 'scalar']
@@ -1283,6 +1375,49 @@ def wave_period_speed(Ac=0.09, hlc=0.20, fc=17.0):
     print('░ question d ░')
     print('speed of a wave: v = fλ')
     print_maths_evaluate('*', v, f, A)
+
+
+
+
+
+def electrons_hitting_tv(Ic=55.0):
+    """
+    brief:
+    from:     WebAssign Homework 
+    category:
+    types:
+    """
+
+    I = ['ampere', Ic, 'I', 'µA', '.1f', 'scalar'] # I: ampere (Amperes are used to express flow rate of electric charge 1A = 1C/s) The unit symbol is dynamic!
+    Q = ['coulomb', '0', 'Q', 'C', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹)
+    t = ['time', 0, 't', 's', '.2f', 'scalar']
+    Qe = ['electrons per coulomb', 0.00000000000000000016021766208, 'Qe', 'electrons', '.2e', 'scalar'] # Q: coloumb (C = Amps/second C = A s⁻¹)
+    e = ['electrons', 0, 'e', 'electrons', '.2e', 'scalar']
+
+    print('-' * 30)
+    print('In a particular television picture tube, the measured beam current is {:{}} {}.'.format(I[1], I[4], I[3]))
+    print('(a) How many electrons strike the screen every second?')
+    
+    print('░ question a ░')
+    print_amps_and_coulomb_equivalent(Q, I, Q)
+    # time is 1 second
+    t[1] = 1
+    # current times time Q = I*t
+    print_maths_evaluate('*', Q, I, t)
+    print('solve how many electrons are in charge Q')
+    print_maths_evaluate('/', e, Q, Qe)
+
+"""
+In a particular television picture tube, the measured beam current is 55.0 µA. How many electrons strike the screen every second?
+
+
+print_area_of_circle(A, r)
+
+"""
+
+
+        
+
 
 
 
